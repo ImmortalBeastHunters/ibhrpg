@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Grimório de Magias</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <div class="header-left">
+
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo do Site">
+      </div>
+
+      <select id="classFilter">
+        <option value="all">Todas Classes</option>
+        <option value="artificer">Artificer</option>
+        <option value="bardo">Bardo</option>
+        <option value="bruxo">Bruxo</option>
+        <option value="clérigo">Clérigo</option>
+        <option value="druida">Druida</option>
+        <option value="feiticeiro">Feiticeiro</option>
+        <option value="mago">Mago</option>
+        <option value="paladino">Paladino</option>
+        <option value="patrulheiro">Patrulheiro</option>
+      </select>
+
+    </div>
+
+    <div class="header-controls">
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Nome da magia..."
+      >
+
+      <!-- ÍCONE CORRIGIDO -->
+      <button id="knownOnlyButton" title="Mostrar apenas conhecidas">
+        <i data-lucide="book-marked"></i>
+      </button>
+
+    </div>
+
+  </header>
+
+  <!-- ================= MAIN ================= -->
+
+  <main id="spellContainer">
+    <!-- Níveis serão inseridos via JS -->
+  </main>
+
+  <!-- ================= MODAL MAGIA ================= -->
+
+  <div id="spellModal" class="modal hidden">
+
+    <div class="modal-overlay"></div>
+
+    <div class="modal-content">
+
+      <button class="modal-close">
+        <i data-lucide="x"></i>
+      </button>
+
+      <div id="modalBody"></div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= BOTÃO SIDEBAR ================= -->
+
+  <button id="sidebarToggle" class="floating-button">
+    <i data-lucide="folder"></i>
+  </button>
+
+  <!-- ================= SIDEBAR ================= -->
+
+  <aside id="sidebar" class="sidebar">
+
+    <div class="sidebar-content">
+
+      <button id="saveSelectionBtn" class="sidebar-main-button">
+        Salvar Seleção
+      </button>
+
+      <button id="noSelectionBtn" class="sidebar-main-button">
+        Nenhuma Seleção
+      </button>
+
+      <div class="sidebar-divider">
+        Seleções
+      </div>
+
+      <div id="selectionList"></div>
+
+    </div>
+
+    <div class="sidebar-footer">
+
+      <button id="exportSelection" class="square-button">
+        <i data-lucide="download"></i>
+      </button>
+
+      <button id="importSelection" class="square-button">
+        <i data-lucide="upload"></i>
+      </button>
+
+      <button id="deleteSelectionMode" class="square-button">
+        <i data-lucide="trash"></i>
+      </button>
+
+      <input type="file" id="importFile" hidden>
+
+    </div>
+
+  </aside>
+
+  <!-- ================= MODAL SALVAR ================= -->
+
+  <div id="saveModal" class="modal hidden">
+
+    <div class="modal-overlay"></div>
+
+    <div class="modal-content small">
+
+      <div class="save-modal-card">
+
+        <div class="save-modal-title">
+          Salvar Seleção
+        </div>
+
+        <input
+          id="selectionNameInput"
+          class="save-modal-input"
+          placeholder="Nome da seleção"
+        >
+
+        <div class="save-modal-buttons">
+
+          <button class="cancel-btn">Cancelar</button>
+
+          <button id="confirmSaveSelection" class="save-btn">
+            Salvar
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= TEMPLATE CARD ================= -->
+
+  <template id="spellCardTemplate">
+
+    <div class="spell-card">
+
+      <div class="spell-header">
+
+        <img class="spell-icon">
+
+        <div class="spell-title-container">
+
+          <h3 class="spell-name"></h3>
+
+          <div class="spell-original"></div>
+
+          <div class="spell-meta"></div>
+
+        </div>
+
+        <!-- ÍCONE CORRIGIDO -->
+        <button class="known-button">
+          <i data-lucide="book-check"></i>
+        </button>
+
+      </div>
+
+      <hr class="spell-divider">
+
+      <div class="spell-info">
+        <div class="spell-casting"></div>
+        <div class="spell-range"></div>
+        <div class="spell-duration"></div>
+        <div class="spell-components"></div>
+      </div>
+
+      <div class="spell-description"></div>
+
+    </div>
+
+  </template>
+
+  <!-- ================= TEMPLATE NÍVEL ================= -->
+
+  <template id="levelTemplate">
+
+    <section class="spell-level">
+
+      <div class="level-header">
+
+        <span class="level-title"></span>
+
+        <i data-lucide="chevron-down" class="level-arrow"></i>
+
+      </div>
+
+      <div class="level-spells"></div>
+
+    </section>
+
+  </template>
+
+  <!-- ================= SCRIPTS ================= -->
+
+  <script src="js/app.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>
