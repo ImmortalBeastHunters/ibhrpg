@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caçador de Sangue • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2019/12/bloodhuntercover.jpg?w=1200&h=628&fit=crop" alt="Caçador de Sangue">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const caçadorDeSangue5e = `
+<h1>Caçador de Sangue</h1>
+<div class="subtitle">Classe Marcial • D&D 5e</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Caçadores de Sangue são guerreiros que trilham um caminho
+    <strong>sombrio e perigoso</strong>, usando o próprio sangue como arma
+    para combater horrores que espreitam além da compreensão comum.
+    Diferente de combatentes tradicionais, eles recorrem a rituais
+    proibidos, alquimia e magia hemática para enfrentar ameaças
+    sobrenaturais.
+  </p>
+
+  <p>
+    Muitos Caçadores de Sangue surgem após encontros traumáticos com
+    monstros — vampiros, demônios, aberrações ou licantropos.
+    Outros são treinados por ordens secretas que acreditam que apenas
+    quem está disposto a sacrificar parte de si mesmo pode derrotar
+    verdadeiros horrores. Seja por vingança, dever ou obsessão, todos
+    compartilham uma disposição inabalável para pagar o preço do poder.
+  </p>
+
+  <p>
+    Mortais por escolha, esses combatentes equilibram lâminas,
+    mutagênicos e ritos de sangue em combate. Onde outros recuam diante
+    do desconhecido, o Caçador de Sangue avança — transformando
+    <strong>dor em força</strong>, sacrifício em poder e determinação em
+    sobrevivência.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Caçador de Sangue</h2>
+
+  <div class="table-wrapper">
+    <table>
+      <tr>
+        <th>Nível</th>
+        <th>Bônus de Prof.</th>
+        <th>Características</th>
+      </tr>
+
+      <tr><td>1°</td><td>+2</td><td>Maldição do Caçador, Maldição de Sangue</td></tr>
+      <tr><td>2°</td><td>+2</td><td>Estilo de Luta, Rito Carmesim</td></tr>
+      <tr><td>3°</td><td>+2</td><td>Ordem dos Caçadores de Sangue</td></tr>
+      <tr><td>4°</td><td>+2</td><td>Melhoria na Pontuação de Habilidade</td></tr>
+      <tr><td>5°</td><td>+3</td><td>Ataque Extra</td></tr>
+      <tr><td>6°</td><td>+3</td><td>Marca de Castigação, Maldição de Sangue (2/resto)</td></tr>
+      <tr><td>7°</td><td>+3</td><td>Característica de Ordem, Melhoria do Rito Carmesim</td></tr>
+      <tr><td>8°</td><td>+3</td><td>Melhoria na Pontuação de Habilidade</td></tr>
+      <tr><td>9°</td><td>+4</td><td>Psicometria Sombria</td></tr>
+      <tr><td>10°</td><td>+4</td><td>Aumento das Trevas</td></tr>
+      <tr><td>11°</td><td>+4</td><td>Característica de Ordem</td></tr>
+      <tr><td>12°</td><td>+4</td><td>Melhoria na Pontuação de Habilidade</td></tr>
+      <tr><td>13°</td><td>+5</td><td>Marca de Amarração, Maldição de Sangue (3/resto)</td></tr>
+      <tr><td>14°</td><td>+5</td><td>Alma Endurecida, Melhoria do Rito Carmesim</td></tr>
+      <tr><td>15°</td><td>+5</td><td>Característica de Ordem</td></tr>
+      <tr><td>16°</td><td>+5</td><td>Melhoria na Pontuação de Habilidade</td></tr>
+      <tr><td>17°</td><td>+6</td><td>Maldição de Sangue (4/resto)</td></tr>
+      <tr><td>18°</td><td>+6</td><td>Característica de Ordem</td></tr>
+      <tr><td>19°</td><td>+6</td><td>Melhoria na Pontuação de Habilidade</td></tr>
+      <tr><td>20°</td><td>+6</td><td>Domínio Sanguíneo</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d10 por nível de Caçador de Sangue</p>
+  <p>
+    <strong>Pontos de Vida no 1º Nível:</strong>
+    10 + seu modificador de Constituição
+  </p>
+  <p>
+    <strong>Pontos de Vida nos Níveis Seguintes:</strong>
+    1d10 (ou 6) + seu modificador de Constituição por nível de Caçador de Sangue após o 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Armaduras leves, armaduras médias, escudos</p>
+  <p>
+    <strong>Armas:</strong> Armas simples, armas marciais
+  </p>
+  <p><strong>Ferramentas:</strong> Suprimentos de alquimista</p>
+  <p>
+    <strong>Testes de Resistência:</strong>
+    Destreza, Inteligência
+  </p>
+  <p>
+    <strong>Perícias:</strong>
+    Escolha três entre Acrobacia, Arcano, Atletismo, História, Intuição,
+    Investigação, Religião e Sobrevivência
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>
+    Você começa com o seguinte equipamento, além do equipamento concedido pelo
+    seu antecedente:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) uma arma marcial
+      <strong>ou</strong>
+      (b) duas armas simples
+    </li>
+    <li>
+      (a) uma besta leve com 20 virotes
+      <strong>ou</strong>
+      (b) uma besta de mão com 20 virotes
+    </li>
+    <li>
+      (a) armadura de couro com tachas
+      <strong>ou</strong>
+      (b) armadura de malha de escamas
+    </li>
+    <li>
+      Uma mochila de explorador e suprimentos de alquimista
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>A Maldição do Caçador</h2>
+
+  <p>
+    No 1º nível, você sobreviveu à <strong>Maldição do Caçador</strong> — um ritual
+    perigoso e guardado há muito tempo que altera o sangue da sua vida,
+    prendendo-o para sempre à escuridão e aprimorando seus sentidos contra ela.
+    Você tem vantagem nos testes de Sabedoria (Sobrevivência) para rastrear
+    feéricos, demônios ou mortos-vivos, assim como nos testes de Inteligência para
+    lembrar informações sobre essas criaturas.
+  </p>
+
+  <p>
+    A Maldição do Caçador também capacita seu corpo a controlar e moldar a magia
+    de <strong>hemocraft</strong>, usando seu próprio sangue e essência vital para
+    alimentar suas habilidades. Algumas das suas habilidades exigem que seu alvo
+    faça um teste de resistência para resistir aos efeitos da habilidade. A CD
+    do teste de resistência é calculada da seguinte forma:
+  </p>
+
+  <p class="formula">
+    <strong>CD de resistência de Hemocraft</strong> =
+    8 + seu bônus de proficiência + seu modificador de Hemocraft
+    (sua escolha entre Inteligência ou Sabedoria)
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maldito de Sangue</h2>
+
+  <p>
+    Também no 1º nível, você ganha a habilidade de canalizar — ou às vezes
+    sacrificar — parte da sua essência vital para amaldiçoar e manipular
+    criaturas por meio da magia de <strong>hemocraft</strong>. Você conhece uma
+    <strong>Maldição de Sangue</strong> de sua escolha. Você aprende uma maldição
+    de sangue adicional de sua escolha no 6º, 10º, 14º e 18º níveis. Sempre que
+    aprender uma nova maldição de sangue, você também pode escolher uma das
+    maldições de sangue que conhece e substituí-la por outra.
+  </p>
+
+  <p>
+    Cada vez que você usa sua característica <strong>Maldito de Sangue</strong>,
+    você escolhe qual maldição invocar entre aquelas que conhece. Ao invocar uma
+    maldição de sangue, mas antes que ela afete o alvo, você pode escolher
+    <strong>amplificar</strong> a maldição, sofrendo dano necrótico igual a uma
+    rolagem do seu dado de hemocraft. Esse dano não pode ser reduzido de nenhuma
+    forma. Uma maldição amplificada recebe um efeito adicional, descrito na
+    descrição da maldição.
+  </p>
+
+  <p>
+    Criaturas que não possuem sangue são imunes às maldições de sangue, a menos
+    que você tenha amplificado a maldição.
+  </p>
+
+  <p>
+    Após usar essa característica, você deve terminar um descanso curto ou longo
+    antes de usá-la novamente. A partir do 6º nível, você pode usar
+    <strong>Maldito de Sangue</strong> duas vezes entre descansos, três vezes a
+    partir do 13º nível e quatro vezes a partir do 17º nível.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Estilo de Luta</h2>
+
+  <p>
+    No 2º nível, você adota um estilo de combate particular que será sua
+    especialidade. Escolha uma das opções a seguir. Você não pode escolher o
+    mesmo Estilo de Luta mais de uma vez, mesmo se puder escolhê-lo novamente.
+  </p>
+
+  <h3>Arquearia</h3>
+  <p>
+    Você ganha +2 de bônus nas jogadas de ataque realizadas com armas de ataque
+    à distância.
+  </p>
+
+  <h3>Duelismo</h3>
+  <p>
+    Quando você empunhar uma arma corpo a corpo em uma mão e nenhuma outra arma,
+    você ganha +2 de bônus nas jogadas de dano com essa arma.
+  </p>
+
+  <h3>Luta com Armas Grandes</h3>
+  <p>
+    Quando você rolar um 1 ou um 2 em um dado de dano que não seja de rito de um
+    ataque feito com uma arma corpo a corpo empunhada com duas mãos, você pode
+    rolar o dado novamente e deve usar a nova rolagem. A arma deve possuir a
+    propriedade duas mãos ou versátil para ganhar esse benefício.
+  </p>
+
+  <h3>Luta com Duas Armas</h3>
+  <p>
+    Quando você estiver engajado em combate com duas armas, você pode adicionar
+    o seu modificador de habilidade à jogada de dano do segundo ataque.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Rito Carmesim</h2>
+
+  <p>
+    Também no 2º nível, você aprende a invocar um rito de hemocraft que infunde
+    seus ataques com armas com energia elemental. Como uma ação bônus, você pode
+    ativar qualquer rito que conheça em uma arma que esteja empunhando. O efeito
+    do rito dura até você terminar um descanso curto ou longo. Quando você ativa
+    um rito, sofre dano necrótico igual a uma rolagem do seu dado de hemocraft.
+    Esse dano não pode ser reduzido de nenhuma forma.
+  </p>
+
+  <p>
+    Enquanto o rito estiver ativo, os ataques que você realizar com essa arma
+    são considerados mágicos e causam dano adicional igual ao seu dado de
+    hemocraft, do tipo determinado pelo rito escolhido. Uma arma pode manter
+    apenas um rito ativo por vez. Outras criaturas não podem se beneficiar do
+    seu rito.
+  </p>
+
+  <p>
+    Quando você ganha essa característica pela primeira vez, escolhe um rito
+    entre os Ritos Carmesins abaixo. Você aprende um rito carmesim adicional no
+    7º nível e novamente no 14º nível.
+  </p>
+
+  <h3>Ritos Carmesins</h3>
+
+  <p>
+    <strong>Rito da Chama.</strong> O dano do seu rito é dano de fogo.
+  </p>
+
+  <p>
+    <strong>Rito do Gelo.</strong> O dano do seu rito é dano de frio.
+  </p>
+
+  <p>
+    <strong>Rito da Tempestade.</strong> O dano do seu rito é dano elétrico.
+  </p>
+
+  <p>
+    <strong>Rito dos Mortos.</strong> O dano do seu rito é dano necrótico.
+    <em>(Pré-requisito: 14º nível)</em>
+  </p>
+
+  <p>
+    <strong>Rito do Oráculo.</strong> O dano do seu rito é dano psíquico.
+    <em>(Pré-requisito: 14º nível)</em>
+  </p>
+
+  <p>
+    <strong>Rito do Rugido.</strong> O dano do seu rito é dano trovejante.
+    <em>(Pré-requisito: 14º nível)</em>
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ordem dos Caçadores de Sangue</h2>
+
+  <p>
+    A partir do <strong>3º nível</strong>, você escolhe uma Ordem dos Caçadores de
+    Sangue que representa a filosofia, os rituais e o caminho que guiarão sua
+    jornada. Essa escolha concede a você características específicas no
+    <strong>3º nível</strong> e novamente nos
+    <strong>7º, 11º, 15º</strong> e <strong>18º níveis</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ordens</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://wa-cdn.nyc3.cdn.digitaloceanspaces.com/user-data/production/56ed0db1-de22-44fe-ae7e-d9ace9aae83c/uploads/images/a3eb7249513f13279c0b05fa814fc4fb.jpeg" alt="Caça Fantasmas">
+      <h3>Caça Fantasmas</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2024/05/monster-hunters-gennifer-and-laurie-weathermay-foxgrove-corner-the-werewolf-by-natalia-vhorishkova.jpg?q=49&fit=crop&w=825&dpr=2" alt="Lycan">
+      <h3>Lycan</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.gmbinder.com/images/MbJ312z.jpg" alt="Mutante">
+      <h3>Mutante</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i.redd.it/2he6iia3esmc1.png" alt="Alma Profana">
+      <h3>Alma Profana</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Extra</h2>
+
+  <p>
+    A partir do <strong>5º nível</strong>, você pode atacar duas vezes, em vez de
+    uma, sempre que realizar a ação <strong>Ataque</strong> no seu turno.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Marca de Castigação</h2>
+
+  <p>
+    A partir do <strong>6º nível</strong>, quando você causar dano a uma criatura
+    com uma arma que possua um <strong>Rito Carmesim</strong> ativo, você pode
+    canalizar a magia de hemocraft para gravar uma marca arcana ardente nessa
+    criatura <em>(nenhuma ação é necessária)</em>. Você sempre sabe a direção da
+    criatura marcada enquanto ela estiver no mesmo plano de existência que
+    você.
+  </p>
+
+  <p>
+    Além disso, sempre que a criatura marcada causar dano a você ou a uma
+    criatura que você possa ver a até <strong>1,5 metro</strong> de você, a
+    criatura marcada sofre dano psíquico igual ao seu <strong>modificador de
+    Hemocraft</strong> (mínimo de 1).
+  </p>
+
+  <p>
+    Sua marca dura até que você a dissipe ou até usar essa característica para
+    aplicar a marca em outra criatura. A sua marca pode ser dissipada com
+    <strong>Desintegrar Magia</strong> e é tratada como uma magia de nível igual à
+    metade do seu nível de caçador de sangue (máximo de 9º nível).
+  </p>
+
+  <p>
+    Após usar essa característica, você não pode usá-la novamente até terminar
+    um descanso curto ou longo.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Psicometria Sombria</h2>
+
+  <p>
+    Ao atingir o <strong>9º nível</strong>, você adquire um talento sobrenatural
+    para discernir os segredos que envolvem relíquias misteriosas ou locais
+    tocados pelo mal. Sempre que você realizar um teste de Inteligência
+    (<strong>História</strong>) para recordar informações sobre a história
+    sinistra ou trágica de um objeto que esteja tocando ou do local em que se
+    encontra, você tem vantagem no teste.
+  </p>
+
+  <p>
+    A critério do Mestre, uma rolagem suficientemente alta pode fazer com que
+    seu personagem experimente breves visões do passado conectadas ao objeto
+    ou local.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Aumento das Trevas</h2>
+
+  <p>
+    A partir do <strong>10º nível</strong>, a magia de hemocraft permeia seu corpo
+    para reforçar permanentemente sua resistência. Seu deslocamento aumenta em
+    <strong>1,5 metro</strong>, e você recebe um bônus nos testes de resistência
+    de <strong>Força, Destreza e Constituição</strong> igual ao seu
+    <strong>modificador de Hemocraft</strong> (mínimo de +1).
+  </p>
+</div>
+
+<div class="section">
+  <h2>Marca de Amarração</h2>
+
+  <p>
+    A partir do <strong>13º nível</strong>, o dano psíquico causado pela sua
+    <strong>Marca de Castigação</strong> aumenta para o dobro do seu modificador
+    de Hemocraft (mínimo de 2).
+  </p>
+
+  <p>
+    Além disso, uma criatura marcada não pode realizar a ação
+    <strong>Disparada</strong>. Se ela tentar se teleportar ou deixar seu plano
+    atual por qualquer meio, sofre <strong>4d6 de dano psíquico</strong> e deve
+    realizar um teste de resistência de <strong>Sabedoria</strong>. Em caso de
+    falha, a tentativa de teleporte ou de deixar o plano falha.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Alma Endurecida</h2>
+
+  <p>
+    Ao atingir o <strong>14º nível</strong>, você passa a ter vantagem em testes
+    de resistência contra as condições <strong>enfeitiçado</strong> e
+    <strong>amedrontado</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Domínio Sanguíneo</h2>
+
+  <p>
+    Ao alcançar o <strong>20º nível</strong>, sua maestria sobre a magia do sangue
+    atinge o auge, mitigando seus sacrifícios e ampliando sua perícia. Uma vez
+    por turno, sempre que uma característica de caçador de sangue exigir que
+    você role um <strong>dado de hemocraft</strong>, você pode rolar o dado
+    novamente e usar qualquer um dos resultados.
+  </p>
+
+  <p>
+    Além disso, sempre que você acertar um <strong>acerto crítico</strong> com
+    uma arma que possua um <strong>Rito Carmesim</strong> ativo, você recupera um
+    uso gasto da sua característica <strong>Maldito de Sangue</strong>.
+  </p>
+</div>
+`;
+
+const caçadorDeSangueOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(caçadorDeSangue5e, true));
+btnOne.addEventListener("click", () => swapContent(caçadorDeSangueOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = caçadorDeSangue5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

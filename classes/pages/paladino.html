@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paladino • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://i0.wp.com/dungeonmister.com/wp-content/uploads/2024/06/paladin.jpg" alt="Paladino">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const paladino5e = `
+<h1>Paladino</h1>
+<div class="subtitle">Guerreiro Sagrado • D&D</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Paladinos são <strong>campeões juramentados</strong> que empunham
+    tanto a força das armas quanto o poder da fé. Ligados a um
+    <strong>juramento sagrado</strong>, eles canalizam sua devoção a
+    ideais como justiça, honra, redenção ou vingança, tornando-se
+    símbolos vivos de sua causa.
+  </p>
+
+  <p>
+    Diferente de clérigos, que servem diretamente a uma divindade,
+    o poder do paladino nasce da <strong>convicção inabalável em seus
+    votos</strong>. Essa fé manifesta-se como magia divina, permitindo
+    que cure aliados, afaste o mal e destrua inimigos profanos com
+    golpes imbuídos de energia sagrada.
+  </p>
+
+  <p>
+    <strong>Defensores da ordem e da esperança</strong>, paladinos são
+    faróis de coragem nos momentos mais sombrios. Onde a corrupção se
+    espalha e a injustiça reina, eles marcham sem hesitar, prontos para
+    sacrificar tudo em nome de seus princípios e proteger aqueles que
+    não podem se defender.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Paladino</h2>
+
+  <div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus de Prof.</th>
+      <th>Características</th>
+      <th>1º</th>
+      <th>2º</th>
+      <th>3º</th>
+      <th>4º</th>
+      <th>5º</th>
+    </tr>
+
+    <tr><td>1º</td><td>+2</td><td>Sentido Divino, Cura pelas Mãos</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>2º</td><td>+2</td><td>Estilo de Luta, Conjuração, Destruição Divina</td><td>2</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>3º</td><td>+2</td><td>Saúde Divina, Juramento Sagrado</td><td>3</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>4º</td><td>+2</td><td>Incremento no Valor de Habilidade</td><td>3</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>5º</td><td>+3</td><td>Ataque Extra</td><td>4</td><td>2</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>6º</td><td>+3</td><td>Aura de Proteção</td><td>4</td><td>2</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>7º</td><td>+3</td><td>Característica de Juramento Sagrado</td><td>4</td><td>3</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>8º</td><td>+3</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>3</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>9º</td><td>+4</td><td>—</td><td>4</td><td>3</td><td>2</td><td>—</td><td>—</td></tr>
+    <tr><td>10º</td><td>+4</td><td>Aura da Coragem</td><td>4</td><td>3</td><td>2</td><td>—</td><td>—</td></tr>
+    <tr><td>11º</td><td>+4</td><td>Destruição Divina Aprimorada</td><td>4</td><td>3</td><td>3</td><td>—</td><td>—</td></tr>
+    <tr><td>12º</td><td>+4</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>3</td><td>3</td><td>—</td><td>—</td></tr>
+    <tr><td>13º</td><td>+5</td><td>—</td><td>4</td><td>3</td><td>3</td><td>1</td><td>—</td></tr>
+    <tr><td>14º</td><td>+5</td><td>Toque Purificador</td><td>4</td><td>3</td><td>3</td><td>1</td><td>—</td></tr>
+    <tr><td>15º</td><td>+5</td><td>Característica de Juramento Sagrado</td><td>4</td><td>3</td><td>3</td><td>2</td><td>—</td></tr>
+    <tr><td>16º</td><td>+5</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>3</td><td>3</td><td>2</td><td>—</td></tr>
+    <tr><td>17º</td><td>+6</td><td>—</td><td>4</td><td>3</td><td>3</td><td>3</td><td>1</td></tr>
+    <tr><td>18º</td><td>+6</td><td>Aprimoramentos de Aura</td><td>4</td><td>3</td><td>3</td><td>3</td><td>1</td></tr>
+    <tr><td>19º</td><td>+6</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td></tr>
+    <tr><td>20º</td><td>+6</td><td>Característica de Juramento Sagrado</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d10 por nível de Paladino</p>
+  <p><strong>Pontos de Vida no 1º Nível:</strong> 10 + seu modificador de Constituição</p>
+  <p>
+    <strong>Pontos de Vida em níveis elevados:</strong>
+    1d10 (ou 6) + seu modificador de Constituição por nível de Paladino depois do 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Todas as armaduras, escudos</p>
+  <p><strong>Armas:</strong> Armas simples, armas marciais</p>
+  <p><strong>Ferramentas:</strong> Nenhum</p>
+  <p><strong>Testes de Resistência:</strong> Sabedoria, Carisma</p>
+  <p>
+    <strong>Perícias:</strong> Escolha duas entre
+    Atletismo, Intuição, Intimidação,
+    Medicina, Persuasão e Religião
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>Você começa com o seguinte equipamento, além do equipamento concedido pelo seu antecedente:</p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) uma arma marcial e um escudo
+      <strong>ou</strong>
+      (b) duas armas marciais
+    </li>
+    <li>
+      (a) cinco azagaias
+      <strong>ou</strong>
+      (b) qualquer arma simples corpo a corpo
+    </li>
+    <li>
+      (a) um pacote de sacerdote
+      <strong>ou</strong>
+      (b) um pacote de aventureiro
+    </li>
+    <li>
+      cota de malha e um símbolo sagrado
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Sentido Divino</h2>
+
+  <p>
+    A presença de um <strong>mal poderoso</strong> é registrada nos seus
+    sentidos como um odor nocivo, enquanto o <strong>bem poderoso</strong>
+    ressoa como música celestial nos seus ouvidos.
+  </p>
+
+  <p>
+    Com uma ação, você pode expandir sua consciência para detectar tais
+    forças. Até o final do seu próximo turno, você sabe a localização de
+    qualquer <strong>celestial, corruptor ou morto-vivo</strong> a até
+    <strong>18 metros</strong> de você que não esteja com cobertura total.
+  </p>
+
+  <p>
+    Você sabe o tipo (celestial, corruptor ou morto-vivo) de qualquer ser
+    cuja presença você sentiu, mas não sua identidade específica
+    (como o vampiro Conde Strahd von Zarovich, por exemplo).
+  </p>
+
+  <p>
+    Dentro do mesmo raio, você também detecta a presença de qualquer
+    lugar ou objeto que tenha sido <strong>consagrado ou conspurcado</strong>,
+    como pela magia <em>consagrar</em>.
+  </p>
+
+  <p>
+    Você pode usar essa característica um número de vezes igual a
+    <strong>1 + seu modificador de Carisma</strong>.
+    Quando você concluir um <strong>descanso longo</strong>, você recupera
+    todos os usos gastos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Cura pelas Mãos</h2>
+
+  <p>
+    Seu toque abençoado pode curar ferimentos. Você possui um
+    <strong>poço de poder curativo</strong> que se renova sempre que
+    você conclui um <strong>descanso longo</strong>.
+  </p>
+
+  <p>
+    Com esse poço, você pode restaurar um número total de
+    <strong>pontos de vida igual ao seu nível de paladino × 5</strong>.
+  </p>
+
+  <p>
+    Com uma ação, você pode tocar uma criatura e gastar pontos
+    desse poço para restaurar um número de pontos de vida da criatura,
+    até o máximo de pontos restantes no poço.
+  </p>
+
+  <p>
+    Alternativamente, você pode gastar <strong>5 pontos de cura</strong>
+    do seu poço para curar o alvo de uma <strong>doença</strong> ou
+    neutralizar um <strong>veneno</strong> que o esteja afetando.
+    Você pode curar múltiplas doenças e neutralizar múltiplos venenos
+    com um único uso de Cura pelas Mãos, gastando pontos de cura
+    separadamente para cada efeito.
+  </p>
+
+  <p>
+    Essa característica não gera nenhum efeito em
+    <strong>mortos-vivos</strong> e <strong>constructos</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Estilo de Luta</h2>
+
+  <p>
+    No <strong>2º nível</strong>, você adota um estilo de combate particular
+    que se torna sua especialidade. Escolha uma das opções a seguir.
+    Você não pode escolher o mesmo Estilo de Luta mais de uma vez,
+    mesmo se puder escolher novamente.
+  </p>
+
+  <h3>Combate com Armas Grandes</h3>
+  <p>
+    Quando você rolar um <strong>1 ou 2</strong> em um dado de dano de um
+    ataque com arma corpo a corpo que esteja empunhando com
+    <strong>duas mãos</strong>, você pode rolar o dado novamente e usar
+    o novo resultado, mesmo que seja 1 ou 2.
+  </p>
+  <p>
+    A arma deve possuir a propriedade <strong>duas mãos</strong> ou
+    <strong>versátil</strong> para receber esse benefício.
+  </p>
+
+  <h3>Defesa</h3>
+  <p>
+    Enquanto estiver usando armadura, você recebe
+    <strong>+1 de bônus na Classe de Armadura (CA)</strong>.
+  </p>
+
+  <h3>Duelismo</h3>
+  <p>
+    Quando você empunhar uma arma corpo a corpo em
+    <strong>uma mão</strong> e nenhuma outra arma, você recebe
+    <strong>+2 de bônus nas jogadas de dano</strong> com essa arma.
+  </p>
+
+  <h3>Proteção</h3>
+  <p>
+    Quando uma criatura que você possa ver atacar um alvo que esteja
+    a até <strong>1,5 metro</strong> de você, você pode usar sua
+    <strong>reação</strong> para impor <strong>desvantagem</strong> na
+    jogada de ataque da criatura.
+  </p>
+  <p>
+    Para usar esse estilo, você deve estar empunhando um
+    <strong>escudo</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Conjuração</h2>
+
+  <p>
+    Através de sua devoção e do poder de seus juramentos sagrados,
+    você é capaz de canalizar <strong>magia divina</strong> para realizar
+    feitos sobrenaturais. Diferente de conjuradores arcanos, a magia
+    do paladino flui de sua <strong>fé inabalável</strong> e de sua
+    determinação em seguir seus votos.
+  </p>
+
+  <h3>Foco de Conjuração</h3>
+  <p>
+    Você pode usar um <strong>símbolo sagrado</strong> como foco de conjuração
+    para suas magias de paladino. O símbolo pode ser exibido visivelmente,
+    empunhado ou estampado em um escudo.
+  </p>
+
+  <h3>Preparando e Conjurando Magias</h3>
+  <p>
+    A tabela do Paladino mostra quantos espaços de magia você possui para
+    conjurar suas magias de paladino. Para conjurar uma magia de paladino
+    de 1º nível ou superior, você deve gastar um espaço de magia do nível
+    da magia ou superior. Você recupera todos os espaços de magia gastos
+    quando termina um descanso longo.
+  </p>
+
+  <p>
+    Você prepara a lista de magias de paladino que estão disponíveis para
+    você conjurar, escolhendo-as da
+    <a href="../magias.html">Lista de magias de Paladino</a>.
+    Quando fizer isso, escolha um número de magias igual ao seu
+    <strong>modificador de Carisma + metade do seu nível de paladino</strong>,
+    arredondado para baixo (mínimo de uma magia).
+  </p>
+
+  <p>
+    As magias devem ser de um nível para o qual você possua espaços de magia.
+    Você pode mudar sua lista de magias preparadas quando terminar
+    um descanso longo.
+  </p>
+
+  <h3>Habilidade de Conjuração</h3>
+  <p>
+    <strong>Carisma</strong> é a sua habilidade de conjuração para suas magias
+    de paladino, pois o poder de sua fé e a força de seus juramentos
+    alimentam seus efeitos mágicos. Você usa seu modificador de Carisma
+    sempre que uma magia de paladino fizer referência à sua habilidade
+    de conjuração.
+  </p>
+
+  <p>
+    <strong>CD para teste de resistência</strong> = 8 + seu bônus de proficiência
+    + seu modificador de Carisma
+  </p>
+
+  <p>
+    <strong>Modificador de ataque de magia</strong> = seu bônus de proficiência
+    + seu modificador de Carisma
+  </p>
+</div>
+
+<div class="section">
+  <h2>Destruição Divina</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, quando você atingir uma criatura
+    com um ataque corpo a corpo com arma, você pode gastar um
+    <strong>espaço de magia de qualquer classe</strong> para causar
+    <strong>dano radiante</strong> adicional ao alvo, além do dano normal da arma.
+  </p>
+
+  <p>
+    O dano extra é de <strong>2d8</strong> para um espaço de magia de
+    <strong>1º nível</strong>, mais <strong>1d8</strong> para cada espaço
+    de magia acima do 1º, até o máximo de <strong>5d8</strong>.
+  </p>
+
+  <p>
+    O dano aumenta em <strong>1d8</strong> se o alvo for um
+    <strong>corruptor</strong> ou um <strong>morto-vivo</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Saúde Divina</h2>
+
+  <p>
+    No <strong>3º nível</strong>, a magia divina flui através de você,
+    tornando você <strong>imune a doenças</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Juramento Sagrado</h2>
+
+  <p>
+    No 3º nível, você escolhe o juramento que seguirá.
+    Essa escolha concede características no 3º nível e
+    novamente nos níveis 7º, 15º e 20º.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Juramentos</h2>
+
+  <div class="subclasse-container">
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/04/mtg-sunblade-elf.jpg" alt="Antigos">
+      <h3>Antigos</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static1.cbrimages.com/wordpress/wp-content/uploads/2021/04/Paladin-Oath-of-Conquest.jpg" alt="Conquista">
+      <h3>Conquista</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/04/paladin-sacred-oath.png" alt="Coroa">
+      <h3>Coroa</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://qph.fs.quoracdn.net/main-qimg-d80b574c5b1da23d47f0f2c3a72f4cae" alt="Devoção">
+      <h3>Devoção</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://sagegamers.com/wp-content/uploads/2022/07/122989a61500c5d69613fb34daff0e3c.jpg" alt="Glória">
+      <h3>Glória</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/04/mtg-anointer-of-champions.jpg" alt="Redenção">
+      <h3>Redenção</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://assets.moxfield.net/cards/card-bR5W0-art_crop.webp" alt="Vingança">
+      <h3>Vingança</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/09/ardenvale-paladin-by-volkan-baga.jpg" alt="Observadores">
+      <h3>Observadores</h3>
+    </button>
+    
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/04/mtg-forsworn-paladin.jpg" alt="Quebrador de Juramento">
+      <h3>Quebrador de Juramento</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado Arquivado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://i.pinimg.com/236x/7b/fe/63/7bfe6343dd7928e03b437643ab5218c5.jpg" alt="Traição">
+      <h3>Traição</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTi91qW1pX-sX2ujvBLmNsgCiLWyDDA7WfkYw&s" alt="Redenção">
+      <h3>Redenção</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2022/01/Paladin-Dungeons-and-Dragons.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Observadores">
+      <h3>Observadores</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.gmbinder.com/images/qV1154L.jpg" alt="Heroísmo">
+      <h3>Heroísmo</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Canalizar Poder Divino (Opcional)</h2>
+
+  <p>
+    Também no 3º nível, você pode gastar um uso de seu
+    <strong>Canalizar Divindade</strong> para alimentar suas magias.
+    Como uma ação bônus, você toca seu símbolo sagrado,
+    profere uma prece e recupera um espaço de magia gasto,
+    cujo nível não pode ser superior à metade do seu bônus
+    de proficiência (arredondado para cima).
+  </p>
+
+  <p>
+    O número de vezes que você pode usar essa característica
+    depende do nível que você alcançou nesta classe:
+    no 3º nível, uma vez; no 7º nível, duas vezes; e no 15º nível,
+    três vezes.
+  </p>
+
+  <p>
+    Você recupera todos os usos gastos quando termina
+    um descanso longo.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Versatilidade Marcial (Opcional)</h2>
+
+  <p>
+    Sempre que você alcançar um nível nesta classe que
+    conceda a característica <strong>Aprimoramento no Valor
+    de Habilidade</strong>, você pode substituir um Estilo de
+    Combate que você conhece por outro Estilo de Combate
+    disponível para paladinos. Essa substituição representa
+    uma mudança de foco em sua prática marcial.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Extra</h2>
+
+  <p>
+    A partir do 5° nível, você pode atacar duas vezes, ao invés
+    de uma, sempre que você realizar a ação de Ataque no seu
+    turno.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Aura de Proteção</h2>
+
+  <p>
+    A partir do 6° nível, sempre que você ou uma criatura
+    amigável a até 3 metros de você tiver que fazer um teste
+    de resistência, aquela criatura ganha um bônus no seu
+    teste de proteção igual a seu modificador de Carisma (com
+    um bônus mínimo de +1). Você deve estar consciente para
+    garantir esse bônus.
+  </p>
+
+  <p>
+    No 18° nível, o alcance dessa aura aumenta para 9
+    metros.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Aura de Coragem</h2>
+
+  <p>
+    Começando no 10° nível, você e as criaturas amigáveis
+    dentro de um raio de 3 metros de você não podem ser
+    amedrontadas enquanto você estiver consciente.
+  </p>
+
+  <p>
+    No 18° nível, o alcance dessa aura aumenta para 9
+    metros.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Destruição Divina Aprimorada</h2>
+
+  <p>
+    No 11° nível, você fica tão infundido com o poder da
+    justiça que todos os seus ataques corpo-a-corpo com arma
+    carregam poder divino neles. Sempre que você atingir
+    uma criatura com um ataque corpo-a-corpo, a criatura
+    sofre 1d8 de dano radiante extra. Se você também usar
+    sua Destruição Divina em um ataque, você adiciona esse
+    dano ao dano extra da sua Destruição Divina.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Toque Purificador</h2>
+
+  <p>
+    A partir do 14° nível, você pode usar sua ação para
+    terminar uma magia em si mesmo ou em uma criatura
+    voluntária que você tocar.
+  </p>
+
+  <p>
+    Você pode usar essa característica um número de
+    vezes igual a seu modificador de Carisma (mínimo uma
+    vez). Você recupera os usos gastos quando termina um
+    descanso longo.
+  </p>
+</div>
+`;
+
+const paladinoOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(paladino5e, true));
+btnOne.addEventListener("click", () => swapContent(paladinoOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = paladino5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+
+document.getElementById("link-ancora").addEventListener("click", function(e){
+  e.preventDefault(); // evita o comportamento padrão
+  const destino = document.getElementById("destino");
+  
+  destino.scrollIntoView({
+    behavior: "smooth", 
+    block: "start"      
+  });
+});
+</script>
+
+</body>
+</html>

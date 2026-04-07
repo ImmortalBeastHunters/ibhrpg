@@ -1,0 +1,313 @@
+{
+"raca": [
+{
+  "name": "Aarakocra",
+  "english_name": "Aarakocra",
+  "source": "Elemental Evil Player's Companion",
+  "page": 5,
+  "size": "M",
+  "speed": {
+    "walk": 25,
+    "fly": 50
+  },
+  "ability": {
+    "dex": 2,
+    "wis": 1
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Os aarakocra atingem a maturidade aos 3 anos de idade. Em comparação com humanos, raramente vivem além dos 30 anos, como chamas breves carregadas pelos ventos."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "A maioria dos aarakocra é bondosa e raramente se prende aos extremos da lei ou do caos. Líderes tribais e guerreiros tendem à ordem, enquanto exploradores e aventureiros frequentemente seguem os ventos do caos."
+      ]
+    },
+    {
+      "name": "Voo",
+      "type": "entries",
+      "entries": [
+        "Você possui deslocamento de voo de 15 metros (50 pés). Para usar esta habilidade, você não pode estar vestindo armadura média ou pesada."
+      ]
+    },
+    {
+      "name": "Garras",
+      "type": "entries",
+      "entries": [
+        "Você é proficiente com seus ataques desarmados, que causam 1d4 de dano cortante ao atingir, como as garras de uma ave de rapina."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum, Aarakocra e Auran, a língua sussurrada pelos ventos elementais."
+      ]
+    },
+    {
+      "name": "Descrição",
+      "type": "entries",
+      "entries": [
+        "Humanoides com traços de pássaro, incluindo asas, bico e penas, capazes de voar com facilidade. Originários de montanhas e regiões isoladas, vivem em tribos que prezam liberdade e conexão com a natureza. Ágeis e atentos, são excelentes exploradores, mensageiros e guerreiros, usando sua visão aguçada e velocidade para proteger suas terras e auxiliar aliados."
+      ]
+    },
+    {
+      "name": "Descrição Detalhada",
+      "type": "entries",
+      "entries": [
+        "Os aarakocra são humanoides com traços de pássaro, possuindo asas fortes, bico afiado e plumagem que varia em cores vibrantes. Capazes de voo natural, eles exploram os céus com facilidade, aproveitando correntes de ar e penhascos para se deslocarem rapidamente. Originários de regiões montanhosas, planaltos e territórios isolados, vivem em pequenas tribos que valorizam a liberdade, a observação do ambiente e a harmonia com a natureza. Dotados de sentidos aguçados, os aarakocra são excelentes mensageiros e exploradores, capazes de perceber perigos à distância e se mover com grande agilidade. Muitos se tornam caçadores ou guerreiros, utilizando sua velocidade e visão superior para proteger suas comunidades ou auxiliar aliados. Culturalmente, prezam pelo voo, pelo respeito às forças da natureza e pela disciplina nas tradições de suas tribos, sendo conhecidos por sua lealdade, coragem e espírito independente. Se quiser, posso fazer uma versão ainda mais completa, como uma entrada detalhada de bestiário de D&D, com subtítulos de “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”. Isso deixaria parecida com uma página oficial de D&D. Quer que eu faça?"
+      ]
+    },
+    {
+      "name": "Traços Raciais",
+      "type": "entries",
+      "entries": [
+        "+2 Destreza, +1 Sabedoria, Voo, Garras"
+      ]
+    }
+  ]
+},
+{
+  "name": "Aasimar",
+  "source": "Volo's Guide for Monster",
+  "page": 104,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "cha": 2
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Aasimar amadurecem na mesma velocidade que os humanos, mas podem viver até 160 anos."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "Imbuídos de poder celestial, a maioria dos aasimar é boa. Aasimar excluídos são geralmente neutros ou até malignos."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Abençoados com uma alma radiante, sua visão corta facilmente a escuridão. Você pode ver em luz fraca a até 60 pés como se fosse luz plena, e na escuridão como se fosse luz fraca. Você não consegue discernir cores na escuridão, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Resistência Celestial",
+      "type": "entries",
+      "entries": [
+        "Você tem resistência a dano necrótico e dano radiante."
+      ]
+    },
+    {
+      "name": "Mãos Curativas",
+      "type": "entries",
+      "entries": [
+        "Como uma ação, você pode tocar uma criatura e fazê-la recuperar um número de pontos de vida igual ao seu nível. Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso longo."
+      ]
+    },
+    {
+      "name": "Portador de Luz",
+      "type": "entries",
+      "entries": [
+        "Você conhece o truque {@spell light}. Carisma é sua habilidade de conjuração para ele."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Celestial."
+      ]
+    },
+    {
+      "name": "Descrição",
+      "type": "entries",
+      "entries": [
+        "Humanoides com herança celestial, marcados por uma conexão divina que se manifesta em traços luminosos, aura brilhante e, em alguns casos, asas etéreas. Guiados por uma forte inclinação para o bem, atuam como campeões, mensageiros e protetores, inspirando esperança e justiça onde quer que vão."
+      ]
+    },
+    {
+      "name": "Descrição Detalhada",
+      "type": "entries",
+      "entries": [
+        "Os aasimar são humanoides tocados por energia celestial, descendentes de influências divinas que se manifestam em sua aparência e essência espiritual. Sua fisionomia costuma apresentar traços marcantes como olhos luminosos, pele com reflexos sutis de luz e, em alguns casos, marcas ou brilhos que indicam sua natureza sagrada. Em momentos de grande poder ou emoção, alguns aasimar podem manifestar asas etéreas de luz, refletindo sua conexão com entidades superiores.\n\nNaturalmente inclinados ao bem, os aasimar possuem um senso elevado de justiça, compaixão e responsabilidade, embora sua moralidade possa variar conforme sua criação e experiências. Muitos sentem um chamado interno, guiado por uma entidade celestial, que os direciona a proteger os inocentes, combater o mal e restaurar o equilíbrio. Outros podem lutar contra esse chamado, buscando seu próprio caminho além do destino que lhes foi atribuído.\n\nNa sociedade, aasimar frequentemente assumem papéis de liderança espiritual, guardiões, paladinos, clérigos ou aventureiros que atuam como agentes do bem. Sua presença tende a inspirar confiança e esperança nos aliados, enquanto sua conexão divina pode causar admiração ou até temor em aqueles que desconhecem sua verdadeira natureza. São resilientes, determinados e frequentemente movidos por um propósito maior que transcende interesses pessoais.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+      ]
+    },
+    {
+      "name": "Traços Raciais",
+      "type": "entries",
+      "entries": [
+        "+2 Carisma, +1 Sabedoria, Resistência a dano necrótico e radiante, Visão no escuro, Cura celestial, Manifestação divina"
+      ]
+    }
+  ],
+  "subraces": [
+    {
+      "name": "Caído",
+      "ability": {
+        "str": 1
+      },
+      "entries": [
+        {
+          "name": "Manto Necrótico",
+          "type": "entries",
+          "entries": [
+            "A partir do 3º nível, você pode usar sua ação para liberar a energia divina dentro de si, fazendo seus olhos se tornarem poços de escuridão e duas asas esqueléticas e fantasmais brotarem das suas costas. Imediatamente, outras criaturas em um raio de 10 pés que possam vê-lo devem suceder em um teste de resistência de Carisma (CD 8 + seu bônus de proficiência + modificador de Carisma) ou ficar {@condition frightened} até o final do seu próximo turno.",
+            "Sua transformação dura 1 minuto ou até você encerrá-la como uma ação bônus. Durante ela, uma vez em cada um de seus turnos, você pode causar dano necrótico extra a um alvo quando causar dano com um ataque ou feitiço. O dano necrótico extra é igual ao seu nível.",
+            "Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso longo."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Protetor",
+      "ability": {
+        "wis": 1
+      },
+      "entries": [
+        {
+          "name": "Alma Radiante",
+          "type": "entries",
+          "entries": [
+            "A partir do 3º nível, você pode usar sua ação para liberar a energia divina dentro de si, fazendo seus olhos brilharem e duas asas luminosas e incorpóreas brotarem das suas costas.",
+            "Sua transformação dura 1 minuto ou até você encerrá-la como uma ação bônus. Durante ela, você possui velocidade de voo de 30 pés, e uma vez em cada um de seus turnos, pode causar dano radiante extra a um alvo ao causar dano com um ataque ou feitiço. O dano radiante extra é igual ao seu nível.",
+            "Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso longo."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Flagelo",
+      "ability": {
+        "con": 1
+      },
+      "entries": [
+        {
+          "name": "Consumo Radiante",
+          "type": "entries",
+          "entries": [
+            "A partir do 3º nível, você pode usar sua ação para liberar a energia divina dentro de si, fazendo uma luz abrasadora irradiar de você, saindo de seus olhos e boca, ameaçando queimá-lo.",
+            "Sua transformação dura 1 minuto ou até você encerrá-la como uma ação bônus. Durante ela, você emite luz intensa em um raio de 10 pés e luz fraca por mais 10 pés, e ao final de cada um dos seus turnos, você e cada criatura em um raio de 10 pés recebem dano radiante igual à metade do seu nível (arredondado para cima). Além disso, uma vez em cada um de seus turnos, você pode causar dano radiante extra a um alvo ao causar dano com um ataque ou feitiço. O dano radiante extra é igual ao seu nível.",
+            "Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso longo."
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "name": "Aetherborn",
+  "english_name": "Aetherborn",
+  "source": "PSK",
+  "page": 17,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "cha": 2,
+    "choose": [
+      {
+        "from": [
+          "str",
+          "dex",
+          "con",
+          "int",
+          "wis"
+        ],
+        "count": 2
+      }
+    ]
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Aetherborn surgem já como adultos e vivem apenas alguns poucos anos."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "Como regra, Aetherborn são guiados pelo hedonismo e pelo interesse próprio, sendo no máximo neutros."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Graças à sua herança, você possui visão superior em condições de pouca luz e escuridão. Você enxerga na penumbra a até 18 metros (60 pés) como se fosse luz plena, e na escuridão como se fosse penumbra. Você não consegue distinguir cores na escuridão, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Nascido do Éter",
+      "type": "entries",
+      "entries": [
+        "Você possui resistência a dano necrótico."
+      ]
+    },
+    {
+      "name": "Ameaçador",
+      "type": "entries",
+      "entries": [
+        "Você tem proficiência na perícia Intimidação."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e dois outros idiomas de sua escolha."
+      ]
+    },
+    {
+      "name": "Descrição",
+      "type": "entries",
+      "entries": [
+        "Seres nascidos de uma essência etérea e efêmera, os aetherborn carregam uma ligação profunda com forças místicas que definem sua existência. Envoltos por uma presença sombria e luminosa ao mesmo tempo, manifestam uma aura sutil, muitas vezes acompanhada por traços que lembram névoa, sombras vivas ou brilhos internos."
+      ]
+    },
+    {
+      "name": "Descrição Detalhada",
+      "type": "entries",
+      "entries": [
+        "Os aetherborn são entidades humanoides formadas a partir de energias arcanas condensadas, frequentemente associadas a fenômenos místicos ou planos de existência superiores. Sua aparência é única e variável, mas geralmente apresenta características como pele com tonalidades incomuns (negro profundo, violeta, azul-escuro), olhos brilhantes e um leve fluxo etéreo ao seu redor, como se estivessem parcialmente desfocados da realidade.\n\nDiferente de outras raças, os aetherborn não possuem uma expectativa de vida natural prolongada; sua existência é limitada e frequentemente instável, o que os leva a viver com intensidade e propósito. Muitos desenvolvem uma forte consciência de identidade e significado, buscando deixar um legado antes que sua essência se dissipe.\n\nEm termos de personalidade, os aetherborn tendem a ser introspectivos, estratégicos e profundamente conscientes do tempo. Alguns abraçam sua natureza efêmera com serenidade, enquanto outros lutam contra a inevitabilidade de sua dissolução, dedicando-se a estudos arcanos, alianças poderosas ou feitos notáveis.\n\nNa sociedade, os aetherborn são frequentemente encontrados em papéis que envolvem magia, intriga, comércio ou liderança discreta. Sua natureza misteriosa pode inspirar respeito, curiosidade ou até desconfiança em outras raças. Ainda assim, são indivíduos adaptáveis, inteligentes e movidos por objetivos claros, muitas vezes buscando significado em poder, conhecimento ou influência.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+      ]
+    },
+    {
+      "name": "Traços Raciais",
+      "type": "entries",
+      "entries": [
+        "+2 Carisma, +1 Constituição, Resistência a dano necrótico, Visão no escuro, Essência etérea, Drenagem vital"
+      ]
+    },
+    {
+      "type": "inset",
+      "name": "Dádiva dos Aetherborn",
+      "entries": [
+        "Um Aetherborn desconhecido, buscando desesperadamente uma forma de estender sua curta vida, descobriu um processo de transformação que prolongava sua existência — concedendo-lhe a capacidade de se alimentar da essência vital de outros seres. Desde então, outros Aetherborn aprenderam e realizaram essa transformação monstruosa, e aqueles com essa \"dádiva\" tornaram-se uma pequena minoria dentro de uma população já reduzida.",
+        "Um Aetherborn agraciado possui a habilidade de drenar a essência vital de outros seres. De forma semelhante à transferência de calor entre objetos, ele precisa apenas tocar outro ser vivo com uma mão com garras para extrair essa essência, sustentando sua própria existência enquanto enfraquece sua vítima.",
+        "Para muitos Aetherborn, que vivem em busca de prazer e gratificação imediata, os conceitos de \"querer\" e \"precisar\" são praticamente iguais. Porém, aqueles com essa dádiva compreendem o verdadeiro significado de necessidade, pois desenvolvem uma fome por essência vital que supera qualquer desejo anterior. Um Aetherborn que se abstém dessa alimentação se deteriora ainda mais rapidamente do que os demais, sofrendo uma agonia indescritível causada pela privação de energia vital.",
+        "A critério do Mestre, um personagem Aetherborn pode pesquisar métodos para alcançar essa sombria \"dádiva\". O processo é semelhante à criação de um item mágico raro (veja \"Inventando e Fabricando Dispositivos\" anteriormente neste documento). Contudo, em vez de éter, o processo requer uma variedade de unguentos raros e ingredientes incomuns que compõem o custo da pesquisa e da transformação.",
+        "Um Aetherborn com essa dádiva adquire a habilidade Drenar Vida: um ataque natural que causa 1d6 de dano necrótico e restaura a mesma quantidade de pontos de vida ao Aetherborn. No entanto, se o Aetherborn passar 7 dias sem causar esse dano, seu máximo de pontos de vida é reduzido em 1d6 por semana. Essa redução não pode ser removida até que o Aetherborn utilize sua habilidade Drenar Vida e complete um descanso longo."
+      ]
+    }
+  ]
+}
+]
+}

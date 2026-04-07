@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monge • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://i0.wp.com/dungeonmister.com/wp-content/uploads/2024/07/Dragonborn-monk-2024.jpg?fit=1159%2C650&amp;ssl=1" alt="Monge">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const monge5e = `
+<h1>Monge</h1>
+<div class="subtitle">Classe Marcial • D&D 5e</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Monges são mestres do <strong>corpo e da mente</strong>, guerreiros que
+    transformam disciplina espiritual e treinamento físico rigoroso em uma
+    forma de combate mortal. Diferente de combatentes que dependem de armaduras
+    pesadas ou armas elaboradas, o monge confia em velocidade, precisão e no
+    domínio da energia interior conhecida como <em>ki</em>.
+  </p>
+
+  <p>
+    Muitos monges treinam em mosteiros isolados, dedicando suas vidas à
+    meditação, ao aperfeiçoamento corporal e à busca do equilíbrio. Outros
+    levam seus ensinamentos para o mundo, atuando como andarilhos, protetores
+    ou buscadores de iluminação através da experiência e do conflito.
+  </p>
+
+  <p>
+    Ágeis e focados, monges enfrentam seus inimigos com golpes rápidos,
+    movimentos fluidos e reflexos sobrenaturais. Onde a batalha exige controle,
+    autocontrole e harmonia entre força e espírito, o monge se destaca —
+    transformando <strong>disciplina em poder</strong> e equilíbrio em vitória.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Monge</h2>
+
+  <div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus de Prof.</th>
+      <th>Artes Marciais</th>
+      <th>Pontos de Chi</th>
+      <th>Deslocamento sem Armadura</th>
+      <th>Características</th>
+    </tr>
+
+    <tr><td>1°</td><td>+2</td><td>1d4</td><td>—</td><td>—</td><td>Defesa sem Armadura, Artes Marciais</td></tr>
+    <tr><td>2°</td><td>+2</td><td>1d4</td><td>2</td><td>+3m</td><td>Chi, Movimento sem Armadura</td></tr>
+    <tr><td>3°</td><td>+2</td><td>1d4</td><td>3</td><td>+3m</td><td>Tradição Monástica, Defletir Projéteis</td></tr>
+    <tr><td>4°</td><td>+2</td><td>1d4</td><td>4</td><td>+3m</td><td>Incremento no Valor de Habilidade, Queda Lenta</td></tr>
+    <tr><td>5°</td><td>+3</td><td>1d6</td><td>5</td><td>+3m</td><td>Ataque Extra, Ataque Atordoante</td></tr>
+    <tr><td>6°</td><td>+3</td><td>1d6</td><td>6</td><td>+4,5m</td><td>Golpes de Chi, Característica de Tradição Monástica</td></tr>
+    <tr><td>7°</td><td>+3</td><td>1d6</td><td>7</td><td>+4,5m</td><td>Evasão, Mente Tranquila</td></tr>
+    <tr><td>8°</td><td>+3</td><td>1d6</td><td>8</td><td>+4,5m</td><td>Incremento no Valor de Habilidade</td></tr>
+    <tr><td>9°</td><td>+4</td><td>1d6</td><td>9</td><td>+4,5m</td><td>Aprimoramento de Movimento sem Armadura</td></tr>
+    <tr><td>10°</td><td>+4</td><td>1d6</td><td>10</td><td>+6m</td><td>Pureza Corporal</td></tr>
+    <tr><td>11°</td><td>+4</td><td>1d8</td><td>11</td><td>+6m</td><td>Característica de Tradição Monástica</td></tr>
+    <tr><td>12°</td><td>+4</td><td>1d8</td><td>12</td><td>+6m</td><td>Incremento no Valor de Habilidade</td></tr>
+    <tr><td>13°</td><td>+5</td><td>1d8</td><td>13</td><td>+6m</td><td>Idiomas do Sol e da Lua</td></tr>
+    <tr><td>14°</td><td>+5</td><td>1d8</td><td>14</td><td>+7,5m</td><td>Alma de Diamante</td></tr>
+    <tr><td>15°</td><td>+5</td><td>1d8</td><td>15</td><td>+7,5m</td><td>Corpo Atemporal</td></tr>
+    <tr><td>16°</td><td>+5</td><td>1d8</td><td>16</td><td>+7,5m</td><td>Incremento no Valor de Habilidade</td></tr>
+    <tr><td>17°</td><td>+6</td><td>1d10</td><td>17</td><td>+7,5m</td><td>Característica de Tradição Monástica</td></tr>
+    <tr><td>18°</td><td>+6</td><td>1d10</td><td>18</td><td>+9m</td><td>Corpo Vazio</td></tr>
+    <tr><td>19°</td><td>+6</td><td>1d10</td><td>19</td><td>+9m</td><td>Incremento no Valor de Habilidade</td></tr>
+    <tr><td>20°</td><td>+6</td><td>1d10</td><td>20</td><td>+9m</td><td>Auto Aperfeiçoamento</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d8 por nível de Monge</p>
+  <p>
+    <strong>Pontos de Vida no 1º Nível:</strong>
+    8 + seu modificador de Constituição
+  </p>
+  <p>
+    <strong>Pontos de Vida nos Níveis Seguintes:</strong>
+    1d8 (ou 5) + seu modificador de Constituição por nível de Monge após o 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Nenhuma</p>
+  <p>
+    <strong>Armas:</strong> Armas simples, espadas curtas
+  </p>
+  <p>
+    <strong>Ferramentas:</strong>
+    Escolha um tipo de ferramenta de artesão ou um instrumento musical
+  </p>
+  <p>
+    <strong>Testes de Resistência:</strong>
+    Força, Destreza
+  </p>
+  <p>
+    <strong>Perícias:</strong>
+    Escolha duas dentre Acrobacia, Atletismo, Furtividade, História, Intuição e Religião
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>
+    Você começa com o seguinte equipamento, além do equipamento concedido pelo
+    seu antecedente:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) uma espada curta
+      <strong>ou</strong>
+      (b) qualquer arma simples
+    </li>
+    <li>
+      (a) um pacote de explorador
+      <strong>ou</strong>
+      (b) um pacote de aventureiro
+    </li>
+    <li>
+      10 dardos
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Defesa sem Armadura</h2>
+
+  <p>
+    A partir do <strong>1º nível</strong>, quando você não estiver vestindo
+    nenhuma armadura nem empunhando um escudo, sua
+    <strong>Classe de Armadura</strong> será
+    <strong>10 + seu modificador de Destreza + seu modificador de Sabedoria</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Artes Marciais</h2>
+
+  <p>
+    No <strong>1º nível</strong>, sua prática nas artes marciais concede a você
+    maestria nos estilos de combate que utilizam golpes desarmados e
+    <strong>armas de monge</strong>, que são as espadas curtas e quaisquer armas
+    simples corpo a corpo que não tenham a propriedade
+    <em>duas mãos</em> ou <em>pesada</em>.
+  </p>
+
+  <p>
+    Você ganha os seguintes benefícios enquanto estiver desarmado ou empunhando
+    uma arma de monge e não estiver vestindo nenhuma armadura nem empunhando um
+    escudo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Você pode usar <strong>Destreza</strong> ao invés de Força para as jogadas
+      de ataque e dano dos seus golpes desarmados e de suas armas de monge.
+    </li>
+    <li>
+      Você pode rolar um <strong>d4</strong> no lugar do dano normal dos seus
+      golpes desarmados e armas de monge. Esse dado muda à medida que você adquire
+      níveis de monge, como mostrado na coluna <strong>Artes Marciais</strong> na
+      tabela <em>O Monge</em>.
+    </li>
+    <li>
+      Quando você usa a ação de <strong>Ataque</strong> com um golpe desarmado ou
+      uma arma de monge no seu turno, você pode realizar um golpe desarmado como
+      <strong>ação bônus</strong>, desde que ainda não tenha usado uma ação bônus
+      nesse turno.
+    </li>
+  </ul>
+
+  <p>
+    Determinados monastérios utilizam formas especializadas de armas de monge.
+    Por exemplo, você pode usar uma clava feita por dois pedaços de madeira
+    conectados por uma pequena corrente (chamada de <em>nunchaku</em>) ou uma
+    foice com uma lâmina fina incomum (chamada de <em>kama</em>). Qualquer que
+    seja o nome usado, você pode utilizar as estatísticas de jogo apresentadas
+    para as armas no Capítulo 5.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Chi</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, seu treinamento permitiu que você
+    controlasse a energia mística conhecida como <strong>chi</strong>. Seu acesso
+    a essa energia é representado por um número de <strong>pontos de chi</strong>.
+    Seu nível de monge determina o número de pontos que você possui, conforme
+    mostrado na coluna <em>Pontos de Chi</em> da tabela <em>O Monge</em>.
+  </p>
+
+  <p>
+    Você pode gastar esses pontos para abastecer diversas características de chi.
+    Você começa conhecendo três dessas características:
+    <strong>Rajada de Golpes</strong>, <strong>Defesa Paciente</strong> e
+    <strong>Passo do Vento</strong>. Você aprende novas características de chi à
+    medida que adquire níveis nessa classe.
+  </p>
+
+  <p>
+    Quando você gasta um ponto de chi, ele se torna indisponível até que você
+    termine um <strong>descanso curto ou longo</strong>. Ao final do descanso,
+    todos os pontos de chi gastos retornam para você. Para recuperar seus pontos
+    de chi, você deve passar pelo menos <strong>30 minutos do descanso meditando</strong>.
+  </p>
+
+  <p>
+    Algumas características de chi exigem que o alvo realize um
+    <strong>teste de resistência</strong> para resistir aos seus efeitos. A
+    Classe de Dificuldade desse teste é calculada da seguinte forma:
+  </p>
+
+  <p>
+    <strong>CD de resistência de Chi = 8 + seu bônus de proficiência + seu modificador de Sabedoria</strong>
+  </p>
+
+  <br>
+
+  <h3>Rajada de Golpes</h3>
+  <p>
+    Imediatamente após realizar a ação de <strong>Ataque</strong> no seu turno,
+    você pode gastar <strong>1 ponto de chi</strong> para realizar
+    <strong>dois golpes desarmados</strong> como uma <strong>ação bônus</strong>.
+  </p>
+
+  <br>
+
+  <h3>Defesa Paciente</h3>
+  <p>
+    Você pode gastar <strong>1 ponto de chi</strong> para realizar a ação de
+    <strong>Esquivar</strong> como uma <strong>ação bônus</strong> no seu turno.
+  </p>
+
+  <br>
+
+  <h3>Passo do Vento</h3>
+  <p>
+    Você pode gastar <strong>1 ponto de chi</strong> para realizar a ação de
+    <strong>Desengajar</strong> ou <strong>Disparada</strong> como uma
+    <strong>ação bônus</strong> no seu turno. Além disso, sua distância de salto
+    é <strong>dobrada</strong> nesse turno.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Arma Dedicada (Opcional)</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, você treina para usar uma variedade
+    maior de armas como <strong>armas de monge</strong>, não se limitando apenas
+    a armas simples corpo-a-corpo e espadas curtas. Sempre que você termina um
+    <strong>descanso curto ou longo</strong>, você pode tocar uma arma,
+    concentrar seu <strong>chi</strong> nela e, então, considerar essa arma como
+    uma <strong>arma de monge</strong> até usar essa característica novamente.
+  </p>
+
+  <p>
+    A arma escolhida deve atender aos seguintes critérios:
+  </p>
+
+  <ul class="bullet-list">
+    <li>A arma deve ser uma arma simples ou marcial.</li>
+    <li>Você deve ser proficiente com ela.</li>
+    <li>A arma não pode possuir as propriedades <strong>pesada</strong> ou
+    <strong>especial</strong>.</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Movimento sem Armadura</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, seu deslocamento aumenta em
+    <strong>3 metros</strong> enquanto você não estiver vestindo nenhuma
+    <strong>armadura</strong> nem empunhando um <strong>escudo</strong>.
+    Esse bônus aumenta conforme você alcança determinados níveis, como
+    mostrado na tabela <em>O Monge</em>.
+  </p>
+
+  <p>
+    No <strong>9º nível</strong>, você adquire a habilidade de se mover
+    através de <strong>superfícies verticais</strong> e sobre
+    <strong>líquidos</strong> durante o seu turno, sem cair durante o
+    movimento.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Tradição Monástica</h2>
+
+  <p>
+    A partir do <strong>3º nível</strong>, você escolhe uma
+    <strong>tradição monástica</strong> que representa o caminho espiritual e
+    as técnicas de combate que você aprendeu em seu monastério.
+    Essa escolha concede a você características específicas no
+    <strong>3º nível</strong> e novamente nos
+    <strong>6º, 11º</strong> e <strong>17º níveis</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Tradições</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nat1gaming.com/wp-content/uploads/2024/08/Astral-Self-Monk.jpg?fit=675%2C588&ssl=1" alt="Eu Astral">
+      <h3>Eu Astral</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://staticdelivery.nexusmods.com/mods/3474/images/thumbnails/2858/2858-1696864422-542030038.jpeg" alt="Dragão Ascendente">
+      <h3>Dragão Ascendente</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2021/03/DD-Monk-Way-of-the-Drunken-Master.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Mestre Bêbado">
+      <h3>Mestre Bêbado</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/09/12-dungeons-dragons-how-to-build-a-way-of-the-four-elements-monk.jpg" alt="Quatro Elementos">
+      <h3>Quatro Elementos</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/09/57-dungeons-dragons-how-to-build-a-way-of-the-kensei-monk-strongarm-monk-by-viktor-titov.jpg?w=1200&h=628&fit=crop" alt="Kensei">
+      <h3>Kensei</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2021/03/DD-Monk-Way-of-the-Long-Death.jpg" alt="Morte Longa">
+      <h3>Morte Longa</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/10/dungeons-dragons-how-to-build-a-way-of-mercy-monk.jpg" alt="Misericórdia">
+      <h3>Misericórdia</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/11/21-dungeons-dragons-how-to-build-a-way-of-the-open-hand-monk.jpg" alt="Mão Aberta">
+      <h3>Mão Aberta</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/08/12-dungeons-dragons-how-to-build-a-way-of-the-shadow-monk.jpg" alt="Sombra">
+      <h3>Sombra</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/11/24-dungeons-dragons-how-to-build-a-way-of-the-sun-soul-monk.jpg" alt="Alma do Sol">
+      <h3>Alma do Sol</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado Arquivado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/11/8-dragons-how-to-build-a-way-of-the-ascendant-dragon-monk.jpg" alt="Dragão Ascendente">
+      <h3>Dragão Ascendente</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://velantis.wordpress.com/wp-content/uploads/2020/01/astral-self.jpg" alt="Eu Astral">
+      <h3>Eu Astral</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://assets.tentonhammer.com/guides/attached_images/000/000/178/medium/diablo3-monk-class-guide.jpg?1468380207" alt="Kensei">
+      <h3>Kensei</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwk8sFMTNZeoanTUP_htOTfoGWvCYbSrWw2g&s    " alt="Misericórdia">
+      <h3>Misericórdia</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.belloflostsouls.net/wp-content/uploads/2016/12/unearthed-arcana-monk.jpg" alt="Tranquilidade">
+      <h3>Tranquilidade</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Defletir Projéteis</h2>
+
+  <p>
+    A partir do <strong>3º nível</strong>, você pode usar sua
+    <strong>reação</strong> para defletir ou apanhar um projétil quando
+    for atingido por um <strong>ataque de arma à distância</strong>.
+    Quando o fizer, o dano que você sofre do ataque é reduzido em
+    <strong>1d10 + seu modificador de Destreza + seu nível de monge</strong>.
+  </p>
+
+  <p>
+    Se o dano for reduzido a <strong>0</strong>, você pode apanhar o
+    projétil se ele for pequeno o suficiente para ser segurado em
+    <strong>uma mão</strong> e se você tiver, pelo menos, <strong>uma
+    mão livre</strong>.
+  </p>
+
+  <p>
+    Se você apanhar um projétil dessa forma, você pode gastar
+    <strong>1 ponto de chi</strong> para realizar um
+    <strong>ataque à distância</strong> com a arma ou munição que acabou
+    de pegar, como parte da <strong>mesma reação</strong>.
+    Você realiza esse ataque com <strong>proficiência</strong>,
+    independentemente das armas em que você é proficiente, e o projétil
+    conta como uma <strong>arma de monge</strong> para o ataque.
+    O alcance do ataque é de <strong>6/18 metros</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Energizado por Chi (Opcional)</h2>
+
+  <p>
+    A partir do <strong>3º nível</strong>, se você gastar
+    <strong>1 ponto de chi ou mais</strong> como parte da sua
+    <strong>ação</strong> no seu turno, você pode realizar
+    <strong>um ataque</strong> com um <strong>golpe desarmado</strong>
+    ou uma <strong>arma de monge</strong> como
+    <strong>ação bônus</strong> antes do final do turno.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Queda Lenta</h2>
+
+  <p>
+    A partir do <strong>4º nível</strong>, você pode usar sua
+    <strong>reação</strong> quando cair para reduzir o dano de queda
+    sofrido em um valor igual a
+    <strong>cinco vezes seu nível de monge</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Cura Acelerada (Opcional)</h2>
+
+  <p>
+    A partir do <strong>4º nível</strong>, como uma
+    <strong>ação</strong>, você pode gastar
+    <strong>2 pontos de chi</strong> e rolar um
+    <strong>dado de Artes Marciais</strong>.
+    Você recupera uma quantidade de
+    <strong>pontos de vida</strong> igual ao valor rolado
+    <strong>+ seu bônus de proficiência</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Extra</h2>
+
+  <p>
+    A partir do <strong>5º nível</strong>, sempre que você realizar a
+    <strong>ação de Ataque</strong> no seu turno, você pode atacar
+    <strong>duas vezes</strong>, em vez de apenas uma.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Atordoante</h2>
+
+  <p>
+    A partir do <strong>5º nível</strong>, você pode interferir no
+    <strong>fluxo de chi</strong> do corpo de um oponente.
+    Quando você atinge outra criatura com um
+    <strong>ataque corpo a corpo com arma</strong>, você pode gastar
+    <strong>1 ponto de chi</strong> para tentar um ataque atordoante.
+  </p>
+
+  <p>
+    O alvo deve ser bem-sucedido em um
+    <strong>teste de resistência de Constituição</strong> ou ficará
+    <strong>atordoado</strong> até o final do seu
+    <strong>próximo turno</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Mira Focada (Opcional)</h2>
+
+  <p>
+    A partir do <strong>5º nível</strong>, quando você errar uma
+    <strong>jogada de ataque</strong>, você pode gastar de
+    <strong>1 a 3 pontos de chi</strong> para aumentar o resultado da
+    jogada de ataque em <strong>+2</strong> para cada ponto de chi gasto,
+    possivelmente transformando o erro em um <strong>acerto</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Golpes de Chi</h2>
+
+  <p>
+    A partir do <strong>6º nível</strong>, seus
+    <strong>golpes desarmados</strong> passam a contar como
+    <strong>armas mágicas</strong> com o propósito de superar
+    <strong>resistência ou imunidade</strong> a ataques e danos
+    <strong>não mágicos</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Evasão</h2>
+
+  <p>
+    A partir do <strong>7º nível</strong>, você pode se esquivar
+    agilmente de <strong>certos efeitos em área</strong>, como o sopro
+    elétrico de um dragão azul ou a magia <em>bola de fogo</em>.
+  </p>
+
+  <p>
+    Quando você for alvo de um efeito que exige um
+    <strong>teste de resistência de Destreza</strong> para sofrer
+    <strong>metade do dano</strong>, você não sofre
+    <strong>dano algum</strong> se obtiver sucesso no teste, e sofre
+    apenas <strong>metade do dano</strong> se falhar.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Mente Tranquila</h2>
+
+  <p>
+    A partir do <strong>7º nível</strong>, você pode usar sua
+    <strong>ação</strong> para encerrar um efeito que esteja
+    <strong>enfeitiçando</strong> ou <strong>amedrontando</strong>
+    você.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Pureza Corporal</h2>
+
+  <p>
+    A partir do <strong>10º nível</strong>, sua maestria do
+    <strong>chi</strong> flui através de você, tornando-o
+    <strong>imune</strong> a <strong>doenças</strong> e
+    <strong>venenos</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Idiomas do Sol e da Lua</h2>
+
+  <p>
+    A partir do <strong>13º nível</strong>, você aprende a tocar o
+    <strong>chi</strong> de outras mentes, permitindo que você
+    <strong>compreenda todos os idiomas falados</strong>.
+    Além disso, qualquer criatura que possa compreender um
+    idioma é capaz de entender o que você diz.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Alma de Diamante</h2>
+
+  <p>
+    A partir do <strong>14º nível</strong>, sua maestria do
+    <strong>chi</strong> concede a você proficiência em
+    <strong>todos os testes de resistência</strong>.
+  </p>
+
+  <p>
+    Além disso, sempre que você realizar um teste de
+    resistência e falhar, você pode gastar
+    <strong>1 ponto de chi</strong> para rolar novamente e
+    ficar com o <strong>segundo resultado</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Corpo Atemporal</h2>
+
+  <p>
+    A partir do <strong>15º nível</strong>, seu
+    <strong>chi</strong> sustenta você de tal forma que você
+    não sofre os efeitos da <strong>velhice</strong> e não
+    pode envelhecer magicamente. Você ainda morrerá de
+    velhice, no entanto.
+  </p>
+
+  <p>
+    Além disso, você não precisa mais de
+    <strong>comida</strong> ou <strong>água</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Corpo Vazio</h2>
+
+  <p>
+    A partir do <strong>18º nível</strong>, você pode usar
+    sua <strong>ação</strong> para gastar
+    <strong>4 pontos de chi</strong> e ficar
+    <strong>invisível</strong> por <strong>1 minuto</strong>.
+  </p>
+
+  <p>
+    Durante esse tempo, você também adquire
+    <strong>resistência a todos os danos</strong>, exceto
+    <strong>dano de energia</strong>.
+  </p>
+
+  <p>
+    Além disso, você pode gastar 8 pontos de chi para 
+    conjurar a magia projeção astral, sem precisar de 
+    componentes materiais. Quando o fizer, você não pode 
+    levar qualquer outra criatura com você.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Auto Aperfeiçoamento</h2>
+
+  <p>
+    A partir do <strong>20º nível</strong>, quando você rolar
+    <strong>iniciativa</strong> e não tiver
+    <strong>nenhum ponto de chi restante</strong>, você
+    recupera <strong>4 pontos de chi</strong>.
+  </p>
+</div>
+`;
+
+const mongeOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(monge5e, true));
+btnOne.addEventListener("click", () => swapContent(mongeOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = monge5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

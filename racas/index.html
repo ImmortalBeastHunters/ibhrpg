@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Raças DnD</title>
+
+<!-- Tabler Icons -->
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet">
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo" onclick="goHome()">
+        <i class="ti ti-dice-5"></i>
+        <span>Raças DnD</span>
+    </div>
+
+    <div class="search-container">
+        <i class="ti ti-search"></i>
+        <input type="text" id="searchInput" placeholder="Pesquisar raça...">
+    </div>
+</header>
+
+<main id="main-content">
+    <!-- Conteúdo dinâmico vindo do JSON -->
+</main>
+
+<!-- Template de Seção (Livro) -->
+<template id="section-template">
+    <section class="book-section">
+        <div class="section-header">
+            <div class="section-title">
+                <img class="book-icon" src="">
+                <span class="book-name"></span>
+            </div>
+            <i class="ti ti-chevron-down arrow"></i>
+        </div>
+
+        <div class="cards-container"></div>
+    </section>
+</template>
+
+<!-- Template de Card -->
+<template id="card-template">
+    <div class="race-card">
+        <div class="race-image">
+            <img src="" alt="Raça">
+        </div>
+
+        <div class="race-content">
+            <h2 class="race-name"></h2>
+            <div class="race-book"></div>
+
+            <div class="race-divider"></div>
+
+            <p class="race-description"></p>
+
+            <div class="race-traits"></div>
+        </div>
+    </div>
+</template>
+
+<!-- JS -->
+<script src="js/app.js"></script>
+
+</body>
+</html>

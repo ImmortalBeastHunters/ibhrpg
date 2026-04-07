@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clérigo • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://i0.wp.com/dungeonmister.com/wp-content/uploads/2024/07/cleric633193351133534357.jpg" alt="Clérigo">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const clerigo5e = `
+    <h1>Clérigo</h1>
+    <div class="subtitle">Classe Conjuradora • D&D 5e</div>
+
+    <div class="section">
+    <h2>Descrição</h2>
+
+    <p>
+        Clérigos são os <strong>intermediários entre mortais e divindades</strong>
+        em Iccarion. Diferente de magos que estudam grimórios ou bardos que
+        moldam a realidade através da arte, clérigos canalizam o poder divino
+        para proteger, curar e punir conforme a vontade de sua divindade.
+    </p>
+
+    <p>
+        Para um clérigo, fé não é apenas crença, mas uma força ativa que
+        pode alterar o destino. Orações, rituais e sinais sagrados carregam
+        energia divina, capazes de restaurar aliados, repelir inimigos
+        ou até mesmo moldar a própria realidade conforme a vontade de seu
+        patrono celestial.
+    </p>
+
+    <p>
+        Viajantes e guardiões, clérigos são frequentemente encontrados em
+        templos sagrados, campos de batalha ou vilarejos necessitados. Onde
+        a fé precisa se tornar ação ou a esperança precisa ser restaurada,
+        um clérigo estará presente — transformando <strong>oração em poder</strong>
+        e devoção em milagres.
+    </p>
+    </div>
+
+<div class="section">
+  <h2>Progressão do Clérigo</h2>
+
+  <div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus de Prof.</th>
+      <th>Características</th>
+      <th>Truques Conhecidos</th>
+      <th>1º</th>
+      <th>2º</th>
+      <th>3º</th>
+      <th>4º</th>
+      <th>5º</th>
+      <th>6º</th>
+      <th>7º</th>
+      <th>8º</th>
+      <th>9º</th>
+    </tr>
+
+    <tr><td>1°</td><td>+2</td><td>Conjuração, Domínio Divino</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>2°</td><td>+2</td><td>Canalizar Divindade (1/descanso), Característica de Domínio Divino</td><td>3</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>3°</td><td>+2</td><td>–</td><td>3</td><td>4</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>4°</td><td>+2</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>4</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>5°</td><td>+3</td><td>Destruir Mortos-Vivos (ND 1/2)</td><td>4</td><td>4</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>6°</td><td>+3</td><td>Canalizar Divindade (2/descanso), Característica de Domínio Divino</td><td>4</td><td>4</td><td>3</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>7°</td><td>+3</td><td>–</td><td>4</td><td>4</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>8°</td><td>+3</td><td>Incremento no Valor de Habilidade, Destruir Mortos-Vivos (ND 1), Característica de Domínio Divino</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>9°</td><td>+4</td><td>–</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>10°</td><td>+4</td><td>Intervenção Divina</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>11°</td><td>+4</td><td>Destruir Mortos-Vivos (ND 2)</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>12°</td><td>+4</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>13°</td><td>+5</td><td>–</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+    <tr><td>14°</td><td>+5</td><td>Destruir Mortos-Vivos (ND 3)</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+    <tr><td>15°</td><td>+5</td><td>–</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+    <tr><td>16°</td><td>+5</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+    <tr><td>17°</td><td>+6</td><td>Destruir Mortos-Vivos (ND 4), Característica de Domínio Divino</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>18°</td><td>+6</td><td>Canalizar Divindade (3/descanso)</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>19°</td><td>+6</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>20°</td><td>+6</td><td>Aprimoramento de Intervenção Divina</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d8 por nível de Clérigo</p>
+  <p><strong>Pontos de Vida no 1º Nível:</strong> 8 + seu modificador de Constituição</p>
+  <p>
+    <strong>Pontos de Vida nos Níveis Seguintes:</strong>
+    1d8 (ou 5) + seu modificador de Constituição por nível de Clérigo após o 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Armaduras leves, armaduras médias, escudos</p>
+  <p><strong>Armas:</strong> Todas as armas simples</p>
+  <p><strong>Ferramentas:</strong> Nenhuma</p>
+  <p><strong>Testes de Resistência:</strong> Sabedoria, Carisma</p>
+  <p>
+    <strong>Perícias:</strong> Escolha duas dentre História, Intuição, Medicina, Persuasão e Religião
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>Você começa com o seguinte equipamento, além do equipamento concedido pelo seu antecedente:</p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) uma maça
+      <strong>ou</strong>
+      (b) um martelo de guerra (se for proficiente)
+    </li>
+    <li>
+      (a) brunea
+      <strong>ou</strong>
+      (b) armadura de couro
+      <strong>ou</strong>
+      (c) cota de malha (se for proficiente)
+    </li>
+    <li>
+      (a) uma besta leve e 20 virotes
+      <strong>ou</strong>
+      (b) qualquer arma simples
+    </li>
+    <li>
+      (a) um pacote de sacerdote
+      <strong>ou</strong>
+      (b) um pacote de aventureiro
+    </li>
+    <li>
+      Um escudo e um símbolo sagrado
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Conjuração</h2>
+
+  <p>
+    Como clérigo, você canaliza a energia divina de sua divindade para moldar o mundo ao seu redor. 
+    Suas magias refletem a vontade do seu deus ou força espiritual, podendo ser ajustadas para diversas situações.
+  </p>
+
+  <h3>Truques</h3>
+  <p>
+    No <strong>1º nível</strong>, você conhece três truques de sua escolha presentes na 
+    <a href="../magias.html">Lista de Magias de Clérigo</a>. Em níveis superiores, você aprende truques adicionais da lista de clérigo, 
+    como mostrado na coluna <a href="../magias.html">Truques Conhecidos</a> na tabela do Clérigo.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, pode substituir um dos truques de Clérigo que conhece por outro truque da 
+    <a href="../magias.html">Lista de Magias de Clérigo</a>.
+  </p>
+
+  <h3>Preparando e Conjurando Magias</h3>
+  <p>
+    A tabela do Clérigo mostra quantos espaços de magia você possui para conjurar suas magias de clérigo de 1º nível ou superior. 
+    Para conjurar uma dessas magias, você deve consumir um espaço do nível da magia ou superior. 
+    Você recupera todos os espaços de magia gastos quando finaliza um descanso longo.
+  </p>
+  <p>
+    Você pode preparar um número de magias de clérigo a cada dia conforme mostrado na coluna 
+    <a href="../magias.html">Magias Preparadas</a> da tabela do Clérigo. Cada magia deve ser de um nível para o qual você possua espaços de magia.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, pode trocar uma das magias preparadas por outra magia da 
+    <a href="../magias.html">Lista de Magias de Clérigo</a>, também de um nível para o qual você possua espaços de magia.
+  </p>
+
+  <h3>Habilidade de Conjuração</h3>
+  <p>
+    Sabedoria é sua habilidade de conjuração para as magias de Clérigo: sua percepção espiritual e fé permitem que você canalize magia com eficácia. 
+    Você usa seu modificador de Sabedoria sempre que uma magia de Clérigo se referir à sua habilidade de conjuração. 
+    Além disso, você usa seu modificador de Sabedoria ao definir a CD dos testes de resistência para suas magias de Clérigo e ao realizar jogadas de ataque com magia.
+  </p>
+  <p>
+    <strong>CD teste de resistência</strong> = 8 + seu bônus de proficiência + seu modificador de Sabedoria
+  </p>
+  <p>
+    <strong>Modificador de ataque de magia</strong> = seu bônus de proficiência + seu modificador de Sabedoria
+  </p>
+
+  <h3>Conjuração de Ritual</h3>
+  <p>
+    Você pode conjurar qualquer magia de Clérigo que conheça como um ritual, se essa magia possuir a etiqueta <strong>ritual</strong>.
+  </p>
+
+  <h3>Foco de Conjuração</h3>
+  <p>
+    Você pode usar um símbolo sagrado (encontrado no capítulo 5) como foco de conjuração para suas magias de Clérigo.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Domínio Divino</h2>
+
+  <p>
+    A partir do <strong>1º nível</strong>, você escolhe um domínio divino relacionado à sua divindade. 
+    Essa escolha concede a você características específicas no <strong>1º nível</strong> e novamente nos 
+    <strong>2º, 6º, 8º</strong> e <strong>17º níveis</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Domínios</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/05/mtg-priest-of-ancient-lore-1024x760.jpg" alt="Arcano">
+      <h3>Arcano</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://arcaneeye.com/wp-content/uploads/2022/03/Death-Domain-Vampire.jpg" alt="Morte">
+      <h3>Morte</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/05/5e-forge-cleric.jpg" alt="Forja">
+      <h3>Forja</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2021/04/DD-Cleric-.jpg?q=49&fit=crop&w=825&dpr=2" alt="Túmulo">
+      <h3>Túmulo</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/dungeonsanddragonsfan.com/wp-content/uploads/2025/11/dnd-2025-knowledge-domain-cleric-8.png?resize=800%2C450&ssl=1" alt="Conhecimento">
+      <h3>Conhecimento</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/05/dawnbringer-cleric-mtg.jpg" alt="Vida">
+      <h3>Vida</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2021/09/dnd-5e-cleric.jpg?q=70&fit=crop&w=825&dpr=1" alt="Luz">
+      <h3>Luz</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://sagegamers.com/wp-content/uploads/2023/02/venerated-loxodon-art-by-zack-stella.jpg.webp" alt="Natureza">
+      <h3>Natureza</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/03/domain-of-order-cleric.jpg" alt="Ordem">
+      <h3>Ordem</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/dungeonmister.com/wp-content/uploads/2024/07/cleric-subclasses5749406194675565897.jpg" alt="Paz">
+      <h3>Paz</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://images.dungeonnexus.com/1024x1024/subclasses/cleric-tempest-domain.jpg" alt="Tempestade">
+      <h3>Tempestade</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nat1gaming.com/wp-content/uploads/2024/04/Lavinia-Azorius-Renegade-Promo-Ravnica-Allegiance-Art-1.jpg?fit=1200%2C958&ssl=1" alt="Enganação">
+      <h3>Enganação</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://mythcreants.com/wp-content/uploads/2019/11/DeathPactClericToken.jpg" alt="Crepúsculo">
+      <h3>Crepúsculo</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/dungeonmister.com/wp-content/uploads/2024/08/cleric-feats4664827524341875120.jpg" alt="Guerra">
+      <h3>Guerra</h3>
+    </button>
+  </div>
+
+  <h2>Amonkhet</h2>
+  <em>Os domínios a seguir foram projetados para os artigos do Amonkhet Planeshift e não fazem parte de nenhum lançamento oficial.</em>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://sagegamers.com/wp-content/uploads/2022/08/image_2022-08-22_202220718.png" alt="Solidariedade">
+      <h3>Solidariedade</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i.pinimg.com/736x/75/d8/e5/75d8e5567beca23de31ed60fcdf0039f.jpg" alt="Força">
+      <h3>Força</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/10/anointer-priest-amonkhet-mtg-art.jpeg?q=50&fit=crop&w=825&dpr=1.5" alt="Ambição">
+      <h3>Ambição</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nerdarchy.com/wp-content/uploads/2019/10/cleric.jpg?fit=600%2C372&ssl=1" alt="Zelo">
+      <h3>Zelo</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/09/collage-maker-06-sep-2023-06-02-pm-7636.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Destino">
+      <h3>Destino</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado Arquivado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://static.wixstatic.com/media/597594_3f596179806948089f2c4d9531d925ae~mv2.webp/v1/fill/w_900,h_600,al_c,q_85,enc_avif,quality_auto/597594_3f596179806948089f2c4d9531d925ae~mv2.webp" alt="Cidade">
+      <h3>Cidade</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/10/grave-domain-cleric-5e-cover.jpg?w=1600&h=900&fit=crop" alt="Proteção">
+      <h3>Proteção</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3kssL63YNh2CW6SYf9c71_tO1rDhzikzp5Q&s" alt="Crepúsculo">
+      <h3>Crepúsculo</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://explorednd.com/wp-content/uploads/2022/06/Twilight-Cleric-5e-Guide-950x650.png" alt="Unidade">
+      <h3>Unidade</h3>
+    </button>
+  </div>
+
+  <h3>Feitiços de Domínio</h3>
+
+  <p>
+    Cada domínio tem uma lista de magias — suas magias de domínio que você ganha nos níveis de clérigo indicados na descrição do domínio. Depois que você ganha uma magia de domínio, você sempre a tem preparada, e ela não conta para o número de magias que você pode preparar por dia.
+    Se você tem uma magia de domínio que não aparece na lista de magias do clérigo, a magia ainda assim é uma magia de clérigo para você.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Canalizar a Divindade</h2>
+
+  <p>
+    No <strong>2º nível</strong>, você ganha a habilidade de canalizar energia divina diretamente da sua divindade,
+    usando essa energia para alimentar efeitos mágicos. Você começa com dois desses efeitos: 
+    <strong>Transformar Mortos-Vivos</strong> e um efeito determinado pelo seu domínio.
+    Alguns domínios concedem efeitos adicionais conforme você avança de nível, conforme indicado na descrição do domínio.
+  </p>
+
+  <p>
+    Quando você usa seu Canalizar Divindade, você escolhe qual efeito criar. 
+    Você deve então terminar um descanso curto ou longo para usar sua Canalização de Divindade novamente.
+  </p>
+
+  <p>
+    Alguns efeitos de Canalizar Divindade exigem testes de resistência. 
+    Quando você usa esse efeito desta classe, a CD é igual à sua CD de resistência de feitiço de clérigo.
+  </p>
+
+  <p>
+    A partir do <strong>6º nível</strong>, você pode usar seu Canalizar Divindade duas vezes entre os descansos, 
+    e a partir do <strong>18º nível</strong>, pode usá-lo três vezes entre os descansos. 
+    Quando você termina um descanso curto ou longo, recupera seus usos gastos.
+  </p>
+
+  <h3>Canalizar Divindade: Transformar Mortos-Vivos</h3>
+
+  <p>
+    Como ação, você apresenta seu símbolo sagrado e faz uma oração censurando os mortos-vivos. 
+    Cada morto-vivo que pode te ver ou ouvir a menos de 30 pés de você deve fazer um teste de resistência de Sabedoria. 
+    Se a criatura falhar no teste de resistência, ela fica virada por 1 minuto ou até receber qualquer dano.
+  </p>
+
+  <p>
+    Uma criatura transformada deve passar seus turnos tentando se afastar o máximo possível de você, 
+    e não pode se mover voluntariamente para um espaço a menos de 30 pés de você. Também não aguenta reações. 
+    Para sua ação, ela pode usar apenas a ação de <strong>Dash</strong> ou tentar escapar de um efeito que a impede de se mover. 
+    Se não houver para onde se mover, a criatura pode usar a ação de <strong>Esquivar</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Dominar o Poder Divino (Opcional)</h2>
+
+  <p>
+    No <strong>2º nível</strong>, você pode gastar o uso da sua <strong>Canalizar Divindade</strong> 
+    para alimentar suas magias. Como <strong>ação bônus</strong>, você toca seu símbolo sagrado, 
+    faz uma oração e recupera um espaço de magia gasto, cujo nível não pode ser maior que metade 
+    do seu bônus de proficiência (arredondado para cima).
+  </p>
+
+  <p>
+    O número de vezes que você pode usar essa característica depende do nível que você alcançou nesta classe: 
+    <strong>2º nível</strong>, uma vez; <strong>6º nível</strong>, duas vezes; e <strong>18º nível</strong>, três vezes. 
+    Você recupera todos os usos gastos quando termina um descanso longo.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Versatilidade de Truques (Opcional)</h2>
+
+  <p>
+    Sempre que você atingir um nível nesta classe que conceda a habilidade de <strong>Melhoria de Pontuação de Habilidade</strong>, 
+    você pode substituir um truque que aprendeu com a habilidade de <strong>Conjuração</strong> desta classe por outro truque da 
+    <a href="../magias.html">Lista de Magias de Clérigo</a>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Destruir os Mortos-Vivos</h2>
+  <p>
+    A partir do <strong>5º nível</strong>, quando um morto-vivo falha no teste de resistência
+    contra sua habilidade <strong>Canalizar Divindade: Transformar Mortos-Vivos</strong>,
+    a criatura é destruída instantaneamente se sua classificação de desafio estiver em
+    um certo limite ou abaixo, como mostrado na tabela do Clérigo acima.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Golpes Abençoados (Opcional)</h2>
+  <p>
+    Substitui a característica <strong>Golpe Divino</strong> ou <strong>Conjuração Potente</strong>.
+  </p>
+  <p>
+    Quando você atinge o <strong>8º nível</strong>, você é abençoado com poder divino em batalha. 
+    Sempre que uma criatura sofrer dano de um dos seus <strong>truques</strong> ou ataques com arma, 
+    você pode causar <strong>1d8 de dano radiante</strong> adicional a essa criatura. 
+    Uma vez que você cause esse dano, não pode usar essa característica novamente até o início do seu próximo turno.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Intervenção Divina</h2>
+  <p>
+    A partir do <strong>10º nível</strong>, você pode invocar sua divindade para intervir em seu favor quando a necessidade for grande.
+  </p>
+  <p>
+    Pedir ajuda à sua divindade requer que você use sua <strong>ação</strong>. Descreva a assistência que você deseja e role um dado percentual (d100). 
+    Se o número obtido for igual ou menor que seu nível de clérigo, sua divindade intervém. 
+    O Mestre determina a natureza da intervenção; o efeito de qualquer magia de clérigo ou magia de domínio do clérigo seria adequado. 
+    Se sua divindade intervier, você não poderá usar essa característica novamente por 7 dias. Caso contrário, você pode tentar novamente após terminar um descanso longo.
+  </p>
+  <p>
+    Ao atingir o <strong>20º nível</strong>, sua invocação para intervenção é bem-sucedida automaticamente, sem necessidade de rolagem.
+  </p>
+</div>
+`;
+
+const clerigoOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(clerigo5e, true));
+btnOne.addEventListener("click", () => swapContent(clerigoOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = clerigo5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

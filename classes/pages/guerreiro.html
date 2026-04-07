@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guerreiro • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://www.dndbeyond.com/attachments/11/409/fighter.jpg" alt="Guerreiro">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const guerreiro5e = `
+<h1>Guerreiro</h1>
+<div class="subtitle">Classe Marcial • D&D 5e</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Guerreiros são mestres da <strong>arte do combate</strong>, treinados para
+    enfrentar qualquer desafio no campo de batalha. Diferente de classes que
+    dependem de magia ou fé, o guerreiro confia em disciplina, técnica e
+    experiência adquirida através de incontáveis confrontos.
+  </p>
+
+  <p>
+    Alguns guerreiros são soldados profissionais, cavaleiros ou mercenários;
+    outros aprenderam a lutar nas arenas, em guerras tribais ou em estradas
+    perigosas. Independentemente de sua origem, todos compartilham uma
+    dedicação incansável ao aprimoramento físico e ao domínio das armas.
+  </p>
+
+  <p>
+    Versáteis e resilientes, guerreiros se adaptam a qualquer situação,
+    alternando entre estilos de luta, armas e armaduras conforme a necessidade.
+    Onde a batalha exige resistência, precisão ou força bruta, um guerreiro se
+    destaca — transformando <strong>treinamento em vitória</strong> e estratégia
+    em sobrevivência.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Guerreiro</h2>
+
+<div class="table-wrapper">
+<table>
+  <tr>
+    <th>Nível</th>
+    <th>Bônus de Prof.</th>
+    <th>Características</th>
+  </tr>
+
+  <tr><td>1°</td><td>+2</td><td>Estilo de Luta, Retomar o Fôlego</td></tr>
+  <tr><td>2°</td><td>+2</td><td>Surto de Ação (um uso)</td></tr>
+  <tr><td>3°</td><td>+2</td><td>Arquétipo Marcial</td></tr>
+  <tr><td>4°</td><td>+2</td><td>Incremento no Valor de Habilidade</td></tr>
+  <tr><td>5°</td><td>+3</td><td>Ataque Extra</td></tr>
+  <tr><td>6°</td><td>+3</td><td>Incremento no Valor de Habilidade</td></tr>
+  <tr><td>7°</td><td>+3</td><td>Característica de Arquétipo Marcial</td></tr>
+  <tr><td>8°</td><td>+3</td><td>Incremento no Valor de Habilidade</td></tr>
+  <tr><td>9°</td><td>+4</td><td>Indomável (um uso)</td></tr>
+  <tr><td>10°</td><td>+4</td><td>Característica de Arquétipo Marcial</td></tr>
+  <tr><td>11°</td><td>+4</td><td>Ataque Extra (2)</td></tr>
+  <tr><td>12°</td><td>+4</td><td>Incremento no Valor de Habilidade</td></tr>
+  <tr><td>13°</td><td>+5</td><td>Indomável (dois usos)</td></tr>
+  <tr><td>14°</td><td>+5</td><td>Incremento no Valor de Habilidade</td></tr>
+  <tr><td>15°</td><td>+5</td><td>Característica de Arquétipo Marcial</td></tr>
+  <tr><td>16°</td><td>+5</td><td>Incremento no Valor de Habilidade</td></tr>
+  <tr><td>17°</td><td>+6</td><td>Surto de Ação (dois usos), Indomável (três usos)</td></tr>
+  <tr><td>18°</td><td>+6</td><td>Característica de Arquétipo Marcial</td></tr>
+  <tr><td>19°</td><td>+6</td><td>Incremento no Valor de Habilidade</td></tr>
+  <tr><td>20°</td><td>+6</td><td>Ataque Extra (3)</td></tr>
+</table>
+</div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d10 por nível de Guerreiro</p>
+  <p>
+    <strong>Pontos de Vida no 1º Nível:</strong>
+    10 + seu modificador de Constituição
+  </p>
+  <p>
+    <strong>Pontos de Vida nos Níveis Seguintes:</strong>
+    1d10 (ou 6) + seu modificador de Constituição por nível de Guerreiro após o 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Todas as armaduras, escudos</p>
+  <p>
+    <strong>Armas:</strong> Armas simples, armas marciais
+  </p>
+  <p><strong>Ferramentas:</strong> Nenhuma</p>
+  <p>
+    <strong>Testes de Resistência:</strong>
+    Força, Constituição
+  </p>
+  <p>
+    <strong>Perícias:</strong>
+    Escolha duas dentre Acrobacia, Adestrar Animais, Atletismo, História,
+    Intuição, Intimidação, Percepção e Sobrevivência
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>
+    Você começa com o seguinte equipamento, além do equipamento concedido pelo
+    seu antecedente:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) cota de malha
+      <strong>ou</strong>
+      (b) gibão de peles, arco longo e 20 flechas
+    </li>
+    <li>
+      (a) uma arma marcial e um escudo
+      <strong>ou</strong>
+      (b) duas armas marciais
+    </li>
+    <li>
+      (a) uma besta leve e 20 virotes
+      <strong>ou</strong>
+      (b) dois machados de arremesso
+    </li>
+    <li>
+      (a) um pacote de aventureiro
+      <strong>ou</strong>
+      (b) um pacote de explorador
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Estilo de Luta</h2>
+
+  <p>
+    Você adota um estilo de combate particular que será sua especialidade.
+    Escolha uma das opções a seguir. Você não pode escolher o mesmo Estilo de
+    Combate mais de uma vez, mesmo se puder escolhê-lo novamente.
+  </p>
+
+  <h3>Arqueiria</h3>
+  <p>
+    Você ganha +2 de bônus nas jogadas de ataque realizadas com uma arma de
+    ataque à distância.
+  </p>
+
+  <h3>Combate com Armas Grandes</h3>
+  <p>
+    Quando você rolar um 1 ou um 2 em um dado de dano de um ataque com arma
+    corpo a corpo que você esteja empunhando com duas mãos, você pode rolar
+    o dado novamente e usar a nova rolagem, mesmo que resulte em 1 ou 2.
+    A arma deve ter a propriedade duas mãos ou versátil para ganhar esse
+    benefício.
+  </p>
+
+  <h3>Combate com Duas Armas</h3>
+  <p>
+    Quando você estiver engajado em uma luta com duas armas, você pode adicionar
+    o seu modificador de habilidade de dano na jogada de dano do seu segundo
+    ataque.
+  </p>
+
+  <h3>Defesa</h3>
+  <p>
+    Enquanto estiver usando armadura, você ganha +1 de bônus em sua Classe
+    de Armadura (CA).
+  </p>
+
+  <h3>Duelismo</h3>
+  <p>
+    Quando você empunhar uma arma corpo a corpo em uma mão e nenhuma outra
+    arma, você ganha +2 de bônus nas jogadas de dano com essa arma.
+  </p>
+
+  <h3>Proteção</h3>
+  <p>
+    Quando uma criatura que você possa ver atacar um alvo que esteja a até
+    1,5 metro de você, você pode usar sua reação para impor desvantagem na
+    jogada de ataque da criatura. Você deve estar empunhando um escudo.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Retomar o Fôlego</h2>
+
+  <p>
+    Você possui uma reserva de estamina e pode usá-la para proteger a si mesmo
+    contra danos. No seu turno, você pode usar uma ação bônus para recuperar
+    pontos de vida igual a 1d10 + seu nível de guerreiro.
+  </p>
+
+  <p>
+    Uma vez que você use essa característica, você precisa terminar um descanso
+    curto ou longo para usá-la novamente.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Surto de Ação</h2>
+
+  <p>
+    A partir do 2º nível, você pode forçar o seu limite para além do normal por
+    um momento. Durante o seu turno, você pode realizar uma ação adicional
+    juntamente com sua ação e possível ação bônus.
+  </p>
+
+  <p>
+    Uma vez que você use essa característica, você precisa terminar um descanso
+    curto ou longo para usá-la novamente.
+  </p>
+
+  <p>
+    A partir do 17º nível, você pode usar essa característica duas vezes antes
+    de precisar descansar, porém somente uma vez por turno.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Arquétipo Marcial</h2>
+
+  <p>
+    A partir do <strong>3º nível</strong>, você escolhe um arquétipo marcial que
+    representa o tipo de treinamento e estilo de combate que você domina.
+    Essa escolha concede a você características específicas no
+    <strong>3º nível</strong> e novamente nos
+    <strong>7º, 10º, 15º</strong> e <strong>18º níveis</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Arquétipos</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2023/01/might-and-magic-arcane-archer-card.jpg" alt="Arqueiro Arcano">
+      <h3>Arqueiro Arcano</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://cdn.shopify.com/s/files/1/0530/6515/4713/files/Banneret_Fighter_in_D_D_dbb933f5-4f15-40da-8880-3129bd8d18b6_240x240.png?v=1739460003" alt="Estandarte">
+      <h3>Estandarte</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://m.media-amazon.com/images/I/51mUEwQAixL._AC_UF894,1000_QL80_.jpg" alt="Mestre de Batalha">
+      <h3>Mestre de Batalha</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/12/Tori-DAvenant-Fury-Rider-mtg-1024x752.jpg" alt="Cavalier">
+      <h3>Cavalier</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/12/dwarfhold-champion-mtg.jpg" alt="Campeão">
+      <h3>Campeão</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://preview.redd.it/zhmee4o5brg71.jpg?width=640&crop=smart&auto=webp&s=20b725f857a3d50d42b92149d3cdf4c33b0c89e3" alt="Cavaleiro do Eco">
+      <h3>Cavaleiro do Eco</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i.imgur.com/mHRh1K6.jpg" alt="Cavaleiro Eldritch">
+      <h3>Cavaleiro Eldritch</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.belloflostsouls.net/wp-content/uploads/2019/12/dnd-psion-warrior.jpg" alt="Guerreiro Psíquico">
+      <h3>Guerreiro Psíquico</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgujah7-8DJo9OQF8LbtEy-UqkL4DhSOzU4A&s" alt="Cavaleiro Rúnico">
+      <h3>Cavaleiro Rúnico</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://siemens-mobile.com/wp-content/uploads/2023/10/image-132-1024x574.png" alt="Samurai">
+      <h3>Samurai</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado Arquivado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2023/02/twin-bolt-mtg.jpg" alt="Arqueiro Arcano (2016)">
+      <h3>Arqueiro Arcano (2016)</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.flutesloot.com/wp-content/uploads/2019/06/archer_elf_by_yanporfirio_d9png0f-fullview-1024x645.jpg" alt="Arqueiro Arcano (2017)">
+      <h3>Arqueiro Arcano (2017)</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nerdarchy.com/wp-content/uploads/2021/04/ajani-adversary-of-tyrants.jpg?fit=676%2C422&ssl=1" alt="Bruto">
+      <h3>Bruto</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://blackcitadelrpg.com/wp-content/uploads/2022/10/Knight-of-Dawns.jpg" alt="Cavalier">
+      <h3>Cavalier</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://arcaneeye.com/wp-content/uploads/2021/09/Fighter-Guide-5e.jpg" alt="Cavaleiro">
+      <h3>Cavaleiro</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://blackcitadelrpg.com/wp-content/uploads/2021/10/Tovolars-Huntmaster-Monster-Slayer-Ranger.jpg" alt="Caçador de Monstros">
+      <h3>Caçador de Monstros</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2023/03/fiendslayer-paladin.jpg" alt="Cavaleiro Psíquico">
+      <h3>Cavaleiro Psíquico</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/12/halvar-mtg-1024x752.webp" alt="Guerreiro Psíquico">
+      <h3>Guerreiro Psíquico</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.wargamer.com/wp-content/sites/wargamer/2023/09/dnd-rune-knight-5e-weapon.jpg" alt="Cavaleiro Rúnico">
+      <h3>Cavaleiro Rúnico</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/12/Isshin-Two-Heavens-as-One-mtg-kamigawa-scaled.jpg" alt="Samurai">
+      <h3>Samurai</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.flutesloot.com/wp-content/uploads/2021/11/DD-5e-Fighter-Multiclassing-900x400.jpg" alt="Escoteiro">
+      <h3>Escoteiro</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://velantis.wordpress.com/wp-content/uploads/2020/01/sharpshooter.jpg">
+      <h3>Atirador de Elite</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Versatilidade Marcial (Opcional)</h2>
+
+  <p>
+    Sempre que você atingir um nível nesta classe que conceda a característica
+    de Melhoria de Pontuação de Habilidade, você pode fazer uma das seguintes
+    opções, enquanto muda o foco da sua prática marcial:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Substitua um estilo de luta que você conhece por outro estilo disponível
+      para os lutadores.
+    </li>
+    <li>
+      Se você conhece alguma manobra do arquétipo Mestre de Batalha, pode
+      substituir uma manobra que conhece por outra diferente.
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Ataque Extra</h2>
+
+  <p>
+    A partir do 5º nível, você pode atacar duas vezes, ao invés
+    de uma, quando usar a ação de Ataque durante seu turno.
+  </p>
+
+  <p>
+    O número de ataques aumenta para três quando você
+    alcançar o 11º nível de guerreiro e para quatro quando
+    alcançar o 20º nível de guerreiro.
+  </p>
+</div>
+
+
+<div class="section">
+  <h2>Indomável</h2>
+
+  <p>
+    A partir do 9º nível, você pode jogar de novo um teste de
+    resistência que falhou. Se o fizer, você deve usar o novo
+    valor e não pode usar essa característica de novo antes de
+    terminar um descanso longo.
+  </p>
+
+  <p>
+    Você pode usar esta característica duas vezes entre
+    descansos longos quando chegar no 13º nível e três vezes
+    entre descansos longos quando chegar no 17º nível.
+  </p>
+</div>
+`;
+
+const guerreiroOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(guerreiro5e, true));
+btnOne.addEventListener("click", () => swapContent(guerreiroOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = guerreiro5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

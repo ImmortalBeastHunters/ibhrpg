@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ladino • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/07/dnd-new-phb-art-rogue.jpg?w=1600&h=900&fit=crop" alt="Ladino">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const ladino5e = `
+<h1>Ladino</h1>
+<div class="subtitle">Classe Especialista • D&D 5e</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Ladinos são especialistas na <strong>arte da furtividade, precisão e astúcia</strong>,
+    dominando o campo de batalha por meio de posicionamento, timing e golpes certeiros.
+    Diferente de combatentes que dependem de força bruta ou magia poderosa, o ladino
+    confia em inteligência, agilidade e oportunidade.
+  </p>
+
+  <p>
+    Alguns ladinos são ladrões habilidosos, espiões ou assassinos treinados;
+    outros atuam como exploradores, trapaceiros ou agentes secretos a serviço
+    de guildas, reinos ou interesses próprios. Independentemente do caminho,
+    todos compartilham uma habilidade excepcional de agir quando ninguém espera.
+  </p>
+
+  <p>
+    Versáteis e mortais, ladinos prosperam em situações que exigem discrição,
+    improviso e precisão absoluta. Onde outros veem risco, o ladino vê abertura —
+    transformando <strong>silêncio em vantagem</strong>, oportunidade em letalidade
+    e um único golpe bem colocado em vitória decisiva.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Ladino</h2>
+
+<div class="table-wrapper">
+<table>
+  <tr>
+    <th>Nível</th>
+    <th>Bônus de Prof.</th>
+    <th>Ataque Furtivo</th>
+    <th>Características</th>
+  </tr>
+
+  <tr>
+    <td>1°</td>
+    <td>+2</td>
+    <td>1d6</td>
+    <td>Especialização, Ataque Furtivo, Gíria de Ladrão</td>
+  </tr>
+
+  <tr>
+    <td>2°</td>
+    <td>+2</td>
+    <td>1d6</td>
+    <td>Ação Ardilosa</td>
+  </tr>
+
+  <tr>
+    <td>3°</td>
+    <td>+2</td>
+    <td>2d6</td>
+    <td>Arquétipo de Ladino</td>
+  </tr>
+
+  <tr>
+    <td>4°</td>
+    <td>+2</td>
+    <td>2d6</td>
+    <td>Incremento no Valor de Habilidade</td>
+  </tr>
+
+  <tr>
+    <td>5°</td>
+    <td>+3</td>
+    <td>3d6</td>
+    <td>Esquiva Sobrenatural</td>
+  </tr>
+
+  <tr>
+    <td>6°</td>
+    <td>+3</td>
+    <td>3d6</td>
+    <td>Especialização</td>
+  </tr>
+
+  <tr>
+    <td>7°</td>
+    <td>+3</td>
+    <td>4d6</td>
+    <td>Evasão</td>
+  </tr>
+
+  <tr>
+    <td>8°</td>
+    <td>+3</td>
+    <td>4d6</td>
+    <td>Incremento no Valor de Habilidade</td>
+  </tr>
+
+  <tr>
+    <td>9°</td>
+    <td>+4</td>
+    <td>5d6</td>
+    <td>Característica de Arquétipo de Ladino</td>
+  </tr>
+
+  <tr>
+    <td>10°</td>
+    <td>+4</td>
+    <td>5d6</td>
+    <td>Incremento no Valor de Habilidade</td>
+  </tr>
+
+  <tr>
+    <td>11°</td>
+    <td>+4</td>
+    <td>6d6</td>
+    <td>Talento Confiável</td>
+  </tr>
+
+  <tr>
+    <td>12°</td>
+    <td>+4</td>
+    <td>6d6</td>
+    <td>Incremento no Valor de Habilidade</td>
+  </tr>
+
+  <tr>
+    <td>13°</td>
+    <td>+5</td>
+    <td>7d6</td>
+    <td>Característica de Arquétipo de Ladino</td>
+  </tr>
+
+  <tr>
+    <td>14°</td>
+    <td>+5</td>
+    <td>7d6</td>
+    <td>Sentido Cego</td>
+  </tr>
+
+  <tr>
+    <td>15°</td>
+    <td>+5</td>
+    <td>8d6</td>
+    <td>Mente Escorregadia</td>
+  </tr>
+
+  <tr>
+    <td>16°</td>
+    <td>+5</td>
+    <td>8d6</td>
+    <td>Incremento no Valor de Habilidade</td>
+  </tr>
+
+  <tr>
+    <td>17°</td>
+    <td>+6</td>
+    <td>9d6</td>
+    <td>Característica de Arquétipo de Ladino</td>
+  </tr>
+
+  <tr>
+    <td>18°</td>
+    <td>+6</td>
+    <td>9d6</td>
+    <td>Elusivo</td>
+  </tr>
+
+  <tr>
+    <td>19°</td>
+    <td>+6</td>
+    <td>10d6</td>
+    <td>Incremento no Valor de Habilidade</td>
+  </tr>
+
+  <tr>
+    <td>20°</td>
+    <td>+6</td>
+    <td>10d6</td>
+    <td>Golpe de Sorte</td>
+  </tr>
+</table>
+</div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d8 por nível de Ladino</p>
+  <p>
+    <strong>Pontos de Vida no 1º Nível:</strong>
+    8 + seu modificador de Constituição
+  </p>
+  <p>
+    <strong>Pontos de Vida nos Níveis Seguintes:</strong>
+    1d8 (ou 5) + seu modificador de Constituição por nível de Ladino após o 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Armaduras leves</p>
+  <p>
+    <strong>Armas:</strong>
+    Armas simples, bestas de mão, espadas longas, rapieiras, espadas curtas
+  </p>
+  <p><strong>Ferramentas:</strong> Ferramentas de ladrão</p>
+  <p>
+    <strong>Testes de Resistência:</strong>
+    Destreza, Inteligência
+  </p>
+  <p>
+    <strong>Perícias:</strong>
+    Escolha quatro dentre Acrobacia, Atletismo, Atuação, Enganação, Furtividade,
+    Intimidação, Intuição, Investigação, Percepção, Persuasão e Prestidigitação
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>
+    Você começa com o seguinte equipamento, além do equipamento concedido pelo
+    seu antecedente:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) uma rapieira
+      <strong>ou</strong>
+      (b) uma espada longa
+    </li>
+    <li>
+      (a) um arco curto e uma aljava com 20 flechas
+      <strong>ou</strong>
+      (b) uma espada curta
+    </li>
+    <li>
+      (a) um pacote de assaltante
+      <strong>ou</strong>
+      (b) um pacote de aventureiro
+      <strong>ou</strong>
+      (c) um pacote de explorador
+    </li>
+    <li>
+      Armadura de couro, duas adagas e ferramentas de ladrão
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Especialização</h2>
+
+  <p>
+    No <strong>1º nível</strong>, você escolhe duas de suas perícias nas quais
+    seja proficiente, ou uma perícia na qual seja proficiente e
+    <strong>ferramentas de ladrão</strong>. Seu bônus de proficiência é dobrado
+    em qualquer teste de habilidade que fizer usando essas proficiências.
+  </p>
+
+  <p>
+    No <strong>6º nível</strong>, você pode escolher outras duas de suas
+    proficiências (em perícias ou ferramentas de ladrão) para ganhar esse
+    benefício.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Furtivo</h2>
+
+  <p>
+    A partir do <strong>1º nível</strong>, você sabe como atacar sutilmente e
+    explorar a distração de seus inimigos. <strong>Uma vez por turno</strong>,
+    você pode adicionar <strong>1d6</strong> às jogadas de dano contra qualquer
+    criatura que acertar, desde que tenha vantagem nas jogadas de ataque.
+    O ataque deve ser feito com uma <strong>arma de acuidade ou à distância</strong>.
+  </p>
+
+  <p>
+    Você não precisa ter vantagem nas jogadas de ataque se outro inimigo do seu
+    alvo estiver a até <strong>1,5 metro</strong> de distância dele, desde que
+    esse inimigo não esteja incapacitado e você não tenha desvantagem nas
+    jogadas de ataque.
+  </p>
+
+  <p>
+    A quantidade de dano extra aumenta conforme você ganha níveis nessa classe,
+    como mostrado na coluna <strong>Ataque Furtivo</strong> da tabela
+    <strong>O Ladino</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Gíria de Ladrão</h2>
+
+  <p>
+    Durante seu treinamento, você aprendeu as <strong>gírias de ladrão</strong>,
+    um misto de dialeto, jargão e códigos secretos que permitem transmitir
+    mensagens ocultas durante uma conversa aparentemente normal. Somente
+    outra criatura que conheça essas gírias de ladrão consegue entender
+    tais mensagens.
+  </p>
+
+  <p>
+    Leva-se <strong>quatro vezes mais tempo</strong> para transmitir essa
+    mensagem do que falar a mesma ideia de forma clara e direta.
+  </p>
+
+  <p>
+    Além disso, você entende um conjunto de <strong>sinais secretos e símbolos</strong>
+    usados para transmitir mensagens curtas e simples, como indicar se uma área
+    é perigosa ou território de uma guilda de ladrões, se o saque está próximo,
+    se as pessoas na área são alvos fáceis ou até mesmo apontar lugares seguros
+    para ladinos se esconderem.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ação Ardilosa</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, seu pensamento rápido e agilidade
+    permitem que você se mova e aja com extrema rapidez. Durante cada um de
+    seus turnos em combate, você pode usar uma <strong>ação bônus</strong>.
+  </p>
+
+  <p>
+    Essa ação bônus pode ser usada apenas para realizar as ações de
+    <strong>Disparada</strong>, <strong>Desengajar</strong> ou
+    <strong>Esconder</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Arquétipo de Ladino</h2>
+
+  <p>
+    A partir do <strong>3º nível</strong>, você escolhe um arquétipo de ladino que
+    representa a especialização, técnicas e métodos que você desenvolveu ao
+    longo de sua carreira. Essa escolha concede a você características
+    específicas no <strong>3º nível</strong> e novamente nos
+    <strong>9º, 13º</strong> e <strong>17º níveis</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Arquétipos</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nat1gaming.com/wp-content/uploads/2024/07/Imoen-Mystic-Trickster-Battle-for-Baldurs-Gate-MtG-Art.jpg?fit=2048%2C1522&ssl=1" alt="Trapaceiro Arcano">
+      <h3>Trapaceiro Arcano</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://images.steamusercontent.com/ugc/2378532574975367925/FC80F4CDE27E84D206E6B771DCF5E03EC3464980/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true" alt="Assassino">
+      <h3>Assassino</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2023/09/a-dnd-mastermind-rogue-lurking-in-the-shadows.jpg" alt="Mastermind">
+      <h3>Mastermind</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/09/phantom-warrior-by-anna-podedworna.jpg" alt="Espectro">
+      <h3>Espectro</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2021/04/Llanowar-Elves-mtg.jpg" alt="Sentinela">
+      <h3>Sentinela</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2021/04/mtg-soulknife-spy.jpg" alt="Lâmina Fantasma">
+      <h3>Lâmina Fantasma</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2022/03/Half-Elf-Rogue-by-Daniel-Castiblanco.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Espadachim">
+      <h3>Espadachim</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.enworld.org/attachments/tumblr_nz1ili43iv1tpri36o1_1280-png.86366/" alt="Ladrão">
+      <h3>Ladrão</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nat1gaming.com/wp-content/uploads/2024/07/Etrata-Deadly-Fugitive-Murders-at-Karlov-Manor-MtG-Art.jpg?fit=1498%2C1080&ssl=1" alt=Inquisitor">
+      <h3>Inquisitor</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado Arquivado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://sagegamers.com/wp-content/uploads/2022/08/e25b9b11e7b8a97a16fa18745e0234e5.jpg" alt="Espectro">
+      <h3>Espectro</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://mythcreants.com/wp-content/uploads/2020/02/Vampire-Rogue.jpg" alt="Revivido">
+      <h3>Revivido</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://images.squarespace-cdn.com/content/v1/6123cf228527981dcdf1feb6/1631247075274-0J05SOZUN37BCC8E4RNB/charles_logan___salt_by_mr_author_dd8lcx6-fullview.jpg" alt="Lâmina Fantasma (2019)">
+      <h3>Lâmina Fantasma (2019)</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://cdnb.artstation.com/p/assets/covers/images/027/395/499/large/roosa-rasanen-roosa-rasanen-artstationthumb.jpg?1591402130" alt="Lâmina Fantasma (2020)">
+      <h3>Lâmina Fantasma (2020)</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Mira Estável (Opcional)</h2>
+
+  <p>
+    No <strong>3º nível</strong>, você pode usar uma <strong>ação bônus</strong>
+    para se concentrar completamente em um único ataque. Ao fazer isso, você
+    recebe <strong>vantagem no próximo teste de ataque</strong> que realizar
+    durante o turno atual.
+  </p>
+
+  <p>
+    Você só pode usar essa ação bônus se <strong>não tiver se movido</strong>
+    durante esse turno, e, após utilizá-la, sua <strong>velocidade se torna 0</strong>
+    até o final do turno atual.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Esquiva Sobrenatural</h2>
+
+  <p>
+    A partir do <strong>5º nível</strong>, quando um inimigo que você possa ver
+    o acertar com um ataque, você pode usar sua <strong>reação</strong> para
+    reduzir pela metade o dano sofrido.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Evasão</h2>
+
+  <p>
+    A partir do <strong>7º nível</strong>, você pode se esquivar agilmente de
+    certos efeitos em área, como o sopro flamejante de um dragão vermelho ou
+    a magia <em>tempestade de gelo</em>.
+  </p>
+
+  <p>
+    Quando você for alvo de um efeito que exija um
+    <strong>teste de resistência de Destreza</strong> para sofrer metade do
+    dano, você <strong>não sofre dano algum</strong> se obtiver sucesso e sofre
+    <strong>apenas metade do dano</strong> se falhar.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Talento Confiável</h2>
+
+  <p>
+    No <strong>11º nível</strong>, você refinou suas perícias a um nível que
+    beira a perfeição. Sempre que você fizer um
+    <strong>teste de habilidade</strong> no qual possa adicionar seu
+    <strong>bônus de proficiência</strong>, você trata qualquer resultado
+    no <strong>d20 de 9 ou menor como um 10</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Sentido Cego</h2>
+
+  <p>
+    No <strong>14º nível</strong>, desde que você seja capaz de
+    <strong>ouvir</strong>, você fica ciente da localização de qualquer
+    criatura <strong>escondida ou invisível</strong> a até
+    <strong>3 metros</strong> de você.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Mente Escorregadia</h2>
+
+  <p>
+    No <strong>15º nível</strong>, você desenvolve uma força de vontade
+    excepcional, adquirindo <strong>proficiência nos testes de resistência
+    de Sabedoria</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Elusivo</h2>
+
+  <p>
+    A partir do <strong>18º nível</strong>, você se torna tão sagaz que
+    raramente alguém consegue atingi-lo. Nenhuma
+    <strong>jogada de ataque</strong> tem <strong>vantagem</strong> contra você,
+    desde que você <strong>não esteja incapacitado</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Golpe de Sorte</h2>
+
+  <p>
+    No <strong>20º nível</strong>, você adquire um dom extraordinário para
+    alcançar o sucesso nos momentos em que mais precisa.
+    Se um <strong>ataque seu falhar</strong> contra um alvo ao seu alcance,
+    você pode transformar essa falha em um <strong>acerto</strong>.
+  </p>
+
+  <p>
+    Alternativamente, se você <strong>falhar em qualquer teste</strong>, pode
+    tratar o resultado da jogada desse mesmo teste como um
+    <strong>20 natural</strong>.
+  </p>
+
+  <p>
+    Após usar essa característica, você <strong>não pode usá-la novamente</strong>
+    até terminar um <strong>descanso curto ou longo</strong>.
+  </p>
+</div>
+`;
+
+const ladinoOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(ladino5e, true));
+btnOne.addEventListener("click", () => swapContent(ladinoOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = ladino5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

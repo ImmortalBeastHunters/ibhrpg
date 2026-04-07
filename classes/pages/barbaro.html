@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bárbaro • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2024/09/barbarian2024.jpg?w=1200&h=628&fit=crop" alt="Bárbaro">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const barbaro5e = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • D&D 5e</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Bárbaros são a personificação da <strong>força primitiva e instintiva</strong>
+    no mundo de Iccarion. Diferente de guerreiros disciplinados ou cavaleiros
+    treinados, o bárbaro luta guiado pela fúria, pelo instinto e por uma
+    conexão visceral com a batalha.
+  </p>
+
+  <p>
+    Seja proveniente de tribos selvagens, terras indomadas ou mesmo da
+    civilização, todo bárbaro carrega dentro de si um poder bruto que
+    emerge quando a violência se torna inevitável. Em combate, eles
+    abandonam qualquer preocupação com dor ou autopreservação,
+    transformando-se em <strong>máquinas imparáveis de destruição</strong>.
+  </p>
+
+  <p>
+    Resistentes além do limite humano, bárbaros são capazes de suportar
+    ferimentos que derrubariam outros combatentes. Para eles, a fúria não
+    é apenas emoção — é uma força ancestral que alimenta golpes devastadores
+    e mantém o corpo em movimento mesmo à beira da morte.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+
+  <div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus de Proficiência</th>
+      <th>Características</th>
+      <th>Fúrias</th>
+      <th>Dano da Fúria</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Defesa sem Armadura</td><td>2</td><td>+2</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td><td>2</td><td>+2</td></tr>
+    <tr><td>3</td><td>+2</td><td>Caminho Primitivo</td><td>3</td><td>+2</td></tr>
+    <tr><td>4</td><td>+2</td><td>Incremento no Valor de Habilidade</td><td>3</td><td>+2</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra, Movimento Rápido</td><td>3</td><td>+2</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica do Caminho Primitivo</td><td>4</td><td>+2</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Selvagem</td><td>4</td><td>+2</td></tr>
+    <tr><td>8</td><td>+3</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>+2</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal (+1 dado)</td><td>4</td><td>+3</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica do Caminho Primitivo</td><td>4</td><td>+3</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td><td>4</td><td>+3</td></tr>
+    <tr><td>12</td><td>+4</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>+3</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal (+2 dados)</td><td>5</td><td>+3</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica do Caminho Primitivo</td><td>5</td><td>+3</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td><td>5</td><td>+3</td></tr>
+    <tr><td>16</td><td>+5</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>+4</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal (+3 dados)</td><td>6</td><td>+4</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td><td>6</td><td>+4</td></tr>
+    <tr><td>19</td><td>+6</td><td>Incremento no Valor de Habilidade</td><td>6</td><td>+4</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primitivo</td><td>Ilimitado</td><td>+4</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d12 por nível de bárbaro</p>
+  <p><strong>Pontos de Vida no 1º Nível:</strong> 12 + seu modificador de Constituição</p>
+  <p><strong>Pontos de Vida em níveis elevados:</strong> 1d12 (ou 7) + seu modificador de Constituição por nível de bárbaro depois do 1º</p>
+  <br>
+  <h3>Proficiências</h3>
+  <p><strong>Armadura:</strong> Leve, Média e Escudos</p>
+  <p><strong>Armas:</strong> Todas Simples e Todas Marciais</p>
+  <p><strong>Ferramentas:</strong> Nenhuma</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+  <p><strong>Perícias</strong>Escolhas 2: Adestrar Animais, Atletismo, Natureza, Intimidação, Percepção e Sobrevivência</p>
+  <br>
+  <h3>Equipamento Inicial</h3>
+  <p>Você começa com o seguinte equipamento, além do equipamento concedido pelo seu antecedente:</p>
+  <ul class="bullet-list">
+  <li>(a) um machado grande ou (b) qualquer arma marcial corpo-a-corpo</li>
+  <li>(a) dois machados de mão ou (b) qualquer arma simple</li>
+  <li>Um pacote de aventureiro e quatro azagaias</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+
+  <p>
+    Em batalha, você luta com uma ferocidade primitiva. No seu turno,
+    você pode entrar em fúria com uma ação bônus.
+  </p>
+
+  <p>
+    Enquanto estiver em fúria, você recebe os seguintes benefícios,
+    desde que não esteja vestindo armadura pesada:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Você tem vantagem em testes de Força e testes de resistência de Força.
+    </li>
+    <li>
+      Quando desferir um ataque corpo a corpo usando Força, você recebe
+      um bônus nas jogadas de dano que aumenta conforme seu nível de
+      bárbaro, conforme indicado na coluna <strong>Dano de Fúria</strong>
+      da tabela O Bárbaro.
+    </li>
+    <li>
+      Você possui resistência a dano de concussão, cortante e perfurante.
+    </li>
+  </ul>
+
+  <p>
+    Se você for capaz de conjurar magias, não poderá conjurá-las nem se
+    concentrar nelas enquanto estiver em fúria.
+  </p>
+
+  <p>
+    Sua fúria dura por 1 minuto. Ela termina prematuramente se você cair
+    inconsciente ou se seu turno acabar sem que você tenha atacado uma
+    criatura hostil desde o último turno ou sofrido dano nesse período.
+    Você também pode encerrar sua fúria no seu turno usando uma ação bônus.
+  </p>
+
+  <p>
+    Quando você tiver usado todas as fúrias disponíveis para seu nível,
+    conforme indicado na coluna <strong>Fúrias</strong> da tabela O Bárbaro,
+    será necessário terminar um descanso longo antes de entrar em fúria
+    novamente.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Defesa sem Armadura</h2>
+
+  <p>
+    Quando você não estiver vestindo qualquer armadura, sua Classe de
+    Armadura será igual a <strong>10 + seu modificador de Destreza + seu
+    modificador de Constituição</strong>.
+  </p>
+
+  <p>
+    Você pode usar um escudo e continuar recebendo esse benefício.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+
+  <p>
+    A partir do 2º nível, você pode abandonar toda preocupação com sua
+    defesa para atacar com um desespero feroz. Quando fizer o seu
+    primeiro ataque em um turno, você pode decidir atacar
+    descuidadamente.
+  </p>
+
+  <p>
+    Ao fazer isso, você recebe vantagem nas jogadas de ataque com armas
+    corpo a corpo usando Força durante esse turno. Contudo, até o início
+    do seu próximo turno, as jogadas de ataque feitas contra você também
+    têm vantagem.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Sentido de Perigo</h2>
+
+  <p>
+    No 2º nível, você adquire um sentido sobrenatural de
+    quando as coisas próximas não estão como deveriam,
+    concedendo a você uma chance maior de evitar perigos.
+  </p>
+
+  <p>
+    Você possui vantagem em testes de resistência de
+    Destreza contra efeitos que possa ver, como armadilhas
+    e magias. Para receber esse benefício, você não pode
+    estar cego, surdo ou incapacitado.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Caminho Primitivo</h2>
+
+  <p>
+    No 3º nível, você escolhe um caminho que molda a
+    natureza da sua fúria. Essa escolha concede
+    características no 3º nível e novamente nos níveis
+    6º, 10º e 14º.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Caminhos</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/08/ursine-champion-mtg-1024x658.jpg" alt="Guardião Ancestral">
+      <h3>Guardião Ancestral</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://beardice.com/cdn/shop/articles/dnd-5e-barbarian-the-strongest-output-of-rage-5412037.webp?v=1760607046" alt="Fúria de Batalha">
+      <h3>Fúria de Batalha</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://arcaneeye.com/wp-content/uploads/2021/04/wisnu-tan-rage-bellower-uplox.jpg" alt="Besta">
+      <h3>Besta</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.mitografias.com.br/wp-content/uploads/2007/06/Berserker_capa.jpg" alt="Berserker">
+      <h3>Berserker</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.nerdsandscoundrels.com/wp-content/uploads/2023/06/giant-barbarian-5e.jpg" alt="Gigante">
+      <h3>Gigante</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://blackcitadelrpg.com/wp-content/uploads/2022/09/Electrostatic-Infantry.jpg" alt="Arauto da Tempestade">
+      <h3>Arauto da Tempestade</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.wargamer.com/wp-content/sites/wargamer/2023/04/dnd-barbarian-subclasses-5e-woman.jpg" alt="Guerreiro Totêmico">
+      <h3>Guerreiro Totêmico</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/dungeonsanddragonsfan.com/wp-content/uploads/2024/05/barbarian-dnd-5e-class-guide-4.png?w=800&ssl=1" alt="Magia Selvagem">
+      <h3>Magia Selvagem</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://cdn.shopify.com/s/files/1/0806/4368/6694/files/DD-Barbarian-yell.jpg?v=1701072262">
+      <h3>Fanático</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://www.wargamer.com/wp-content/sites/wargamer/2023/04/dnd-barbarian-subclasses-5e-storm.jpg" alt="Guardião Ancestral">
+      <h3>Guardião Ancestral</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/08/mtg-karlach-fury-of-avernus-1024x800.jpg" alt="Fúria de Batalha">
+      <h3>Fúria de Batalha</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2023/01/goblin-javelineer-mtg-forgotten-realms-440x264.jpg" alt="Besta">
+      <h3>Besta</h3>
+    </button>
+  </div>
+</div>
+
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Extra</h2>
+
+  <p>
+    A partir do <strong>5º nível</strong>, você pode atacar <strong>duas vezes</strong>,
+    ao invés de uma, sempre que realizar a ação de <strong>Ataque</strong>
+    no seu turno.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Movimento Rápido</h2>
+
+  <p>
+    A partir do <strong>5º nível</strong>, seu deslocamento aumenta em
+    <strong>3 metros</strong> enquanto você não estiver vestindo
+    <strong>armadura pesada</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Instinto Selvagem</h2>
+
+  <p>
+    No <strong>7º nível</strong>, seu instinto está tão apurado que você
+    recebe <strong>vantagem nas jogadas de iniciativa</strong>.
+  </p>
+
+  <p>
+    Além disso, se você estiver <strong>surpreso</strong> no começo de um
+    combate e não estiver <strong>incapacitado</strong>, você pode agir
+    normalmente no seu primeiro turno, mas apenas se
+    <strong>entrar em fúria</strong> antes de realizar qualquer outra
+    coisa neste turno.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Crítico Brutal</h2>
+
+  <p>
+    A partir do <strong>9º nível</strong>, você pode rolar
+    <strong>um dado de dano de arma adicional</strong> ao
+    determinar o dano extra de um <strong>acerto crítico</strong>
+    com uma arma <strong>corpo a corpo</strong>.
+  </p>
+
+  <p>
+    Esse benefício aumenta conforme você avança de nível:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      <strong>13º nível:</strong> dois dados adicionais;
+    </li>
+    <li>
+      <strong>17º nível:</strong> três dados adicionais.
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Fúria Implacável</h2>
+
+  <p>
+    A partir do <strong>11º nível</strong>, sua fúria pode manter você
+    lutando independentemente da gravidade dos seus ferimentos.
+  </p>
+
+  <p>
+    Se você cair para <strong>0 pontos de vida</strong> enquanto estiver
+    em <strong>fúria</strong> e não morrer, você pode realizar um
+    <strong>teste de resistência de Constituição</strong> com
+    <strong>CD 10</strong>.
+  </p>
+
+  <p>
+    Se for bem-sucedido, você volta para <strong>1 ponto de vida</strong>
+    ao invés de cair inconsciente.
+  </p>
+
+  <p>
+    Cada vez que você utilizar essa característica após a primeira,
+    a <strong>CD aumenta em 5</strong>.
+    Após terminar um <strong>descanso curto ou longo</strong>,
+    a CD retorna para <strong>10</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Fúria Persistente</h2>
+
+  <p>
+    A partir do <strong>15º nível</strong>, sua fúria é tão brutal que
+    ela só termina prematuramente se você
+    <strong>cair inconsciente</strong> ou se
+    <strong>decidir encerrá-la</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Força Indomável</h2>
+
+  <p>
+    A partir do <strong>18º nível</strong>, sempre que o total de um
+    <strong>teste de Força</strong> for menor que o seu
+    <strong>valor de Força</strong>, você pode usar esse valor
+    no lugar do resultado obtido.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Campeão Primitivo</h2>
+
+  <p>
+    No <strong>20º nível</strong>, você incorpora os poderes da natureza.
+    Seus valores de <strong>Força</strong> e <strong>Constituição</strong>
+    aumentam em <strong>4</strong>.
+  </p>
+
+  <p>
+    O máximo para esses valores passa a ser
+    <strong>24</strong>.
+  </p>
+</div>
+`;
+
+const barbaroOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(barbaro5e, true));
+btnOne.addEventListener("click", () => swapContent(barbaroOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = barbaro5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

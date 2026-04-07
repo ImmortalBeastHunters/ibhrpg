@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bardo • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2024/09/an-inspiring-performer-of-music-dance-and-magic-by-evyn-fong.jpg?q=49&fit=crop&w=825&dpr=2" alt="Bardo">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const bardo5e = `
+<h1>Bardo</h1>
+<div class="subtitle">Classe Conjuradora • D&D 5e</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Bardos são os <strong>artistas, cronistas e manipuladores da palavra</strong>
+    em Iccarion. Diferente de magos que estudam grimórios ou clérigos que
+    canalizam poder divino, bardos moldam a realidade através de
+    <strong>histórias, música e emoção</strong>.
+  </p>
+
+  <p>
+    Para um bardo, conhecimento não é apenas algo a ser acumulado, mas
+    vivido e transmitido. Canções ancestrais, poemas esquecidos e lendas
+    heroicas carregam ecos de magia, capazes de inspirar aliados,
+    confundir inimigos ou alterar o curso de um confronto com poucas
+    palavras bem escolhidas.
+  </p>
+
+  <p>
+    Viajantes por natureza, bardos são frequentemente encontrados entre
+    cortes nobres, tavernas obscuras e estradas perigosas. Onde histórias
+    precisam ser contadas ou verdades precisam ser distorcidas, um bardo
+    sempre estará presente — transformando <strong>arte em poder</strong>
+    e memória em magia.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bardo</h2>
+
+  <div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus de Prof.</th>
+      <th>Características</th>
+      <th>Truques Conhecidos</th>
+      <th>Magias Conhecidas</th>
+      <th>1º</th>
+      <th>2º</th>
+      <th>3º</th>
+      <th>4º</th>
+      <th>5º</th>
+      <th>6º</th>
+      <th>7º</th>
+      <th>8º</th>
+      <th>9º</th>
+    </tr>
+
+    <tr><td>1º</td><td>+2</td><td>Conjuração, Inspiração de Bardo (d6)</td><td>2</td><td>4</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>2º</td><td>+2</td><td>Versatilidade, Canção do Descanso (d6)</td><td>2</td><td>5</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>3º</td><td>+2</td><td>Colégio de Bardo, Aptidão</td><td>2</td><td>6</td><td>4</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>4º</td><td>+2</td><td>Incremento no Valor de Habilidade</td><td>3</td><td>7</td><td>4</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>5º</td><td>+3</td><td>Inspiração de Bardo (d8), Fonte de Inspiração</td><td>3</td><td>8</td><td>4</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>6º</td><td>+3</td><td>Habilidade de Colégio de Bardo, Canção de Proteção</td><td>3</td><td>9</td><td>4</td><td>3</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>7º</td><td>+3</td><td>–</td><td>3</td><td>10</td><td>4</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>8º</td><td>+3</td><td>Incremento no Valor de Habilidade</td><td>3</td><td>11</td><td>4</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>9º</td><td>+4</td><td>Canção do Descanso (d8)</td><td>3</td><td>12</td><td>4</td><td>3</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>10º</td><td>+4</td><td>Inspiração de Bardo (d10), Aptidão, Segredos Mágicos</td><td>4</td><td>14</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>11º</td><td>+4</td><td>–</td><td>4</td><td>15</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>12º</td><td>+4</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>15</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>13º</td><td>+5</td><td>Canção do Descanso (d10)</td><td>4</td><td>16</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+    <tr><td>14º</td><td>+5</td><td>Habilidade de Colégio de Bardo, Segredos Mágicos</td><td>4</td><td>18</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+    <tr><td>15º</td><td>+5</td><td>Inspiração de Bardo (d12)</td><td>4</td><td>19</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+    <tr><td>16º</td><td>+5</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>19</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+    <tr><td>17º</td><td>+6</td><td>Canção do Descanso (d12)</td><td>4</td><td>20</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>18º</td><td>+6</td><td>Segredos Mágicos</td><td>4</td><td>22</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>19º</td><td>+6</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>22</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>20º</td><td>+6</td><td>Inspiração Superior</td><td>4</td><td>22</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d8 por nível de Bardo</p>
+  <p><strong>Pontos de Vida no 1º Nível:</strong> 8 + seu modificador de Constituição</p>
+  <p>
+    <strong>Pontos de Vida em níveis elevados:</strong>
+    1d8 (ou 5) + seu modificador de Constituição por nível de Bardo depois do 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Leves</p>
+  <p><strong>Armas:</strong> Armas simples, bestas de mão, espadas longas, rapieiras, espadas curtas</p>
+  <p>
+    <strong>Ferramentas:</strong> Três instrumentos musicais à sua escolha
+  </p>
+  <p><strong>Testes de Resistência:</strong> Destreza, Carisma</p>
+  <p>
+    <strong>Perícias:</strong> Escolha três quaisquer
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>Você começa com o seguinte equipamento, além do equipamento concedido pelo seu antecedente:</p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) uma rapieira
+      <strong>ou</strong>
+      (b) uma espada longa
+      <strong>ou</strong>
+      (c) qualquer arma simples
+    </li>
+    <li>
+      (a) um pacote de diplomata
+      <strong>ou</strong>
+      (b) um pacote de artista
+    </li>
+    <li>
+      (a) um lute
+      <strong>ou</strong>
+      (b) qualquer outro instrumento musical
+    </li>
+    <li>
+      Armadura de couro e uma adaga
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Conjuração</h2>
+
+  <p>
+    Você aprendeu a desvendar e remodelar o tecido da realidade em harmonia com seus desejos e música. 
+    Suas magias fazem parte de seu vasto repertório, uma magia que você pode ajustar para diferentes situações.
+  </p>
+
+  <h3>Truques</h3>
+  <p>
+    No <strong>1º nível</strong>, você conhece dois truques de sua escolha presentes na 
+    <a href="../magias.html">Lista de magias de Bardo</a>. Em níveis superiores, você aprende truques adicionais da lista de bardo de sua escolha, 
+    como mostrado na coluna <a href="../magias.html">Truques Conhecidos</a> na tabela do Bardo.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, você pode substituir um dos truques de Bardo que você conhece por outro truque da 
+    <a href="../magias.html">Lista de magias de Bardo</a>.
+  </p>
+
+  <h3>Preparando e Conjurando Magias</h3>
+  <p>
+    A tabela do Bardo mostra quantos espaços de magia você possui para conjurar suas magias de bardo de 1º nível ou superior. 
+    Para conjurar uma dessas magias, você deve consumir um espaço do nível da magia ou superior. 
+    Você recupera todos os espaços de magia gastos quando finaliza um descanso longo.
+  </p>
+  <p>
+    Você conhece magias de Bardo de 1º nível ou superior conforme mostrado na coluna 
+    <a href="../magias.html">Magias Conhecidas</a> da tabela do Bardo. Cada magia deve ser de um nível para o qual você possua espaços de magia.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, pode escolher uma das magias de Bardo que conhece e substituí-la por outra magia da 
+    <a href="../magias.html">Lista de magias de Bardo</a>, também de um nível para o qual você possua espaços de magia.
+  </p>
+
+  <h3>Habilidade de Conjuração</h3>
+  <p>
+    Carisma é a sua habilidade de conjuração para suas magias de Bardo: seu encanto e expressão pessoal permitem que você canalize magia com maestria. 
+    Você usa seu modificador de Carisma sempre que uma magia de Bardo se referir à sua habilidade de conjuração. 
+    Além disso, você usa seu modificador de Carisma ao definir a CD dos testes de resistência para suas magias de Bardo e ao realizar jogadas de ataque com magia.
+  </p>
+  <p>
+    <strong>CD teste de resistência</strong> = 8 + seu bônus de proficiência + seu modificador de Carisma
+  </p>
+  <p>
+    <strong>Modificador de ataque de magia</strong> = seu bônus de proficiência + seu modificador de Carisma
+  </p>
+
+  <h3>Conjuração de Ritual</h3>
+  <p>
+    Você pode conjurar qualquer magia de Bardo que conheça como um ritual, se essa magia possuir a etiqueta <strong>ritual</strong>.
+  </p>
+
+  <h3>Foco de Conjuração</h3>
+  <p>
+    Você pode usar um instrumento musical (encontrado no capítulo 5) como foco de conjuração para suas magias de Bardo.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Inspiração Bárdica</h2>
+
+  <p>
+    Você pode inspirar outros através de palavras emocionantes ou música. Para isso, você usa uma ação bônus no seu turno para escolher uma criatura, além de você mesmo, que esteja a até 18 metros (60 pés) de você e que possa ouvi-lo. 
+    Essa criatura recebe um dado de <strong>Inspiração Bárdica</strong>, que inicialmente é um d6.
+  </p>
+
+  <p>
+    Dentro dos próximos 10 minutos, a criatura pode rolar o dado e adicionar o número obtido em um teste de habilidade, ataque ou teste de resistência. 
+    A criatura pode esperar até depois de rolar o d20 para decidir usar o dado de Inspiração Bárdica, mas deve decidir antes do Mestre dizer se a rolagem teve sucesso ou falhou. 
+    Uma vez que o dado de Inspiração Bárdica seja usado, ele se perde. Cada criatura pode ter apenas um dado de Inspiração Bárdica por vez.
+  </p>
+
+  <p>
+    Você pode usar essa característica um número de vezes igual ao seu modificador de Carisma (mínimo de uma vez). 
+    Você recupera todos os usos gastos ao finalizar um descanso longo.
+  </p>
+
+  <p>
+    O dado de <strong>Inspiração Bárdica</strong> muda conforme você alcança certos níveis nesta classe: ele se torna um d8 no 5º nível, um d10 no 10º nível e um d12 no 15º nível.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Versatilidade</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, você pode adicionar metade do seu bônus de proficiência, arredondado para baixo, a qualquer teste de habilidade que você fizer e que <strong>não</strong> inclua seu bônus de proficiência.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Canção de Descanso</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, você pode usar música ou oratória calmante para ajudar a revitalizar seus aliados feridos durante um descanso curto. 
+    Se você ou qualquer criatura amiga que possa ouvir sua apresentação recuperar pontos de vida no final do descanso curto utilizando um ou mais Dados de Vida, cada uma dessas criaturas recupera <strong>1d6 pontos de vida adicionais</strong>.
+  </p>
+
+  <p>
+    Os pontos de vida adicionais aumentam quando você alcança certos níveis nesta classe: <strong>1d8 no 9º nível</strong>, <strong>1d10 no 13º nível</strong> e <strong>1d12 no 17º nível</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Inspiração Mágica <span style="font-weight: normal;">(Opcional)</span></h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, se uma criatura possuir um dado de <strong>Inspiração Bárdica</strong> seu e conjurar uma magia que restaure pontos de vida ou cause dano, a criatura pode rolar esse dado e escolher um alvo afetado pela magia. 
+    Adicione o valor rolado como bônus aos pontos de vida recuperados ou ao dano causado. 
+    Após isso, o dado de <strong>Inspiração Bárdica</strong> é perdido.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Colégio de Bardo</h2>
+
+  <p>
+    A partir do <strong>3º nível</strong>, você se aprofunda nas técnicas avançadas de um colégio de bardo à sua escolha. 
+    Sua escolha concede a você características específicas no <strong>3º nível</strong> e novamente no <strong>6º</strong> e <strong>14º nível</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Colégios</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nerdarchy.com/wp-content/uploads/2021/04/5E-DD-College-of-Creation-bard.png?fit=1200%2C802&ssl=1" alt="Criação">
+      <h3>Criação</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2022/11/dragonborn-lizardfolk-bard-monsters-of-the-multiverse.jpg" alt="Eloquência">
+      <h3>Eloquência</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2022/03/Inspiring-Bard-(1).jpg" alt="Glamour">
+      <h3>Glamour</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://mythcreants.com/wp-content/uploads/2021/05/unnamed.jpg" alt="Conhecimento">
+      <h3>Conhecimento</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2023/06/occult-epiphany-mtg.jpg" alt="Espíritos">
+      <h3>Espíritos</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2021/09/Eloquence-Bard---Cropped.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Espadas">
+      <h3>Espadas</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://velantis.wordpress.com/wp-content/uploads/2020/01/valor.jpg" alt="Bravura">
+      <h3>Bravura</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/07/piper-of-the-swarm-by-irina-nordsol.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Sussurros">
+      <h3>Sussurros</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://th.bing.com/th/id/R.da1e65945b89f7e5e52c9771ccb6240c?rik=5AAx0%2b7mA1%2bCxw&pid=ImgRaw&r=0" alt="Mago de Lorehold">
+      <h3>Mago de Lorehold</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.dndbeyond.com/attachments/10/148/silvery-barbs-featured.jpg" alt="Mago de Silverquill">
+      <h3>Mago de Silverquill</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.dndbeyond.com/attachments/thumbnails/8/375/850/568/creation-2.png" alt="Criação">
+      <h3>Criação</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.dndbeyond.com/avatars/17834/86/637572141438024494.jpeg" alt="Espíritos">
+      <h3>Espíritos</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2024/09/a-gnome-bard-casts-vicious-mockery-to-skewer-a-kobold-with-magical-insults-by-igor-grechanyi.jpg?q=49&fit=crop&w=825&dpr=2" alt="Sátira">
+      <h3>Sátira</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Aptidão</h2>
+
+  <p>
+    A partir do <strong>3º nível</strong>, escolha duas das suas proficiências em perícias. 
+    Seu bônus de proficiência é dobrado para qualquer teste de habilidade que utilize uma das proficiências escolhidas.
+  </p>
+  <p>
+    No <strong>10º nível</strong>, você pode escolher mais duas proficiências em perícias para ganhar este mesmo benefício.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Versatilidade Bardica (Opcional)</h2>
+
+  <p>
+    Sempre que você atingir um nível nesta classe que conceda a característica
+    <strong>Incremento no Valor de Habilidade</strong>, você pode fazer uma das seguintes opções,
+    representando uma mudança de foco enquanto utiliza suas habilidades e magias:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Substituir uma das perícias escolhidas na característica <strong>Perícia Aprimorada</strong>
+      por outra de suas proficiências em perícias que não esteja se beneficiando da Perícia Aprimorada.
+    </li>
+    <li>
+      Substituir um truque aprendido com a característica <strong>Conjuração</strong> desta classe
+      por outro truque da <a href="../magias.html">Lista de Magias de Bardo</a>.
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Fonte de Inspiração</h2>
+
+  <p>
+    A partir do <strong>5º nível</strong>, você recupera todos os usos gastos
+    da característica <strong>Inspiração de Bardo</strong> ao finalizar um
+    descanso curto ou longo.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Canção de Proteção</h2>
+
+  <p>
+    No <strong>6º nível</strong>, você adquire a habilidade de usar notas musicais
+    ou palavras de poder para interromper efeitos que influenciam a mente.
+  </p>
+  <p>
+    Como ação, você pode iniciar uma performance que dura até o final do seu
+    próximo turno. Durante esse período, você e quaisquer criaturas amigas
+    em até 9 metros (30 pés) de você têm vantagem em testes de resistência
+    contra serem amedrontadas ou enfeitiçadas. 
+  </p>
+  <p>
+    A criatura precisa ser capaz de ouvir você para se beneficiar desse efeito.
+    A performance termina mais cedo se você ficar incapacitado, silenciado, ou
+    se decidir encerrar a performance voluntariamente (não é necessária ação).
+  </p>
+</div>
+
+
+<div class="section">
+  <h2>Segredos Mágicos</h2>
+
+  <p>
+    Ao atingir o <strong>10º nível</strong>, você adquiriu conhecimentos mágicos
+    de um amplo espectro de disciplinas. Escolha duas magias de qualquer classe,
+    incluindo a sua própria. A magia escolhida deve ser de um nível que você
+    possa conjurar, conforme mostrado na tabela do Bardo, ou um truque.
+  </p>
+  <p>
+    As magias escolhidas contam como magias de bardo para você e estão incluídas
+    no número da coluna <strong>Magias Conhecidas</strong> da tabela do Bardo.
+  </p>
+  <p>
+    Você aprende duas magias adicionais de qualquer classe no <strong>14º nível</strong>
+    e novamente no <strong>18º nível</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Inspiração Superior</h2>
+
+  <p>
+    Ao atingir o <strong>20º nível</strong>, quando você rolar iniciativa e não tiver
+    usos restantes da <strong>Inspiração de Bardo</strong>, você recupera um uso.
+  </p>
+</div>
+`;
+
+const bardoOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(bardo5e, true));
+btnOne.addEventListener("click", () => swapContent(bardoOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = bardo5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

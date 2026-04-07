@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classes de D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  min-height: 90px;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  z-index: 1000;
+}
+
+/* LOGO */
+.logo img {
+  height: 40px;
+  object-fit: contain;
+}
+
+/* AJUSTE DO MAIN POR CAUSA DO HEADER FIXO */
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 50px 16px 80px; /* topo maior por causa do header */
+}
+
+/* GRID */
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+/* CARD */
+.class-card {
+  display: flex;
+  align-items: stretch;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.class-card.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.class-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+}
+
+/* IMAGEM */
+.class-card-image {
+  position: relative;
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.class-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* DEGRADÊ SOBRE A IMAGEM */
+.class-card-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,0) 35%,
+    var(--card) 100%
+  );
+}
+
+/* CONTEÚDO */
+.class-card-content {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  z-index: 1;
+}
+
+.class-card-content h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+}
+
+.class-card-content em {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.class-card-content p {
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+
+.section-divider {
+  grid-column: 1 / -1; /* ocupa toda a largura do grid */
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 40px 0 20px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* FOCO PARA TECLADO */
+.class-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <img src="https://via.placeholder.com/80x40?text=Logo" alt="Logo do Site">
+  </a>
+</header>
+
+<br><br>
+
+<main>
+
+  <div class="section-divider">
+      Classes Oficiais
+  </div>
+
+  <br>
+
+  <section class="class-grid">
+
+    <div class="class-card" data-link="pages/artifice.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.wargamer.com/wp-content/sites/wargamer/2024/01/dnd-artificer-5e.jpg" alt="Artífice">
+      </div>
+      <div class="class-card-content">
+        <h2>Artífice</h2>
+        <em>Conjurador Técnico • Inteligência</em>
+        <p>
+        Inventores mágicos que combinam engenhocas, alquimia e magia para apoiar aliados e criar itens extraordinários.
+        </p>
+      </div>
+    </div>
+
+    <div class="class-card" data-link="pages/barbaro.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/barbarian.jpg" alt="Clérigo">
+      </div>
+      <div class="class-card-content">
+        <h2>Bárbaro</h2>
+        <em>Combatente Marcial • Força</em>
+        <p>
+        Guerreiros movidos pela fúria, bárbaros canalizam força primitiva para resistir a danos e esmagar inimigos.
+        </p>
+      </div>
+    </div>
+
+    <div class="class-card" data-link="pages/bardo.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/bard.jpg" alt="Bardo">
+      </div>
+      <div class="class-card-content">
+        <h2>Bardo</h2>
+        <em>Conjurador Versátil • Carisma</em>
+        <p>
+        Artistas e contadores de histórias que usam música, palavras e magia para inspirar aliados e confundir inimigos.
+        </p>
+      </div>
+    </div>
+
+    <div class="class-card" data-link="pages/bruxo.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://i0.wp.com/www.strangeassembly.com/wp-content/uploads/2024/05/11-001.vecnas-ritual-of-remaking.jpg?ssl=1" alt="Bruxo">
+      </div>
+      <div class="class-card-content">
+        <h2>Bruxo</h2>
+        <em>Conjurador de Pacto • Carisma</em>
+        <p>
+        Usuários de magia que fazem pactos com entidades poderosas, recebendo habilidades sobrenaturais em troca de serviços.
+        </p>
+
+      </div>
+    </div>
+
+    <div class="class-card" data-link="pages/clerigo.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/cleric.jpg" alt="Clérigo">
+      </div>
+      <div class="class-card-content">
+        <h2>Clérigo</h2>
+        <em>Conjurador Divino • Sabedoria</em>
+        <p>
+          Servos dos deuses, clérigos canalizam energia divina
+          para curar aliados e punir inimigos.
+        </p>
+      </div>
+    </div>
+
+    <div class="class-card" data-link="pages/druida.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/druid.jpg" alt="Druida">
+      </div>
+      <div class="class-card-content">
+        <h2>Druida</h2>
+        <em>Conjurador Natural • Sabedoria</em>
+        <p>
+        Guardiões da natureza que dominam magias naturais e podem assumir a forma de animais.
+        </p>
+      </div>
+    </div>
+
+    <div class="class-card" data-link="pages/feiticeiro.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/sorcerer.jpg" alt="Feiticeiro">
+      </div>
+      <div class="class-card-content">
+        <h2>Feiticeiro</h2>
+        <em>Conjurador Inato • Carisma</em>
+        <p>
+        Portadores de magia inata, cujo poder flui do sangue, de heranças místicas ou forças sobrenaturais.
+        </p>
+      </div>
+    </div>    
+    
+    <div class="class-card" data-link="pages/guerreiro.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/fighter.jpg" alt="Guerreiro">
+      </div>
+      <div class="class-card-content">
+        <h2>Guerreiro</h2>
+        <em>Mestre Marcial • Força ou Destreza</em>
+        <p>
+          Especialistas em combate, guerreiros dominam armas, armaduras e táticas para sobreviver em qualquer batalha.
+        </p>
+      </div>
+    </div> 
+    
+    <div class="class-card" data-link="pages/ladino.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/rogue.jpg" alt="Ladino">
+      </div>
+      <div class="class-card-content">
+        <h2>Ladino</h2>
+        <em>Especialista • Destreza</em>
+        <p>
+        Especialistas em furtividade e precisão, ladinos atacam onde dói mais e evitam confrontos diretos.
+        </p>
+      </div>
+    </div>     
+
+    <div class="class-card" data-link="pages/mago.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/wizard.jpg" alt="Mago">
+      </div>
+      <div class="class-card-content">
+        <h2>Mago</h2>
+        <em>Conjurador Arcano • Inteligência</em>
+        <p>
+          Mestres do conhecimento arcano, magos estudam grimórios antigos para moldar a realidade com poderosas magias.
+        </p>
+      </div>
+    </div>
+
+    <div class="class-card" data-link="pages/monge.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/monk.jpg" alt="Monge">
+      </div>
+      <div class="class-card-content">
+        <h2>Monge</h2>
+        <em>Artista Marcial • Destreza ou Sabedoria</em>
+        <p>
+        Guerreiros disciplinados que canalizam energia interior para realizar feitos físicos extraordinários.
+        </p>
+      </div>
+    </div>
+
+    <div class="class-card" data-link="pages/paladino.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/paladin.jpg" alt="Paladino">
+      </div>
+      <div class="class-card-content">
+        <h2>Paladino</h2>
+        <em>Combatente Divino • Força e Carisma</em>
+        <p>
+        Campeões sagrados que juram votos solenes e usam magia divina para proteger e julgar o mal.
+        </p>
+      </div>
+    </div>
+
+    <div class="class-card" data-link="pages/patrulheiro.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://www.aidedd.org/assets/regles/2024/ranger.jpg" alt="Patrulheiro">
+      </div>
+      <div class="class-card-content">
+        <h2>Patrulheiro</h2>
+        <em>Combatente Natural • Destreza ou Sabedoria</em>
+        <p>
+        Caçadores e exploradores que combinam combate, sobrevivência e magia ligada à natureza.
+        </p>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      Classes Homebrew
+    </div>
+    
+    <div class="class-card" data-link="pages/caçador_de_sangue.html" tabindex="0">
+      <div class="class-card-image">
+        <img src="https://external-preview.redd.it/eDAx6y_2mNOFTHNheT84xoBwQ3KBJKpwv96Ohvl_4ok.jpg?width=640&crop=smart&auto=webp&s=90a60d0cac131d7485be23e2b40c5a0b58b742d5" alt="Caçador de Sangue">
+      </div>
+      <div class="class-card-content">
+        <h2>Caçador de Sangue</h2>
+        <em>Caçador Hemomântico • Destreza ou Força</em>
+        <p>
+          Guerreiros que usam rituais de sangue e sacrifício para caçar monstros, amaldiçoar inimigos e resistir às trevas.
+        </p>
+      </div>
+    </div>
+
+
+  </section>
+
+</main>
+
+<script>
+const cards = document.querySelectorAll('.class-card');
+
+cards.forEach((card, index) => {
+  const link = card.dataset.link;
+
+  /* clique */
+  card.addEventListener('click', () => {
+    window.location.href = link;
+  });
+
+  /* teclado */
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      window.location.href = link;
+    }
+  });
+
+  /* animação em cascata */
+  setTimeout(() => {
+    card.classList.add('show');
+  }, index * 120); // controla o intervalo entre os cards
+});
+</script>
+
+</body>
+</html>

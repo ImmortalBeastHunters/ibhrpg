@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mago • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/07/dungeons-and-dragons-wizard-phb-2024.jpg" alt="Mago">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const mago5e = `
+<h1>Mago</h1>
+<div class="subtitle">Classe Conjuradora • D&D 5e</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Magos são estudiosos dedicados das artes arcanas, indivíduos que alcançam
+    o poder mágico por meio de <strong>conhecimento, disciplina e estudo rigoroso</strong>.
+    Diferente de feiticeiros, cuja magia é inata, ou clérigos, que canalizam o
+    poder divino, o mago conquista a magia através da compreensão profunda
+    das leis que regem o multiverso.
+  </p>
+
+  <p>
+    Grimórios, fórmulas arcanas e anos de pesquisa são as ferramentas essenciais
+    de um mago. Cada magia é aprendida, registrada e aperfeiçoada com precisão,
+    seja em torres isoladas, academias arcanas ou bibliotecas esquecidas pelo
+    tempo. Para um mago, a magia é uma ciência complexa — algo a ser dominado,
+    refinado e expandido constantemente.
+  </p>
+
+  <p>
+    Metódicos ou criativos, eruditos ou experimentais, magos moldam a realidade
+    por meio da <strong>intelectualização do arcano</strong>, adaptando feitiços,
+    criando novas magias e explorando os limites do possível. Onde há mistérios
+    arcanos a serem desvendados, um mago se destaca — transformando
+    <strong>conhecimento em poder</strong> e teoria em feitos extraordinários.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Mago</h2>
+
+<div class="table-wrapper">
+<table>
+  <tr>
+    <th>Nível</th>
+    <th>Bônus de Prof.</th>
+    <th>Características</th>
+    <th>Truques<br>Conhecidos</th>
+    <th>1º</th>
+    <th>2º</th>
+    <th>3º</th>
+    <th>4º</th>
+    <th>5º</th>
+    <th>6º</th>
+    <th>7º</th>
+    <th>8º</th>
+    <th>9º</th>
+  </tr>
+
+  <tr><td>1°</td><td>+2</td><td>Conjuração, Recuperação Arcana</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>2°</td><td>+2</td><td>Tradição Arcana</td><td>3</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>3°</td><td>+2</td><td>–</td><td>3</td><td>4</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>4°</td><td>+2</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>4</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>5°</td><td>+3</td><td>–</td><td>4</td><td>4</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>6°</td><td>+3</td><td>Característica de Tradição Arcana</td><td>4</td><td>4</td><td>3</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>7°</td><td>+3</td><td>–</td><td>4</td><td>4</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>8°</td><td>+3</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>4</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>9°</td><td>+4</td><td>–</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>10°</td><td>+4</td><td>Característica de Tradição Arcana</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>11°</td><td>+4</td><td>–</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>12°</td><td>+4</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>13°</td><td>+5</td><td>–</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+  <tr><td>14°</td><td>+5</td><td>Característica de Tradição Arcana</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+  <tr><td>15°</td><td>+5</td><td>–</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+  <tr><td>16°</td><td>+5</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+  <tr><td>17°</td><td>+6</td><td>–</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  <tr><td>18°</td><td>+6</td><td>Dominar Magia</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  <tr><td>19°</td><td>+6</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+  <tr><td>20°</td><td>+6</td><td>Assinatura Mágica</td><td>5</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+</table>
+</div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d6 por nível de Mago</p>
+  <p>
+    <strong>Pontos de Vida no 1º Nível:</strong>
+    6 + seu modificador de Constituição
+  </p>
+  <p>
+    <strong>Pontos de Vida nos Níveis Seguintes:</strong>
+    1d6 (ou 4) + seu modificador de Constituição por nível de Mago após o 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Nenhuma</p>
+  <p>
+    <strong>Armas:</strong> Adagas, dardos, fundas, bordões e bestas leves
+  </p>
+  <p><strong>Ferramentas:</strong> Nenhuma</p>
+  <p>
+    <strong>Testes de Resistência:</strong>
+    Inteligência, Sabedoria
+  </p>
+  <p>
+    <strong>Perícias:</strong>
+    Escolha duas dentre Arcanismo, História, Intuição,
+    Investigação, Medicina e Religião
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>
+    Você começa com o seguinte equipamento, além do equipamento concedido pelo
+    seu antecedente:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) um bordão
+      <strong>ou</strong>
+      (b) uma adaga
+    </li>
+    <li>
+      (a) uma bolsa de componentes
+      <strong>ou</strong>
+      (b) um foco arcano
+    </li>
+    <li>
+      (a) um pacote de estudioso
+      <strong>ou</strong>
+      (b) um pacote de explorador
+    </li>
+    <li>Um grimório</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Conjuração</h2>
+
+  <p>
+    Como mago, você pratica a magia por meio de <strong>estudo rigoroso, lógica e disciplina</strong>.
+    Diferente de conjuradores que canalizam poder inato ou divino, você aprende a moldar
+    a energia arcana através da compreensão das leis que regem o multiverso.
+    Cada magia que você conjura é o resultado de pesquisa, prática e preparação cuidadosa.
+  </p>
+
+  <h3>Truques</h3>
+  <p>
+    No <strong>1º nível</strong>, você conhece três truques de sua escolha presentes na
+    <a href="../magias.html">Lista de Magias de Mago</a>. Em níveis superiores,
+    você aprende truques adicionais da lista de mago, como mostrado na coluna
+    <a href="../magias.html">Truques Conhecidos</a> na tabela do Mago.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, pode substituir um dos truques de Mago
+    que conhece por outro truque da
+    <a href="../magias.html">Lista de Magias de Mago</a>.
+  </p>
+
+  <h3>Livro de Magias</h3>
+  <p>
+    No 1º nível, você possui um <strong>grimório</strong> contendo seis magias de 1º nível
+    de sua escolha da
+    <a href="../magias.html">Lista de Magias de Mago</a>.
+    Seu grimório é o repositório de todo o conhecimento arcano que você acumulou,
+    registrando fórmulas, símbolos e anotações necessárias para conjurar suas magias.
+  </p>
+  <p>
+    Sempre que você ganhar um nível de Mago, pode adicionar duas magias de Mago
+    de um nível para o qual possua espaços de magia ao seu grimório.
+    Você também pode adicionar magias encontradas em pergaminhos ou livros de outros
+    magos, conforme descrito nas regras de conjuração.
+  </p>
+
+  <h3>Preparando e Conjurando Magias</h3>
+  <p>
+    A tabela do Mago mostra quantos espaços de magia você possui para conjurar suas
+    magias de 1º nível ou superior. Para conjurar uma dessas magias,
+    você deve gastar um espaço de magia do nível da magia ou superior.
+    Você recupera todos os espaços de magia gastos ao concluir um descanso longo.
+  </p>
+  <p>
+    Diferente de feiticeiros, você <strong>prepara</strong> uma lista de magias de Mago
+    a partir de seu grimório. O número de magias que você pode preparar é igual
+    ao seu modificador de Inteligência + seu nível de Mago (mínimo de uma magia).
+    Você pode alterar sua lista de magias preparadas ao final de um descanso longo.
+  </p>
+
+  <h3>Habilidade de Conjuração</h3>
+  <p>
+    Inteligência é sua habilidade de conjuração para as magias de Mago:
+    seu conhecimento, memória e capacidade de análise determinam
+    o quão eficazmente você manipula a energia arcana.
+    Você usa seu modificador de Inteligência sempre que uma magia de Mago
+    se referir à sua habilidade de conjuração.
+    Além disso, você usa seu modificador de Inteligência ao definir a CD dos testes
+    de resistência para suas magias de Mago e ao realizar jogadas de ataque com magia.
+  </p>
+  <p>
+    <strong>CD de teste de resistência</strong> = 8 + seu bônus de proficiência + seu modificador de Inteligência
+  </p>
+  <p>
+    <strong>Modificador de ataque de magia</strong> = seu bônus de proficiência + seu modificador de Inteligência
+  </p>
+
+  <h3>Foco de Conjuração</h3>
+  <p>
+    Você pode usar um <strong>foco arcano</strong> (encontrado no capítulo 5)
+    como foco de conjuração para suas magias de Mago.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Recuperação Arcana</h2>
+
+  <p>
+    Você aprendeu como recuperar um pouco de sua energia mágica
+    estudando seu grimório. Uma vez por dia, quando você terminar
+    um descanso curto, você pode escolher espaços de magia gastos
+    para recuperá-los.
+  </p>
+
+  <p>
+    Os espaços de magia gastos a serem recuperados podem ser de
+    qualquer combinação de níveis de magia, desde que sejam iguais
+    ou inferiores a metade de seu nível de mago (arredondado para cima)
+    e nenhum deles seja de 6º nível ou superior.
+  </p>
+
+  <p>
+    Por exemplo, se você é um mago de 4º nível, você pode recuperar
+    até 2 espaços de magia gastos. Você pode recuperar o espaço de
+    uma magia de 2º nível ou os espaços de duas magias de 1º nível.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Tradição Arcana</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, você escolhe uma tradição arcana
+    que representa o campo de estudo mágico ao qual você se dedicou.
+    Sua escolha reflete a abordagem teórica e prática que você utiliza
+    para compreender e manipular a magia.
+    Essa tradição concede a você características específicas no
+    <strong>2º nível</strong> e novamente nos
+    <strong>6º, 10º</strong> e <strong>14º níveis</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Tradições</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2022/04/drow-warlock.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Abjuração">
+      <h3>Abjuração</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nat1gaming.com/wp-content/uploads/2024/02/Kellan-Inquisitive-Prodigy-Murders-at-Karlov-Manor-MtG-Art.jpg?fit=1080%2C810&ssl=1" alt="Bladesinging">
+      <h3>Bladesinging</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.wargamer.com/wp-content/sites/wargamer/2024/04/dnd-chronurgy-wizard-5e-teferi.jpg" alt="Cronurgia">
+      <h3>Cronurgia</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/11/nimbleclaw-adept-by-scott-murphy.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Conjuração">
+      <h3>Conjuração</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/08/10-dungeons-dragons-how-to-build-a-school-of-divination-wizard-contact-other-plane-by-alix-branwyn.jpg" alt="Adivinhação">
+      <h3>Adivinhação</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2022/03/Dungeons-Dragons-Ice-Spell.jpg" alt="Encantamento">
+      <h3>Encantamento</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img,w_437,h_520/https://wizardofthetavern.com/wp-content/uploads/2019/10/EXPLOSION.jpg" alt="Evocação">
+      <h3>Evocação</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i.redd.it/izqud7cvazp61.jpg" alt="Graviturgia">
+      <h3>Graviturgia</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nerdarchy.com/wp-content/uploads/2020/03/illusionist.jpg?resize=1024%2C683" alt="Ilusão">
+      <h3>Ilusão</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://attachment.tapatalk-cdn.com/2742/202007/10759084_eb47082b90ad27bf7c6dc6d45f3fdbae.jpg" alt="Necromancia">
+      <h3>Necromancia</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.wargamer.com/wp-content/sites/wargamer/2024/04/dnd-abjuration-wizard-5e-spells.jpg" alt="Ordem dos Escribas">
+      <h3>Ordem dos Escribas</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://preview.redd.it/transmutation-wizard-revised-v0-kh0018pxg8oc1.jpg?width=1269&format=pjpg&auto=webp&s=9274e10186bc61e3c11df25b1bfe23e37edfba79" alt="Transmutação">
+      <h3>Transmutação</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/09/syncopate-by-marta-nael.jpg" alt="Magia de Guerra">
+      <h3>Magia de Guerra</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/09/candlekeep-inspiration.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Runista">
+      <h3>Runista</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado Arquivado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2023/09/mtg-twinferno.jpg" alt="Artífice">
+      <h3>Artífice</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2022/04/enchantment-wizard.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Invenção">
+      <h3>Invenção</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.gmbinder.com/images/W2QM6hi.jpg" alt="Lore Mastery">
+      <h3>Lore Mastery</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/11/conjuration-wizard-by-zoltan-boros.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Mago de Lorehold">
+      <h3>Mago de Lorehold</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2021/10/Basic-Conjuration-by-Randy-Vargas.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Mago de Prismari">
+      <h3>Mago de Prismari</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2023/09/eager-first-year-strixhaven.jpg" alt="Mago de Quandrix">
+      <h3>Mago de Quandrix</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2023/09/hurkyl-master-wizard-mtg-1024x600.jpg" alt="Mago de Silverquill">
+      <h3>Mago de Silverquill</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://mythcreants.com/wp-content/uploads/2020/03/Wizard.jpg" alt="Onomancia">
+      <h3>Onomancia</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2023/10/Bruvac-the-Grandiloquent-mtg.jpg" alt="Ordem dos Escribas">
+      <h3>Ordem dos Escribas</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://cannibalhalflinggaming.com/wp-content/uploads/2017/03/mystic-dnd-750x375.jpg?w=672&h=372&crop=1" alt="Psíquica">
+      <h3>Psíquica</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/68193e98-d5fd-4de6-87ad-ec7db4314677/dgsvz48-7dbfaae1-2348-41b7-9790-b62f87c196c9.jpg/v1/fill/w_1280,h_758,q_75,strp/wizard___steampunk_by_consensusstudios_dgsvz48-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzU4IiwicGF0aCI6Ii9mLzY4MTkzZTk4LWQ1ZmQtNGRlNi04N2FkLWVjN2RiNDMxNDY3Ny9kZ3N2ejQ4LTdkYmZhYWUxLTIzNDgtNDFiNy05NzkwLWI2MmY4N2MxOTZjOS5qcGciLCJ3aWR0aCI6Ijw9MTI4MCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.4CVc5dBRAepAoGGX-zzkJ5YUSTAP7eqo2YkRwe7b_ZM" alt="Tecnomancia">
+      <h3>Tecnomancia</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i.ibb.co/z7YDr6h/Battlefield-Thaumaturge-Mt-G-Art.jpg" alt="Teurgia">
+      <h3>Teurgia</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Fórmulas de Truques (Opcional)</h2>
+
+  <p>
+    No <strong>3º nível</strong>, você gravou um conjunto de fórmulas arcanas
+    em seu grimório que pode usar para formular um truque em sua mente.
+    Sempre que você terminar um descanso longo e consultar essas fórmulas
+    em seu livro de magias, pode substituir um truque de Mago que conhece
+    por outro da
+    <a href="../magias.html">Lista de Magias de Mago</a>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Dominar Magia</h2>
+
+  <p>
+    No <strong>18º nível</strong>, você alcança tamanha maestria em determinadas
+    magias que pode conjurá-las à vontade.
+    Você escolhe uma magia de Mago de 1º nível e uma magia de Mago de 2º nível
+    de seu grimório.
+  </p>
+
+  <p>
+    Você conjura essas magias em seu nível mínimo, sem gastar espaços de magia
+    quando as tiver preparadas.
+    Caso queira, você pode conjurá-las utilizando um espaço de magia de nível
+    superior, gastando espaços de magia normalmente.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Assinatura Mágica</h2>
+
+  <p>
+    Quando alcançar o <strong>20º nível</strong>, você adquire domínio completo
+    de duas poderosas magias e pode conjurá-las sem muito esforço.
+    Escolha duas magias de Mago de 3º nível em seu grimório como sua
+    assinatura mágica.
+  </p>
+
+  <p>
+    Você sempre tem essas magias preparadas, e elas não contam como magias
+    preparadas em sua lista. Além disso, você pode conjurar cada uma das
+    magias escolhidas uma vez por dia como magias de 3º nível, sem gastar
+    nenhum espaço de magia.
+  </p>
+
+  <p>
+    Quando fizer isso, você não poderá fazê-lo novamente antes de terminar
+    um descanso curto ou longo.
+    Se desejar conjurar essas magias usando espaços de níveis superiores,
+    a magia gastará espaços de magia normalmente.
+  </p>
+</div>
+`;
+
+const magoOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(mago5e, true));
+btnOne.addEventListener("click", () => swapContent(magoOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = mago5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

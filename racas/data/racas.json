@@ -1,0 +1,3531 @@
+{
+    "raca": [
+        {
+  "name": "Aarakocra",
+  "english_name": "Aarakocra",
+  "source": "Mordenkainen Presents: Monsters of the Multiverse",
+  "page": 5,
+  "size": "M",
+  "speed": {
+    "walk": 25,
+    "fly": 50
+  },
+  "ability": {
+    "dex": 2,
+    "wis": 1
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Os aarakocra atingem a maturidade aos 3 anos de idade. Em comparação com humanos, raramente vivem além dos 30 anos, como chamas breves carregadas pelos ventos."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "A maioria dos aarakocra é bondosa e raramente se prende aos extremos da lei ou do caos. Líderes tribais e guerreiros tendem à ordem, enquanto exploradores e aventureiros frequentemente seguem os ventos do caos."
+      ]
+    },
+    {
+      "name": "Voo",
+      "type": "entries",
+      "entries": [
+        "Você possui deslocamento de voo de 15 metros (50 pés). Para usar esta habilidade, você não pode estar vestindo armadura média ou pesada."
+      ]
+    },
+    {
+      "name": "Garras",
+      "type": "entries",
+      "entries": [
+        "Você é proficiente com seus ataques desarmados, que causam 1d4 de dano cortante ao atingir, como as garras de uma ave de rapina."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum, Aarakocra e Auran, a língua sussurrada pelos ventos elementais."
+      ]
+    },
+    {
+      "name": "Descrição",
+      "type": "entries",
+      "entries": [
+        "Humanoides com traços de pássaro, incluindo asas, bico e penas, capazes de voar com facilidade. Originários de montanhas e regiões isoladas, vivem em tribos que prezam liberdade e conexão com a natureza. Ágeis e atentos, são excelentes exploradores, mensageiros e guerreiros, usando sua visão aguçada e velocidade para proteger suas terras e auxiliar aliados."
+      ]
+    },
+    {
+      "name": "Descrição Detalhada",
+      "type": "entries",
+      "entries": [
+        "Os aarakocra são humanoides com traços de pássaro, possuindo asas fortes, bico afiado e plumagem que varia em cores vibrantes. Capazes de voo natural, eles exploram os céus com facilidade, aproveitando correntes de ar e penhascos para se deslocarem rapidamente. Originários de regiões montanhosas, planaltos e territórios isolados, vivem em pequenas tribos que valorizam a liberdade, a observação do ambiente e a harmonia com a natureza. Dotados de sentidos aguçados, os aarakocra são excelentes mensageiros e exploradores, capazes de perceber perigos à distância e se mover com grande agilidade. Muitos se tornam caçadores ou guerreiros, utilizando sua velocidade e visão superior para proteger suas comunidades ou auxiliar aliados. Culturalmente, prezam pelo voo, pelo respeito às forças da natureza e pela disciplina nas tradições de suas tribos, sendo conhecidos por sua lealdade, coragem e espírito independente. Se quiser, posso fazer uma versão ainda mais completa, como uma entrada detalhada de bestiário de D&D, com subtítulos de “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”. Isso deixaria parecida com uma página oficial de D&D. Quer que eu faça?"
+      ]
+    },
+    {
+      "name": "Traços Raciais",
+      "type": "entries",
+      "entries": [
+        "+2 Destreza, +1 Sabedoria, Voo, Garras"
+      ]
+    }
+  ]
+},
+{
+  "name": "Aasimar",
+  "source": "Volo's Guide for Monster",
+  "page": 104,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "cha": 2
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Aasimar amadurecem na mesma velocidade que os humanos, mas podem viver até 160 anos."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "Imbuídos de poder celestial, a maioria dos aasimar é boa. Aasimar excluídos são geralmente neutros ou até malignos."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Abençoados com uma alma radiante, sua visão corta facilmente a escuridão. Você pode ver em luz fraca a até 60 pés como se fosse luz plena, e na escuridão como se fosse luz fraca. Você não consegue discernir cores na escuridão, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Resistência Celestial",
+      "type": "entries",
+      "entries": [
+        "Você tem resistência a dano necrótico e dano radiante."
+      ]
+    },
+    {
+      "name": "Mãos Curativas",
+      "type": "entries",
+      "entries": [
+        "Como uma ação, você pode tocar uma criatura e fazê-la recuperar um número de pontos de vida igual ao seu nível. Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso longo."
+      ]
+    },
+    {
+      "name": "Portador de Luz",
+      "type": "entries",
+      "entries": [
+        "Você conhece o truque {@spell light}. Carisma é sua habilidade de conjuração para ele."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Celestial."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Humanoides com herança celestial, marcados por uma conexão divina que se manifesta em traços luminosos, aura brilhante e, em alguns casos, asas etéreas. Guiados por uma forte inclinação para o bem, atuam como campeões, mensageiros e protetores, inspirando esperança e justiça onde quer que vão."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os aasimar são humanoides tocados por energia celestial, descendentes de influências divinas que se manifestam em sua aparência e essência espiritual. Sua fisionomia costuma apresentar traços marcantes como olhos luminosos, pele com reflexos sutis de luz e, em alguns casos, marcas ou brilhos que indicam sua natureza sagrada. Em momentos de grande poder ou emoção, alguns aasimar podem manifestar asas etéreas de luz, refletindo sua conexão com entidades superiores.\n\nNaturalmente inclinados ao bem, os aasimar possuem um senso elevado de justiça, compaixão e responsabilidade, embora sua moralidade possa variar conforme sua criação e experiências. Muitos sentem um chamado interno, guiado por uma entidade celestial, que os direciona a proteger os inocentes, combater o mal e restaurar o equilíbrio. Outros podem lutar contra esse chamado, buscando seu próprio caminho além do destino que lhes foi atribuído.\n\nNa sociedade, aasimar frequentemente assumem papéis de liderança espiritual, guardiões, paladinos, clérigos ou aventureiros que atuam como agentes do bem. Sua presença tende a inspirar confiança e esperança nos aliados, enquanto sua conexão divina pode causar admiração ou até temor em aqueles que desconhecem sua verdadeira natureza. São resilientes, determinados e frequentemente movidos por um propósito maior que transcende interesses pessoais.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Carisma, +1 Sabedoria, Resistência a dano necrótico e radiante, Visão no escuro, Cura celestial, Manifestação divina"
+  ]
+}
+  ],
+  "subraces": [
+    {
+      "name": "Caído",
+      "ability": {
+        "str": 1
+      },
+      "entries": [
+        {
+          "name": "Manto Necrótico",
+          "type": "entries",
+          "entries": [
+            "A partir do 3º nível, você pode usar sua ação para liberar a energia divina dentro de si, fazendo seus olhos se tornarem poços de escuridão e duas asas esqueléticas e fantasmais brotarem das suas costas. Imediatamente, outras criaturas em um raio de 10 pés que possam vê-lo devem suceder em um teste de resistência de Carisma (CD 8 + seu bônus de proficiência + modificador de Carisma) ou ficar {@condition frightened} até o final do seu próximo turno.",
+            "Sua transformação dura 1 minuto ou até você encerrá-la como uma ação bônus. Durante ela, uma vez em cada um de seus turnos, você pode causar dano necrótico extra a um alvo quando causar dano com um ataque ou feitiço. O dano necrótico extra é igual ao seu nível.",
+            "Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso longo."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Protetor",
+      "ability": {
+        "wis": 1
+      },
+      "entries": [
+        {
+          "name": "Alma Radiante",
+          "type": "entries",
+          "entries": [
+            "A partir do 3º nível, você pode usar sua ação para liberar a energia divina dentro de si, fazendo seus olhos brilharem e duas asas luminosas e incorpóreas brotarem das suas costas.",
+            "Sua transformação dura 1 minuto ou até você encerrá-la como uma ação bônus. Durante ela, você possui velocidade de voo de 30 pés, e uma vez em cada um de seus turnos, pode causar dano radiante extra a um alvo ao causar dano com um ataque ou feitiço. O dano radiante extra é igual ao seu nível.",
+            "Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso longo."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Flagelo",
+      "ability": {
+        "con": 1
+      },
+      "entries": [
+        {
+          "name": "Consumo Radiante",
+          "type": "entries",
+          "entries": [
+            "A partir do 3º nível, você pode usar sua ação para liberar a energia divina dentro de si, fazendo uma luz abrasadora irradiar de você, saindo de seus olhos e boca, ameaçando queimá-lo.",
+            "Sua transformação dura 1 minuto ou até você encerrá-la como uma ação bônus. Durante ela, você emite luz intensa em um raio de 10 pés e luz fraca por mais 10 pés, e ao final de cada um dos seus turnos, você e cada criatura em um raio de 10 pés recebem dano radiante igual à metade do seu nível (arredondado para cima). Além disso, uma vez em cada um de seus turnos, você pode causar dano radiante extra a um alvo ao causar dano com um ataque ou feitiço. O dano radiante extra é igual ao seu nível.",
+            "Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso longo."
+          ]
+        }
+      ]
+    }
+  ]
+},
+    {
+      "name": "Aetherborn",
+      "english_name": "Aetherborn",
+      "source": "PSK",
+      "page": 17,
+      "size": "M",
+      "speed": 30,
+      "darkvision": 60,
+      "ability": {
+        "cha": 2,
+        "choose": [
+          {
+            "from": [
+              "str",
+              "dex",
+              "con",
+              "int",
+              "wis"
+            ],
+            "count": 2
+          }
+        ]
+      },
+      "entries": [
+        {
+          "name": "Idade",
+          "type": "entries",
+          "entries": [
+            "Aetherborn surgem já como adultos e vivem apenas alguns poucos anos."
+          ]
+        },
+        {
+          "name": "Tendência",
+          "type": "entries",
+          "entries": [
+            "Como regra, Aetherborn são guiados pelo hedonismo e pelo interesse próprio, sendo no máximo neutros."
+          ]
+        },
+        {
+          "name": "Visão no Escuro",
+          "type": "entries",
+          "entries": [
+            "Graças à sua herança, você possui visão superior em condições de pouca luz e escuridão. Você enxerga na penumbra a até 18 metros (60 pés) como se fosse luz plena, e na escuridão como se fosse penumbra. Você não consegue distinguir cores na escuridão, apenas tons de cinza."
+          ]
+        },
+        {
+          "name": "Nascido do Éter",
+          "type": "entries",
+          "entries": [
+            "Você possui resistência a dano necrótico."
+          ]
+        },
+        {
+          "name": "Ameaçador",
+          "type": "entries",
+          "entries": [
+            "Você tem proficiência na perícia Intimidação."
+          ]
+        },
+        {
+          "name": "Idiomas",
+          "type": "entries",
+          "entries": [
+            "Você pode falar, ler e escrever Comum e dois outros idiomas de sua escolha."
+          ]
+        },
+        {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Seres nascidos de uma essência etérea e efêmera, os aetherborn carregam uma ligação profunda com forças místicas que definem sua existência. Envoltos por uma presença sombria e luminosa ao mesmo tempo, manifestam uma aura sutil, muitas vezes acompanhada por traços que lembram névoa, sombras vivas ou brilhos internos."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os aetherborn são entidades humanoides formadas a partir de energias arcanas condensadas, frequentemente associadas a fenômenos místicos ou planos de existência superiores. Sua aparência é única e variável, mas geralmente apresenta características como pele com tonalidades incomuns (negro profundo, violeta, azul-escuro), olhos brilhantes e um leve fluxo etéreo ao seu redor, como se estivessem parcialmente desfocados da realidade.\n\nDiferente de outras raças, os aetherborn não possuem uma expectativa de vida natural prolongada; sua existência é limitada e frequentemente instável, o que os leva a viver com intensidade e propósito. Muitos desenvolvem uma forte consciência de identidade e significado, buscando deixar um legado antes que sua essência se dissipe.\n\nEm termos de personalidade, os aetherborn tendem a ser introspectivos, estratégicos e profundamente conscientes do tempo. Alguns abraçam sua natureza efêmera com serenidade, enquanto outros lutam contra a inevitabilidade de sua dissolução, dedicando-se a estudos arcanos, alianças poderosas ou feitos notáveis.\n\nNa sociedade, os aetherborn são frequentemente encontrados em papéis que envolvem magia, intriga, comércio ou liderança discreta. Sua natureza misteriosa pode inspirar respeito, curiosidade ou até desconfiança em outras raças. Ainda assim, são indivíduos adaptáveis, inteligentes e movidos por objetivos claros, muitas vezes buscando significado em poder, conhecimento ou influência.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Carisma, +1 Constituição, Resistência a dano necrótico, Visão no escuro, Essência etérea, Drenagem vital"
+  ]
+},
+        {
+          "type": "inset",
+          "name": "Dádiva dos Aetherborn",
+          "entries": [
+            "Um Aetherborn desconhecido, buscando desesperadamente uma forma de estender sua curta vida, descobriu um processo de transformação que prolongava sua existência — concedendo-lhe a capacidade de se alimentar da essência vital de outros seres. Desde então, outros Aetherborn aprenderam e realizaram essa transformação monstruosa, e aqueles com essa \"dádiva\" tornaram-se uma pequena minoria dentro de uma população já reduzida.",
+            "Um Aetherborn agraciado possui a habilidade de drenar a essência vital de outros seres. De forma semelhante à transferência de calor entre objetos, ele precisa apenas tocar outro ser vivo com uma mão com garras para extrair essa essência, sustentando sua própria existência enquanto enfraquece sua vítima.",
+            "Para muitos Aetherborn, que vivem em busca de prazer e gratificação imediata, os conceitos de \"querer\" e \"precisar\" são praticamente iguais. Porém, aqueles com essa dádiva compreendem o verdadeiro significado de necessidade, pois desenvolvem uma fome por essência vital que supera qualquer desejo anterior. Um Aetherborn que se abstém dessa alimentação se deteriora ainda mais rapidamente do que os demais, sofrendo uma agonia indescritível causada pela privação de energia vital.",
+            "A critério do Mestre, um personagem Aetherborn pode pesquisar métodos para alcançar essa sombria \"dádiva\". O processo é semelhante à criação de um item mágico raro (veja \"Inventando e Fabricando Dispositivos\" anteriormente neste documento). Contudo, em vez de éter, o processo requer uma variedade de unguentos raros e ingredientes incomuns que compõem o custo da pesquisa e da transformação.",
+            "Um Aetherborn com essa dádiva adquire a habilidade Drenar Vida: um ataque natural que causa 1d6 de dano necrótico e restaura a mesma quantidade de pontos de vida ao Aetherborn. No entanto, se o Aetherborn passar 7 dias sem causar esse dano, seu máximo de pontos de vida é reduzido em 1d6 por semana. Essa redução não pode ser removida até que o Aetherborn utilize sua habilidade Drenar Vida e complete um descanso longo."
+          ]
+        }
+      ]
+    },
+{
+  "name": "Anão",
+  "english_name": "Dwarf",
+  "source": "Player's Handbook",
+  "page": 18,
+  "size": "M",
+  "speed": 25,
+  "darkvision": 60,
+  "ability": {
+    "con": 2
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Anões amadurecem na mesma taxa que os humanos, mas são considerados jovens até os 50 anos. Em média, vivem cerca de 350 anos."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "A maioria dos anões é legalista, acreditando firmemente nos benefícios de uma sociedade bem organizada. Tendem também para o bem, com forte senso de justiça e a crença de que todos merecem compartilhar os benefícios de uma ordem justa."
+      ]
+    },
+    {
+      "name": "Velocidade",
+      "type": "entries",
+      "entries": [
+        "Sua velocidade não é reduzida ao usar armadura pesada."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Acostumado à vida subterrânea, você possui visão superior em condições de pouca luz e escuridão. Você pode enxergar em luz fraca num raio de 18 metros (60 pés) como se fosse luz plena, e na escuridão como se fosse luz fraca. Não é possível discernir cores na escuridão, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Resiliência Anã",
+      "type": "entries",
+      "entries": [
+        "Você tem vantagem em testes de resistência contra veneno e resistência a dano por veneno."
+      ]
+    },
+    {
+      "name": "Treinamento de Combate Anão",
+      "type": "entries",
+      "entries": [
+        "Você possui proficiência com machado de batalha, machado de mão, martelo leve e martelo de guerra."
+      ]
+    },
+    {
+      "name": "Proficiência com Ferramentas",
+      "type": "entries",
+      "entries": [
+        "Você ganha proficiência em um dos seguintes conjuntos de ferramentas de artesão: ferramentas de ferreiro, suprimentos de cervejeiro ou ferramentas de pedreiro."
+      ]
+    },
+    {
+      "name": "Perícia em Pedras",
+      "type": "entries",
+      "entries": [
+        "Sempre que fizer uma prova de Inteligência (História) relacionada à origem de obras de pedra, você é considerado proficiente em História e adiciona o dobro do seu bônus de proficiência à prova, em vez do bônus normal."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Anão. O idioma anão é cheio de consoantes duras e sons guturais, características que costumam aparecer nos outros idiomas falados por um anão."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Povos robustos e resilientes, os anões são conhecidos por sua resistência inabalável, tradição ancestral e profundo vínculo com a terra e a pedra. Habitantes de montanhas, fortalezas subterrâneas e cidades esculpidas na rocha, valorizam a honra, o trabalho duro e a estabilidade, sendo considerados artesãos, guerreiros e guardiões excepcionais."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os anões são uma das raças mais antigas conhecidas, com uma cultura rica em tradições, clãs e histórias transmitidas ao longo de gerações. Sua aparência é marcada por corpos baixos e largos, musculatura densa, pele variando entre tons terrosos e olhos profundos e determinados. Suas barbas, frequentemente longas e bem cuidadas, são símbolos de orgulho, status e identidade cultural.\n\nNaturalmente resistentes tanto física quanto mentalmente, os anões possuem uma notável capacidade de suportar adversidades, sejam elas ambientais, mágicas ou sociais. São conhecidos por sua habilidade em sobreviver e prosperar em ambientes hostis, como montanhas íngremes, cavernas profundas e regiões desoladas.\n\nA sociedade anã é estruturada em torno de clãs, linhagens e tradições rigorosas. Honra, lealdade e reputação são valores fundamentais, e o compromisso com a palavra dada é levado extremamente a sério. Artesanato é uma das maiores expressões culturais dos anões, com destaque para a forja de armas, armaduras, joias e construções monumentais.\n\nEm combate, os anões são tenazes e disciplinados, preferindo estratégias sólidas e posicionamento defensivo. Muitos seguem caminhos como guerreiros, ferreiros, guardiões ou especialistas em mineração e engenharia. Sua conexão com a terra também lhes confere uma afinidade natural com metais, pedras preciosas e recursos subterrâneos.\n\nApesar de sua aparência severa, os anões podem ser leais, generosos e profundamente protetores com aqueles que consideram aliados ou parte de seu clã. Sua visão de mundo é prática e direta, mas carregada de um senso de dever e continuidade que atravessa gerações.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Constituição, +1 Força, Visão no escuro, Resistência a veneno, Treinamento com armas e ferramentas, Resiliência anã"
+  ]
+}
+  ],
+  "subraces": [
+    {
+      "name": "Colina",
+      "ability": {
+        "wis": 1
+      },
+      "entries": [
+        {
+          "name": "Robustez Anã",
+          "type": "entries",
+          "entries": [
+            "Seu máximo de pontos de vida aumenta em 1, e aumenta em 1 a cada nível que você ganha."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Duergar",
+      "source": "SCAG",
+      "darkvision": 120,
+      "ability": {
+        "str": 1
+      },
+      "entries": [
+        {
+          "name": "Visão no Escuro Superior",
+          "type": "entries",
+          "entries": [
+            "Acostumado à vida subterrânea, você possui visão superior em condições de pouca luz e escuridão. Você pode enxergar em luz fraca num raio de 36 metros (120 pés) como se fosse luz plena, e na escuridão como se fosse luz fraca. Não é possível discernir cores na escuridão, apenas tons de cinza."
+          ]
+        },
+        {
+          "name": "Resiliência Duergar",
+          "type": "entries",
+          "entries": [
+            "Você tem vantagem em testes de resistência contra veneno e resistência a dano por veneno. Além disso, você tem vantagem contra ilusões e contra ser {@condition charmed} ou {@condition paralyzed}."
+          ]
+        },
+        {
+          "name": "Idiomas",
+          "type": "entries",
+          "entries": [
+            "Você pode falar, ler e escrever Comum, Anão e Infernal/Subcomum."
+          ]
+        },
+        {
+          "name": "Magia Duergar",
+          "type": "entries",
+          "entries": [
+            "Quando atingir o 3º nível, você pode lançar a magia {@spell Enlarge/Reduce} em si mesmo uma vez com este traço, usando apenas a opção de aumentar. Ao atingir o 5º nível, você pode lançar a magia {@spell Invisibility} em si mesmo uma vez com este traço. Não é necessário componente material, e você não pode lançar estas magias sob luz solar direta, embora a luz solar não afete a magia após lançada. Você recupera a habilidade de lançar essas magias com este traço após um descanso longo. Inteligência é sua habilidade de conjuração para essas magias."
+          ]
+        },
+        {
+          "name": "Sensibilidade à Luz Solar",
+          "type": "entries",
+          "entries": [
+            "Você tem desvantagem em ataques e testes de Sabedoria (Percepção) que dependam de visão quando você, o alvo do ataque ou o que está tentando perceber estiver sob luz solar direta."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Montanha",
+      "ability": {
+        "str": 2
+      },
+      "entries": [
+        {
+          "name": "Treinamento em Armadura Anã",
+          "type": "entries",
+          "entries": [
+            "Você possui proficiência com armaduras leves e médias."
+          ]
+        }
+      ]
+    }    
+  ]
+},
+{
+  "name": "Bugbear",
+  "english_name": "Bugbear",
+  "source": "Volo's Guide to Monsters",
+  "page": 119,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "str": 2,
+    "dex": 1
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Bugbears atingem a idade adulta aos 16 anos e podem viver até 80 anos."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "Bugbears vivem uma existência dura que exige que cada um seja autossuficiente, mesmo às custas de seus semelhantes. Tendem a ser caóticos e malignos."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Você pode ver em luz fraca a até 60 pés como se fosse luz plena, e na escuridão como se fosse luz fraca. Você não consegue discernir cores na escuridão, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Braços Longos",
+      "type": "entries",
+      "entries": [
+        "Quando você realiza um ataque corpo a corpo no seu turno, seu alcance para ele é 5 pés maior do que o normal."
+      ]
+    },
+    {
+      "name": "Constituição Poderosa",
+      "type": "entries",
+      "entries": [
+        "Você conta como um tamanho maior ao determinar sua capacidade de carga e o peso que pode empurrar, arrastar ou levantar."
+      ]
+    },
+    {
+      "name": "Furtivo",
+      "type": "entries",
+      "entries": [
+        "Você tem proficiência na perícia Furtividade."
+      ]
+    },
+    {
+      "name": "Ataque Surpresa",
+      "type": "entries",
+      "entries": [
+        "Se você surpreender uma criatura e acertá-la com um ataque no seu primeiro turno em combate, o ataque causa 2d6 de dano adicional. Você só pode usar esse traço uma vez por combate."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Goblin."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Criaturas grandes, furtivas e surpreendentemente astutas, os bugbears são conhecidos por sua força bruta combinada com uma habilidade natural para emboscadas e ataques inesperados. Apesar de sua aparência intimidadora, são mestres em se mover silenciosamente e atacar com precisão no momento certo."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os bugbears são humanoides de porte elevado e físico robusto, com membros longos, músculos bem definidos e uma postura que transmite tanto ameaça quanto agilidade. Sua aparência é frequentemente associada a pelos espessos, traços bestiais e olhos atentos que parecem constantemente avaliar oportunidades e perigos.\n\nDiferente de sua reputação como criaturas brutais, os bugbears possuem uma inteligência prática e uma forte inclinação para a sobrevivência. São especialistas em emboscadas, preferindo atacar de surpresa e tirar vantagem de terreno, sombras e distrações. Sua habilidade de se mover silenciosamente mesmo com seu tamanho os torna caçadores e guerreiros temidos.\n\nNa sociedade, os bugbears tendem a viver em grupos tribais ou se integrar a organizações onde sua força e furtividade sejam valorizadas. Muitos atuam como mercenários, guardas, assassinos ou exploradores, utilizando sua capacidade de infiltração e impacto físico para cumprir tarefas que exigem tanto discrição quanto poder.\n\nEm termos de personalidade, podem variar amplamente: alguns são pragmáticos e reservados, enquanto outros são agressivos e dominadores. Apesar disso, muitos bugbears desenvolvem um senso de lealdade forte para com seus aliados e companheiros, especialmente aqueles que demonstram respeito por sua força e habilidades.\n\nSua cultura, quando presente, valoriza a resistência, a astúcia e a eficiência acima de formalidades. Em combate, são oportunistas por natureza, buscando sempre o melhor momento para agir e maximizar o impacto de seus ataques.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Força, +1 Destreza, Visão no escuro, Alcance natural, Furtividade surpreendente, Ataque surpresa"
+  ]
+}
+  ]
+},
+{
+  "name": "Changeling",
+  "source": "UAEberron",
+  "page": 1,
+  "size": "M",
+  "speed": 30,
+  "ability": {
+    "dex": 1,
+    "cha": 1
+  },
+  "entries": [
+    {
+      "name": "Duplicidade",
+      "type": "entries",
+      "entries": [
+        "Você ganha proficiência na perícia Enganação."
+      ]
+    },
+    {
+      "name": "Metamorfo",
+      "type": "entries",
+      "entries": [
+        "Como ação, você pode se transformar em qualquer humanoide do seu tamanho que tenha visto, ou voltar para sua forma verdadeira. Seu equipamento não se transforma junto. Se você morrer, retorna à sua aparência natural."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e dois outros idiomas à sua escolha."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Seres mutáveis e altamente adaptáveis, os changelings possuem a capacidade inata de alterar sua aparência e assumir diferentes identidades, vivendo entre culturas diversas e frequentemente ocultando sua verdadeira natureza."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os changelings possuem uma fisiologia única que lhes permite modificar traços faciais, estrutura corporal e aparência geral à vontade. Embora sua forma natural seja relativamente neutra e pouco distinta, eles podem se transformar para imitar praticamente qualquer humanoide de tamanho semelhante, ajustando características como altura, cor da pele, olhos, voz e até postura.\n\nEssa habilidade de mudança de forma não é apenas física, mas também social, permitindo que changelings adotem múltiplas identidades ao longo de suas vidas. Muitos crescem em ambientes onde o anonimato é uma necessidade, aprendendo desde cedo a interpretar comportamentos, linguagens corporais e nuances sociais para se integrar perfeitamente.\n\nA sociedade dos changelings é frequentemente descentralizada e discreta, já que sua própria existência tende a incentivá-los a evitar exposição. Alguns formam redes de contatos secretos, enquanto outros vivem isolados ou integrados a outras culturas, mantendo suas origens ocultas. Identidade, confiança e autenticidade são temas centrais em sua cultura, embora frequentemente tratados de maneira complexa e individual.\n\nEm termos de personalidade, changelings tendem a ser adaptáveis, observadores e altamente perceptivos. Sua vida entre identidades pode levá-los a desenvolver múltiplas perspectivas sobre o mundo, tornando-os empáticos, mas também cautelosos ao se abrir com outros. Alguns abraçam plenamente o conceito de identidade fluida, enquanto outros lutam para definir um senso de si mesmos que vá além das máscaras que utilizam.\n\nSão frequentemente encontrados em papéis que envolvem espionagem, atuação, negociação, infiltração ou qualquer atividade que se beneficie de discrição e versatilidade. Sua habilidade de se passar por outros os torna valiosos aliados, mas também pode gerar desconfiança em ambientes onde a verdade é altamente valorizada.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Carisma, +1 em um atributo à escolha, Metamorfose (Mudança de aparência), Adaptação social, Proficiência em Enganação ou Persuasão"
+  ]
+}
+  ]
+},
+{
+    "name": "Dragonborn",
+    "english_name": "Dragonborn",
+    "source": "Player's Handbook",
+    "page": 32,
+    "size": "M",
+    "speed": 30,
+    "ability": {
+      "str": 2,
+      "cha": 1
+    },
+    "entries": [
+      {
+        "name": "Idade",
+        "type": "entries",
+        "entries": [
+          "Dragonborn jovens crescem rapidamente. Eles caminham poucas horas após nascer, atingem o tamanho e desenvolvimento de uma criança humana de 10 anos aos 3 anos, e chegam à idade adulta aos 15. Vivem cerca de 80 anos."
+        ]
+      },
+      {
+        "name": "Tendência",
+        "type": "entries",
+        "entries": [
+          "Dragonborn tendem a extremos, fazendo uma escolha consciente por um lado ou outro na guerra cósmica entre o bem e o mal (representados por  e , respectivamente). A maioria é boa, mas aqueles que se alinham com Tiamat podem ser vilões terríveis."
+        ]
+      },
+      {
+        "name": "Ascendência Dracônica",
+        "type": "entries",
+        "entries": [
+          "Você possui ascendência dracônica. Escolha um tipo de dragão da tabela de Ascendência Dracônica. Sua arma de sopro e resistência a dano são determinadas pelo tipo de dragão, conforme mostrado na tabela.",
+          {
+            "type": "table",
+            "caption": "Ascendência Dracônica",
+            "colLabels": ["Dragão", "Tipo de Dano", "Arma de Sopro"],
+            "colStyles": ["col-xs-3 text-align-center","col-xs-3 text-align-center","col-xs-6"],
+            "rows": [
+              ["Negro","Ácido","Linha de 1,5 por 9 m (teste de Destreza)"],
+              ["Azul","Raio","Linha de 1,5 por 9 m (teste de Destreza)"],
+              ["Latão","Fogo","Linha de 1,5 por 9 m (teste de Destreza)"],
+              ["Bronze","Raio","Linha de 1,5 por 9 m (teste de Destreza)"],
+              ["Cobre","Ácido","Linha de 1,5 por 9 m (teste de Destreza)"],
+              ["Ouro","Fogo","Cone de 4,5 m (teste de Destreza)"],
+              ["Verde","Veneno","Cone de 4,5 m (teste de Constituição)"],
+              ["Vermelho","Fogo","Cone de 4,5 m (teste de Destreza)"],
+              ["Prata","Frio","Cone de 4,5 m (teste de Constituição)"],
+              ["Branco","Frio","Cone de 4,5 m (teste de Constituição)"]
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Arma de Sopro",
+        "type": "entries",
+        "entries": [
+          "Você pode usar sua ação para exalar energia destrutiva. Sua ascendência dracônica determina o tamanho, a forma e o tipo de dano da exalação.",
+          "Quando usa sua arma de sopro, cada criatura na área deve realizar um teste de resistência, cujo tipo é determinado pela sua ascendência dracônica. A CD desse teste é 8 + seu modificador de Constituição + seu bônus de proficiência. Uma criatura sofre 2d6 de dano em um teste falho, ou metade em um teste bem-sucedido. O dano aumenta para 3d6 no 6º nível, 4d6 no 11º nível e 5d6 no 16º nível.",
+          "Após usar sua arma de sopro, você não pode usá-la novamente até completar um descanso curto ou longo."
+        ]
+      },
+      {
+        "name": "Resistência a Dano",
+        "type": "entries",
+        "entries": [
+          "Você tem resistência ao tipo de dano associado à sua ascendência dracônica."
+        ]
+      },
+      {
+        "name": "Idiomas",
+        "type": "entries",
+        "entries": [
+          "Você pode falar, ler e escrever Comum e Dracônico. Dracônico é considerado uma das línguas mais antigas e frequentemente usado no estudo da magia. Soa áspero para a maioria das outras criaturas, incluindo muitas consoantes duras e sibilantes."
+        ]
+      },
+      {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Descendentes de dragões, os dragonborn são humanoides orgulhosos e imponentes, marcados por escamas, traços dracônicos e um sopro elemental que reflete sua linhagem ancestral."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os dragonborn são uma raça de humanoides cuja herança dracônica se manifesta em sua aparência e capacidades físicas. Seu corpo é coberto por escamas resistentes, cuja coloração varia conforme a linhagem ou afinidade elemental, indo de tons metálicos a cores vibrantes associadas a diferentes tipos de dragões. Possuem traços faciais alongados, olhos reptilianos e uma postura que transmite força e dignidade.\n\nA característica mais distintiva dos dragonborn é seu sopro dracônico, uma habilidade inata que lhes permite expelir energia elemental, como fogo, gelo, ácido ou eletricidade, dependendo de sua herança. Essa habilidade é frequentemente usada tanto em combate quanto como demonstração de poder e identidade.\n\nCulturalmente, os dragonborn valorizam fortemente a honra, a disciplina e o respeito. Muitos seguem códigos rígidos de conduta e demonstram grande orgulho por sua linhagem, buscando viver de acordo com ideais elevados de força e responsabilidade. Sua sociedade pode ser estruturada em clãs ou comunidades que enfatizam tradição, mérito e reputação.\n\nEm termos de personalidade, dragonborn tendem a ser determinados, confiáveis e orientados por objetivos claros. Embora possam parecer severos ou reservados, são frequentemente leais aos seus aliados e levam compromissos muito a sério. Sua presença costuma inspirar respeito, seja em ambientes sociais ou no campo de batalha.\n\nSão comuns em papéis como guerreiros, líderes, guardiões e aventureiros, onde sua combinação de força física, resistência e habilidades dracônicas pode ser plenamente aproveitada. Muitos dragonborn buscam provar seu valor através de feitos grandiosos, honrando sua herança ancestral.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Força, +1 Carisma, Resistência a dano baseado em elemento (conforme linhagem), Sopro dracônico, Presença imponente"
+  ]
+}
+    ]
+  },
+{
+  "name": "Elfo",
+  "english_name": "Elf",
+  "source": "Player's Handbook",
+  "page": 21,
+  "size": "M",
+  "speed": 30,
+  "ability": {
+  "dex": 2,
+  "choose": {
+    "from": ["int", "wis"],
+    "amount": 1
+  }
+},
+  "darkvision": 60,
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Embora os elfos atinjam a maturidade física por volta da mesma idade que os humanos, sua compreensão da vida adulta vai além do crescimento físico, incluindo experiência de mundo. Um elfo normalmente se considera adulto e recebe um nome adulto por volta dos 100 anos, podendo viver até 750 anos."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "Elfos amam liberdade, diversidade e expressão pessoal, inclinando-se fortemente para os aspectos gentis do caos. Valorizam e protegem tanto a própria liberdade quanto a dos outros, sendo mais frequentemente bons do que não."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Acostumado a florestas crepusculares e ao céu noturno, você tem visão superior em condições de pouca luz e escuridão. Você pode enxergar em luz fraca até 18 metros (60 pés) como se fosse luz plena, e na escuridão como se fosse luz fraca. Não é possível distinguir cores no escuro, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Sentidos Aguçados",
+      "type": "entries",
+      "entries": [
+        "Você é proficiente na perícia Percepção."
+      ]
+    },
+    {
+      "name": "Ascendência Feérica",
+      "type": "entries",
+      "entries": [
+        "Você tem vantagem em testes de resistência contra ser {@condition charmed}, e magias não podem colocá-lo para dormir."
+      ]
+    },
+    {
+      "name": "Transe",
+      "type": "entries",
+      "entries": [
+        "Elfos não precisam dormir. Em vez disso, meditam profundamente, permanecendo semi-conscientes, por 4 horas ao dia. Enquanto medita, você pode sonhar de certa forma; esses sonhos são exercícios mentais reflexivos de anos de prática. Após descansar dessa forma, você obtém o mesmo benefício que um humano teria com 8 horas de sono.",
+        "Se você meditar durante um descanso longo, ele termina após apenas 4 horas, obedecendo às demais regras de descanso longo; apenas a duração muda."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Élfico. O élfico é fluido, com sutis entonações e gramática complexa. A literatura élfica é rica e variada, e suas canções e poemas são famosos entre outras raças. Muitos bardos aprendem essa língua para incluir baladas élficas em seus repertórios."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Humanoides graciosos e de traços delicados, os elfos são conhecidos por sua longevidade, sentidos aguçados e profunda conexão com a magia e a natureza. Originários de florestas antigas e reinos ocultos, vivem em sociedades refinadas que valorizam conhecimento, arte e harmonia com o mundo natural."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os elfos são humanoides esguios, de orelhas pontudas e aparência elegante, frequentemente descritos como belos e etéreos. Sua longevidade extraordinária lhes permite acumular vasto conhecimento ao longo dos séculos, tornando-os mestres em diversas artes, desde magia até combate refinado. Habitantes tradicionais de florestas antigas, reinos ocultos ou cidades encantadas, os elfos vivem em sociedades organizadas que prezam pela estética, sabedoria e equilíbrio com a natureza. Seus sentidos são extremamente aguçados, especialmente a visão e a audição, o que os torna excelentes arqueiros, batedores e usuários de magia. Culturalmente, valorizam tradição, disciplina e expressão artística, sendo comuns entre eles bardos, magos e guerreiros ágeis. Apesar de sua aparência serena, os elfos podem ser formidáveis em combate, defendendo suas terras com precisão e estratégia. Sua personalidade costuma refletir paciência, introspecção e uma visão ampla do mundo, embora alguns possam demonstrar certa arrogância devido à sua longa história e refinamento cultural."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Destreza, +1 Inteligência ou Sabedoria, Visão no Escuro, Sentidos Aguçados"
+  ]
+}
+  ],
+  "subraces": [
+    {
+      "name": "Drow",
+      "english_name": "Drow",
+      "ability": {
+        "cha": 1
+      },
+      "darkvision": 120,
+      "entries": [
+        {
+          "name": "Visão no Escuro Superior",
+          "type": "entries",
+          "entries": [
+            "Acostumado às profundezas do Submundo, você pode enxergar em luz fraca até 36 metros (120 pés) como se fosse luz plena, e na escuridão como se fosse luz fraca. Não é possível distinguir cores, apenas tons de cinza."
+          ]
+        },
+        {
+          "name": "Sensibilidade à Luz Solar",
+          "type": "entries",
+          "entries": [
+            "Você sofre desvantagem em testes de ataque e em testes de Sabedoria (Percepção) que dependam da visão enquanto você, o alvo do ataque ou o que você tenta perceber estiver sob luz solar direta."
+          ]
+        },
+        {
+          "name": "Magia Drow",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell dancing lights}. Ao atingir o 3º nível, pode lançar {@spell faerie fire} uma vez por dia; é necessário um descanso longo para lançar novamente. Ao atingir o 5º nível, pode também lançar {@spell darkness} uma vez por dia; descanso longo é necessário para lançar novamente. Carisma é sua habilidade de conjuração para esses feitiços."
+          ]
+        },
+        {
+          "name": "Treinamento com Armas Drow",
+          "type": "entries",
+          "entries": [
+            "Você é proficiente com espadas curtas, espadas longas e bestas de mão."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Eladrin (DMG)",
+      "english_name": "Eladrin",
+      "source": "Dungeon Master's Guide",
+      "page": 286,
+      "ability": {
+        "int": 1
+      },
+      "entries": [
+        {
+          "name": "Treinamento com Armas Élficas",
+          "type": "entries",
+          "entries": [
+            "Você é proficiente com espada longa, espada curta, arco curto e arco longo."
+          ]
+        },
+        {
+          "name": "Passo Feérico",
+          "type": "entries",
+          "entries": [
+            "Você pode lançar o feitiço {@spell misty step} uma vez usando esta habilidade. Recupera a capacidade ao terminar um descanso curto ou longo."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Elfo Alto",
+      "english_name": "High Elf",
+      "speed": 30,
+      "ability": {
+        "int": 1
+      },
+      "entries": [
+        {
+          "name": "Treinamento com Armas Élficas",
+          "type": "entries",
+          "entries": [
+            "Você é proficiente com espada longa, espada curta, arco curto e arco longo."
+          ]
+        },
+        {
+          "name": "Truque",
+          "type": "entries",
+          "entries": [
+            "Você conhece um truque de sua escolha da lista de magias de mago. Inteligência é sua habilidade de conjuração para ele."
+          ]
+        },
+        {
+          "name": "Idioma Extra",
+          "type": "entries",
+          "entries": [
+            "Você pode falar, ler e escrever um idioma extra de sua escolha."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Elfo da Floresta",
+      "english_name": "Wood Elf",
+      "speed": 35,
+      "ability": {
+        "wis": 1
+      },
+      "entries": [
+        {
+          "name": "Treinamento com Armas Élficas",
+          "type": "entries",
+          "entries": [
+            "Você é proficiente com espada longa, espada curta, arco curto e arco longo."
+          ]
+        },
+        {
+          "name": "Passos Ágeis",
+          "type": "entries",
+          "entries": [
+            "Sua velocidade de caminhada base aumenta para 35 pés (10,5 metros)."
+          ]
+        },
+        {
+          "name": "Máscara da Natureza",
+          "type": "entries",
+          "entries": [
+            "Você pode tentar se esconder mesmo quando está levemente obscurecido por folhagem, chuva forte, neve, névoa ou outros fenômenos naturais."
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "name": "Firbolg",
+  "source": "Volo's Guide to Monsters",
+  "page": 107,
+  "size": "M",
+  "speed": 30,
+  "ability": {
+    "wis": 2,
+    "str": 1
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Como humanoides relacionados aos feéricos, os firbolgs têm uma longa expectativa de vida. Um firbolg atinge a idade adulta por volta dos 30 anos, e os mais velhos podem viver até 500 anos."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "Como pessoas que seguem o ritmo da natureza e se veem como seus guardiões, os firbolgs são tipicamente neutros bons. Firbolgs malignos são raros e geralmente são inimigos jurados do restante de sua espécie."
+      ]
+    },
+    {
+      "name": "Magia Firbolg",
+      "type": "entries",
+      "entries": [
+        "Você pode conjurar {@spell detect magic} e {@spell disguise self} com este traço, usando Sabedoria como sua habilidade de conjuração para eles. Depois de conjurar qualquer um dos feitiços, você não pode conjurá-lo novamente com este traço até terminar um descanso curto ou longo. Quando usar esta versão de {@spell disguise self}, você pode parecer até 1 metro (3 pés) mais baixo que o normal, permitindo que se misture mais facilmente entre humanos e elfos."
+      ]
+    },
+    {
+      "name": "Passo Oculto",
+      "type": "entries",
+      "entries": [
+        "Como uma ação bônus, você pode se tornar {@condition invisible} magicamente até o início do seu próximo turno ou até atacar, rolar dano ou forçar alguém a fazer um teste de resistência. Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso curto ou longo."
+      ]
+    },
+    {
+      "name": "Corpo Poderoso",
+      "type": "entries",
+      "entries": [
+        "Você conta como uma categoria de tamanho maior ao determinar sua capacidade de carga e o peso que pode empurrar, arrastar ou levantar."
+      ]
+    },
+    {
+      "name": "Fala com Feras e Folhagens",
+      "type": "entries",
+      "entries": [
+        "Você tem a habilidade de se comunicar de forma limitada com bestas e plantas. Elas podem compreender o significado de suas palavras, embora você não possua habilidade especial para entendê-las em troca. Você tem vantagem em todos os testes de Carisma feitos para influenciá-las."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum, Élfico e Gigante."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Seres gentis e reclusos ligados à natureza, os firbolgs são guardiões dos bosques e defensores do equilíbrio natural, conhecidos por sua força tranquila, sabedoria e conexão profunda com o mundo natural."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os firbolgs são humanoides de grande estatura e constituição robusta, com traços que evocam sua conexão com o mundo natural. Sua aparência pode incluir pele em tons variados (frequentemente com matizes suaves ou naturais), cabelos espessos e, em alguns casos, características sutis que lembram aspectos bestiais ou fey. Seus olhos costumam transmitir calma e percepção aguçada.\n\nFortemente ligados à natureza, os firbolgs vivem em florestas e regiões selvagens, onde atuam como protetores discretos dos ecossistemas. Preferem evitar conflitos diretos sempre que possível, mas são capazes de se tornar formidáveis oponentes quando necessário para defender seu território ou aqueles sob sua proteção.\n\nSua sociedade é geralmente organizada de forma simples e comunitária, com pouca ênfase em hierarquias rígidas. Valorizam o equilíbrio, a harmonia com o ambiente e o respeito por todas as formas de vida. Muitos firbolgs mantêm laços estreitos com espíritos da natureza, entidades fey ou forças druídicas, que influenciam sua visão de mundo.\n\nEm termos de personalidade, firbolgs tendem a ser reservados, contemplativos e profundamente empáticos. Preferem ouvir antes de agir e raramente buscam atenção ou reconhecimento. Apesar disso, possuem grande força interior e coragem silenciosa, agindo com determinação quando seus valores são ameaçados.\n\nSão frequentemente encontrados em papéis como guardiões naturais, druidas, exploradores ou eremitas que protegem segredos ancestrais. Sua habilidade de se integrar ao ambiente e sua afinidade com a natureza os tornam excelentes aliados em jornadas que envolvem exploração e preservação.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Sabedoria, +1 Força, Visão no escuro, Fala com animais e plantas, Passo oculto (camuflagem natural), Magia fey natural"
+  ]
+}
+  ]
+},
+{
+  "name": "Genasi",
+  "english_name": "Genasi",
+  "source": "Mordenkainen Presents: Monsters of the Multiverse",
+  "page": 9,
+  "size": "M",
+  "speed": 30,
+  "ability": {
+    "con": 2
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Os genasi amadurecem aproximadamente na mesma velocidade que os humanos, alcançando a idade adulta no final da adolescência. Vivem um pouco mais que os humanos, chegando até cerca de 120 anos."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "Independentes e autossuficientes, os genasi tendem à neutralidade em sua conduta moral."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Primordial. Primordial é uma língua gutural, cheia de sílabas ásperas e consoantes fortes."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Seres nascidos da união entre humanoides e forças elementais, os genasi carregam a essência dos elementos em seu corpo e espírito, manifestando traços físicos e habilidades que refletem seu elemento ancestral."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os genasi são humanoides que possuem uma ligação intrínseca com os planos elementais, herdando características de elementos como ar, terra, fogo ou água. Essa herança se manifesta em sua aparência, personalidade e habilidades, tornando cada genasi único conforme seu elemento dominante.\n\nFisicamente, podem apresentar traços distintivos relacionados ao seu elemento: pele com tons incomuns, cabelos que lembram chamas ou correntes de ar, olhos brilhantes ou aspectos que evocam rocha, vapor ou energia elemental. Essas características variam amplamente entre indivíduos, refletindo tanto sua linhagem quanto sua conexão pessoal com o elemento.\n\nA cultura dos genasi é diversa e frequentemente influenciada tanto por sua herança elemental quanto pelo ambiente em que foram criados. Alguns vivem entre outras civilizações, enquanto outros se conectam a regiões onde seu elemento é predominante, como desertos, oceanos, montanhas ou regiões vulcânicas. Não existe uma sociedade genasi unificada, mas sim indivíduos e grupos que compartilham experiências semelhantes de identidade híbrida.\n\nEm termos de personalidade, genasi tendem a refletir aspectos de seu elemento: aqueles ligados ao fogo podem ser passionais e intensos; os ligados à água, adaptáveis e fluidos; os do ar, livres e imprevisíveis; e os da terra, estáveis e resilientes. Ainda assim, cada genasi desenvolve sua própria identidade além dessas influências elementais.\n\nSão frequentemente encontrados em papéis como aventureiros, exploradores, conjuradores ou especialistas em áreas que envolvem manipulação de energia ou resistência a ambientes extremos. Sua conexão elemental lhes concede vantagens únicas que podem ser aplicadas tanto em combate quanto na exploração.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Constituição, +1 em um atributo à escolha, Resistência a dano elemental (conforme o tipo), Visão no escuro, Afinidade elemental, Habilidade temática do elemento"
+  ]
+}
+  ],
+  "subraces": [
+    {
+      "name": "Ar (Air Genasi)",
+      "ability": {
+        "dex": 1
+      },
+      "entries": [
+        {
+          "name": "Respiração Infinita",
+          "type": "entries",
+          "entries": [
+            "Você pode prender a respiração indefinidamente enquanto não estiver {@condition incapacitated}."
+          ]
+        },
+        {
+          "name": "Misturar-se ao Vento",
+          "type": "entries",
+          "entries": [
+            "Você pode lançar o feitiço {@spell levitate} uma vez com esta habilidade, sem precisar de componentes materiais, e recupera a capacidade de lançá-lo desta forma ao terminar um descanso longo. Constituição é sua habilidade de conjuração para este feitiço."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Terra (Earth Genasi)",
+      "ability": {
+        "str": 1
+      },
+      "entries": [
+        {
+          "name": "Passo sobre a Terra",
+          "type": "entries",
+          "entries": [
+            "Você pode se mover por terreno difícil feito de terra ou pedra sem gastar movimento extra."
+          ]
+        },
+        {
+          "name": "Fusão com a Pedra",
+          "type": "entries",
+          "entries": [
+            "Você pode lançar o feitiço {@spell pass without trace} uma vez com esta habilidade, sem precisar de componentes materiais, e recupera a capacidade de lançá-lo desta forma ao terminar um descanso longo. Constituição é sua habilidade de conjuração para este feitiço."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fogo (Fire Genasi)",
+      "ability": {
+        "int": 1
+      },
+      "darkvision": 60,
+      "entries": [
+        {
+          "name": "Visão no Escuro",
+          "type": "entries",
+          "entries": [
+            "Você pode enxergar em luz fraca até 18 metros (60 pés) como se fosse luz plena, e na escuridão como se fosse luz fraca. Seus laços com o Plano Elemental do Fogo tornam sua visão no escuro especial: tudo que você vê na escuridão aparece em tons de vermelho."
+          ]
+        },
+        {
+          "name": "Resistência ao Fogo",
+          "type": "entries",
+          "entries": [
+            "Você tem resistência a dano de fogo."
+          ]
+        },
+        {
+          "name": "Toque das Chamas",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell produce flame}. Ao atingir o 3º nível, pode lançar o feitiço {@spell burning hands} uma vez com esta habilidade como feitiço de 1º nível, recuperando a capacidade de lançá-lo desta forma após um descanso longo. Constituição é sua habilidade de conjuração para esses feitiços."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Água (Water Genasi)",
+      "speed": {
+        "walk": 30,
+        "swim": 30
+      },
+      "ability": {
+        "wis": 1
+      },
+      "entries": [
+        {
+          "name": "Resistência a Ácidos",
+          "type": "entries",
+          "entries": [
+            "Você tem resistência a dano de ácido."
+          ]
+        },
+        {
+          "name": "Anfíbio",
+          "type": "entries",
+          "entries": [
+            "Você pode respirar tanto ar quanto água."
+          ]
+        },
+        {
+          "name": "Natação",
+          "type": "entries",
+          "entries": [
+            "Você possui velocidade de natação de 9 metros (30 pés)."
+          ]
+        },
+        {
+          "name": "Chamado da Onda",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell shape water|xge}. Ao atingir o 3º nível, pode lançar o feitiço {@spell create or destroy water} como feitiço de 2º nível uma vez com esta habilidade, recuperando a capacidade de lançá-lo desta forma após um descanso longo. Constituição é sua habilidade de conjuração para esses feitiços."
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "name": "Gnomo",
+  "english_name": "Gnome",
+  "source": "Player's Handbook",
+  "page": 35,
+  "size": "S",
+  "speed": 25,
+  "darkvision": 60,
+  "ability": {
+    "int": 2
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Gnomos amadurecem na mesma taxa que os humanos, e a maioria tende a se estabelecer em uma vida adulta por volta dos 40 anos. Podem viver entre 350 e quase 500 anos."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "Gnomos são, na maioria das vezes, bons. Aqueles que tendem à lei são sábios, engenheiros, pesquisadores, estudiosos, investigadores ou inventores. Os que tendem ao caos são menestréis, trapaceiros, viajantes ou joalheiros imaginativos. Gnomos são de bom coração, e até mesmo os trapaceiros entre eles são mais brincalhões do que maliciosos."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Acostumado à vida subterrânea, você tem visão superior em condições de pouca luz e escuridão. Você pode enxergar em luz fraca até 18 metros (60 pés) como se fosse luz plena, e na escuridão como se fosse luz fraca. Não é possível distinguir cores no escuro, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Astúcia Gnômica",
+      "type": "entries",
+      "entries": [
+        "Você tem vantagem em todos os testes de resistência de Inteligência, Sabedoria e Carisma contra magia."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Gnômico. A língua gnômica, que usa a escrita dos anões, é famosa por seus tratados técnicos e por seus catálogos de conhecimento sobre o mundo natural."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Pequenos, curiosos e engenhosos, os gnomos são conhecidos por sua inteligência aguçada, criatividade e afinidade natural com magia, invenções e conhecimento, sempre buscando explorar o mundo com entusiasmo e imaginação."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os gnomos são humanoides de estatura reduzida, com traços delicados e expressivos, olhos vivos e feições que transmitem curiosidade constante. Seus cabelos e barbas, quando presentes, costumam ser bem cuidados e muitas vezes estilizados de maneira peculiar, refletindo sua personalidade individual.\n\nConhecidos por sua mente inventiva, os gnomos possuem grande afinidade com conhecimentos técnicos e mágicos. São frequentemente associados a engenhocas, experimentos e descobertas, demonstrando uma curiosidade insaciável sobre o funcionamento das coisas. Essa inclinação os torna excelentes artesãos, estudiosos, ilusionistas e inventores.\n\nA sociedade dos gnomos é diversa, mas geralmente marcada por comunidades pequenas, vibrantes e colaborativas. Valorizam o aprendizado, a criatividade e o humor, frequentemente abordando desafios com leveza e soluções não convencionais. Contação de histórias, experimentação e trocas de conhecimento são elementos centrais de sua cultura.\n\nEm termos de personalidade, gnomos tendem a ser otimistas, engenhosos e sociáveis. Muitos demonstram uma resistência natural a efeitos mentais negativos, possivelmente devido à sua mente ativa e disciplinada. Apesar de seu tamanho, possuem grande coragem e disposição para enfrentar perigos em nome da curiosidade ou de seus objetivos.\n\nSão frequentemente encontrados em papéis como magos, artífices, engenheiros, exploradores e estudiosos. Sua combinação de inteligência, criatividade e resiliência os torna valiosos em situações que exigem soluções rápidas e pensamento inovador.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Inteligência, +1 Carisma, Visão no escuro, Astúcia gnômica, Resistência a efeitos mentais, Afinidade com magia e engenhocas"
+  ]
+}
+  ],
+  "subraces": [
+    {
+      "name": "Gnomo Profundo / Svirfneblin",
+      "english_name": "Deep Gnome / Svirfneblin",
+      "source": "Elemental Evil Player’s Companion",
+      "page": 5,
+      "darkvision": 120,
+      "ability": {
+        "dex": 1
+      },
+      "entries": [
+        {
+          "name": "Idade",
+          "type": "entries",
+          "entries": [
+            "Gnomos profundos têm vida curta para padrões gnômicos. Amadurecem na mesma taxa que os humanos e são considerados adultos aos 25 anos. Vivem entre 200 e 250 anos, embora o trabalho árduo e os perigos do Submundo frequentemente os prejudiquem antes do tempo."
+          ]
+        },
+        {
+          "name": "Tendência",
+          "type": "entries",
+          "entries": [
+            "Svirfneblin acreditam que a sobrevivência depende de evitar conflitos com outras criaturas e de não fazer inimigos, portanto tendem a alinhamentos neutros. Raramente desejam mal a outros e dificilmente correm riscos pelos outros, exceto por aqueles mais próximos."
+          ]
+        },
+        {
+          "name": "Visão no Escuro Superior",
+          "type": "entries",
+          "entries": [
+            "Acostumado à vida subterrânea, você tem visão superior em condições de pouca luz e escuridão. Você pode enxergar em luz fraca até 36 metros (120 pés) como se fosse luz plena, e na escuridão como se fosse luz fraca. Não é possível distinguir cores no escuro, apenas tons de cinza."
+          ]
+        },
+        {
+          "name": "Camuflagem em Pedra",
+          "type": "entries",
+          "entries": [
+            "Você tem vantagem em testes de Destreza (Furtividade) para se esconder em terreno rochoso."
+          ]
+        },
+        {
+          "name": "Idiomas",
+          "type": "entries",
+          "entries": [
+            "Você pode falar, ler e escrever Comum, Gnômico e Comum Subterrâneo. O dialeto svirfneblin é mais gutural que o gnômico superficial, e a maioria conhece apenas um pouco do Comum, mas quem lida com estrangeiros aprende o suficiente para se virar em outras terras."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gnomo da Floresta",
+      "english_name": "Forest Gnome",
+      "ability": {
+        "dex": 1
+      },
+      "entries": [
+        {
+          "name": "Ilusionista Nato",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell minor illusion}. Inteligência é sua habilidade de conjuração para ele."
+          ]
+        },
+        {
+          "name": "Falar com Pequenas Feras",
+          "type": "entries",
+          "entries": [
+            "Através de sons e gestos, você pode comunicar ideias simples a Feras Pequenas ou menores. Gnomos da floresta amam os animais e frequentemente mantêm esquilos, texugos, coelhos, toupeiras, pica-paus e outras criaturas como animais de estimação."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gnomo da Rocha",
+      "english_name": "Rock Gnome",
+      "ability": {
+        "con": 1
+      },
+      "entries": [
+        {
+          "name": "Conhecimento de Artífice",
+          "type": "entries",
+          "entries": [
+            "Sempre que fizer um teste de Inteligência (História) relacionado a itens mágicos, objetos alquímicos ou dispositivos tecnológicos, você pode adicionar o dobro do seu bônus de proficiência, em vez de apenas o bônus normalmente aplicado."
+          ]
+        },
+        {
+          "name": "Inventor",
+          "type": "entries",
+          "entries": [
+            "Você é proficiente com ferramentas de artesão (ferramentas de artesão/inventor). Usando essas ferramentas, você pode gastar 1 hora e 10 po de materiais para construir um dispositivo minúsculo mecânico (CA 5, 1 pv). O dispositivo deixa de funcionar após 24 horas (a menos que você passe 1 hora para repará-lo) ou quando usar sua ação para desmontá-lo, recuperando os materiais usados. Você pode ter até três dispositivos ativos simultaneamente.",
+            "Ao criar um dispositivo, escolha uma das opções a seguir:",
+            {
+              "type": "entries",
+              "name": "Brinquedo Mecânico",
+              "entries": [
+                "Este brinquedo é um animal, monstro ou pessoa mecânico, como sapo, rato, pássaro, dragão ou soldado. Ao ser colocado no chão, o brinquedo se move 1,5 metros (5 pés) em direção aleatória a cada turno, fazendo sons adequados à criatura que representa."
+              ]
+            },
+            {
+              "type": "entries",
+              "name": "Acendedor de Fogo",
+              "entries": [
+                "O dispositivo produz uma chama minúscula, que pode ser usada para acender velas, tochas ou fogueiras. Usar o dispositivo requer sua ação."
+              ]
+            },
+            {
+              "type": "entries",
+              "name": "Caixa de Música",
+              "entries": [
+                "Ao ser aberta, a caixa de música toca uma única canção em volume moderado. Para quando a música termina ou quando é fechada."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gnomo Profundo",
+      "english_name": "Deep Gnome",
+      "source": "Mordenkainen’s Tome of Foes",
+      "page": 0,
+      "darkvision": 120,
+      "ability": {
+        "dex": 1
+      },
+      "entries": [
+        {
+          "name": "Idade",
+          "type": "entries",
+          "entries": [
+            "Gnomos profundos têm vida curta para padrões gnômicos. Amadurecem na mesma taxa que os humanos e são considerados adultos aos 25 anos. Vivem entre 200 e 250 anos, embora o trabalho árduo e os perigos do Submundo frequentemente os prejudiquem antes do tempo."
+          ]
+        },
+        {
+          "name": "Tendência",
+          "type": "entries",
+          "entries": [
+            "Svirfneblin acreditam que a sobrevivência depende de evitar conflitos com outras criaturas e de não fazer inimigos, portanto tendem a alinhamentos neutros. Raramente desejam mal a outros e dificilmente correm riscos pelos outros, exceto pelos mais próximos."
+          ]
+        },
+        {
+          "name": "Visão no Escuro Superior",
+          "type": "entries",
+          "entries": [
+            "Acostumado à vida subterrânea, você tem visão superior em condições de pouca luz e escuridão. Você pode enxergar em luz fraca até 36 metros (120 pés) como se fosse luz plena, e na escuridão como se fosse luz fraca. Não é possível distinguir cores no escuro, apenas tons de cinza."
+          ]
+        },
+        {
+          "name": "Camuflagem em Pedra",
+          "type": "entries",
+          "entries": [
+            "Você tem vantagem em testes de Destreza (Furtividade) para se esconder em terreno rochoso."
+          ]
+        },
+        {
+          "name": "Idiomas",
+          "type": "entries",
+          "entries": [
+            "Você pode falar, ler e escrever Comum, Gnômico e Comum Subterrâneo."
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "name": "Goblin",
+  "source": "Volo's Guide to Monsters",
+  "page": 119,
+  "size": "S",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "dex": 2,
+    "con": 1
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Goblins atingem a idade adulta aos 8 anos e podem viver até 60 anos."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "Goblins são tipicamente malignos neutros, preocupando-se apenas com suas próprias necessidades. Alguns goblins podem tender ao bem ou à neutralidade, mas isso é raro."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Você consegue enxergar na penumbra a até 60 pés como se fosse luz plena, e no escuro como se fosse penumbra. Você não consegue distinguir cores no escuro, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Fúria dos Pequenos",
+      "type": "entries",
+      "entries": [
+        "Quando você causa dano a uma criatura com um ataque ou feitiço e o tamanho da criatura é maior que o seu, você pode fazer com que o ataque ou feitiço cause dano extra à criatura. O dano extra é igual ao seu nível. Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso curto ou longo."
+      ]
+    },
+    {
+      "name": "Fuga Ágil",
+      "type": "entries",
+      "entries": [
+        "Você pode usar a ação de Desengajar ou Esconder-se como uma ação bônus em cada um dos seus turnos."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Goblin."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Criaturas pequenas, ágeis e oportunistas, os goblins são conhecidos por sua esperteza, furtividade e instinto de sobrevivência, adaptando-se rapidamente a ambientes hostis e situações perigosas."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os goblins são humanoides de estatura baixa, com corpos esguios, orelhas pontiagudas e traços faciais marcantes, frequentemente associados a olhos atentos e expressões inquietas. Sua aparência pode variar conforme o ambiente e o grupo ao qual pertencem, mas em geral refletem uma constituição feita para agilidade e sobrevivência.\n\nApesar de sua reputação como criaturas caóticas ou problemáticas, os goblins são extremamente adaptáveis e inteligentes à sua maneira. Eles aprendem rapidamente com experiências práticas e tendem a valorizar soluções imediatas que garantam sua sobrevivência. Sua cultura, quando organizada, é baseada em hierarquias simples, força prática e astúcia.\n\nGoblins frequentemente vivem em grupos tribais ou comunidades improvisadas, onde a liderança é conquistada por mérito, força ou esperteza. Em muitos casos, sua sociedade é moldada por ambientes hostis, o que reforça comportamentos como cooperação estratégica, fuga tática e uso criativo de recursos limitados.\n\nEm termos de personalidade, goblins tendem a ser impulsivos, curiosos e altamente oportunistas. Muitos demonstram uma habilidade natural para furtividade e movimentos rápidos, preferindo evitar confrontos diretos sempre que possível. No entanto, quando bem liderados, podem se mostrar surpreendentemente organizados e eficazes.\n\nSão frequentemente encontrados em papéis como batedores, ladrões, exploradores, engenheiros improvisados ou combatentes de guerrilha. Sua capacidade de se esconder, se mover rapidamente e aproveitar oportunidades os torna especialmente perigosos em emboscadas e situações inesperadas.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Destreza, +1 Constituição, Visão no escuro, Fuga ágil, Furtividade natural, Ataque oportunista"
+  ]
+}
+  ]
+},
+{
+    "name": "Golias",
+    "english_name": "Goliath",
+    "source": "Mordenkainen Presents: Monsters of the Multiverse",
+    "page": 10,
+    "size": "M",
+    "speed": 30,
+    "ability": {
+      "str": 2,
+      "con": 1
+    },
+    "entries": [
+      {
+        "name": "Idade",
+        "type": "entries",
+        "entries": [
+          "Goliaths têm expectativa de vida semelhante à dos humanos. Tornam-se adultos no final da adolescência e geralmente vivem menos de um século."
+        ]
+      },
+      {
+        "name": "Tendência",
+        "type": "entries",
+        "entries": [
+          "A sociedade goliath, com suas funções e tarefas claras, possui forte tendência à lei. O senso de justiça equilibrado com autonomia e responsabilidade pessoal tende a levá-los ao alinhamento neutro."
+        ]
+      },
+      {
+        "name": "Atleta Nato",
+        "type": "entries",
+        "entries": [
+          "Você tem proficiência na perícia Atletismo."
+        ]
+      },
+      {
+        "name": "Resistência da Pedra",
+        "type": "entries",
+        "entries": [
+          "Você pode se concentrar para, ocasionalmente, ignorar ferimentos. Ao receber dano, você pode usar sua reação para rolar 1d12 e adicionar seu modificador de Constituição, reduzindo o dano pelo total obtido. Após usar essa característica, não pode usá-la novamente até terminar um descanso curto ou longo."
+        ]
+      },
+      {
+        "name": "Construção Poderosa",
+        "type": "entries",
+        "entries": [
+          "Você conta como uma categoria maior ao determinar sua capacidade de carga e o peso que pode empurrar, puxar ou levantar."
+        ]
+      },
+      {
+        "name": "Nascido nas Montanhas",
+        "type": "entries",
+        "entries": [
+          "Você está adaptado a grandes altitudes, incluindo acima de 6.000 metros. Também está naturalmente adaptado a climas frios, conforme descrito no capítulo 5 do Livro do Mestre."
+        ]
+      },
+      {
+        "name": "Idiomas",
+        "type": "entries",
+        "entries": [
+          "Você pode falar, ler e escrever Comum e Gigante."
+        ]
+      },
+      {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Gigantes entre os humanoides, os golias são conhecidos por sua resistência excepcional, força física e espírito competitivo, vivendo entre montanhas e ambientes extremos onde testam constantemente seus limites."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os golias são humanoides de grande estatura e constituição robusta, com traços que refletem sua herança ligada a povos de origem montanhosa. Sua pele costuma apresentar padrões naturais semelhantes a marcas, manchas ou desenhos que lembram pedra, refletindo sua conexão simbólica com as montanhas. Seus corpos são adaptados para resistência, com musculatura densa e grande capacidade física.\n\nCulturalmente, os golias vivem em tribos nômades ou comunidades localizadas em regiões montanhosas e de clima rigoroso. Suas sociedades valorizam o desempenho, a superação e a honra conquistada por meio de feitos pessoais. Competição saudável é um aspecto central de sua cultura, incentivando indivíduos a constantemente se desafiarem e evoluírem.\n\nOs golias possuem uma visão de vida orientada por mérito e igualdade de oportunidades. Em suas comunidades, status não é herdado, mas conquistado através de habilidades, contribuições e conquistas. Esse sistema reforça um senso de justiça baseado em desempenho e esforço individual.\n\nEm termos de personalidade, golias tendem a ser determinados, resilientes e diretos. Eles encaram dificuldades como desafios a serem superados, mantendo uma mentalidade prática e focada. Apesar de sua aparência intimidadora, muitos são cooperativos, leais e respeitam profundamente aqueles que demonstram competência e coragem.\n\nSão frequentemente encontrados em papéis como guerreiros, exploradores, atletas, guardiões e aventureiros que se beneficiam de sua força física e resistência. Sua capacidade de suportar condições adversas os torna ideais para jornadas longas e ambientes extremos.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Força, +1 Constituição, Visão no escuro, Resistência a dano ambiental, Físico poderoso, Resiliência de pedra"
+  ]
+}
+    ]
+  },
+{
+  "name": "Halfling",
+  "english_name": "Halfling",
+  "source": "Player's Handbook",
+  "page": 26,
+  "size": "S",
+  "speed": 25,
+  "ability": {
+    "dex": 2
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Um halfling atinge a idade adulta aos 20 anos e, geralmente, vive até meados do seu segundo século."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "A maioria dos halflings é bondosa e leal. Em regra, são de bom coração e gentis, odeiam ver outros sofrendo e não toleram a opressão. São também muito organizados e tradicionais, apoiando-se fortemente na comunidade e no conforto dos velhos costumes."
+      ]
+    },
+    {
+      "name": "Sortudo",
+      "type": "entries",
+      "entries": [
+        "Quando você rola 1 em um ataque, teste de habilidade ou teste de resistência, você pode rolar novamente o dado e deve usar o novo resultado."
+      ]
+    },
+    {
+      "name": "Corajoso",
+      "type": "entries",
+      "entries": [
+        "Você tem vantagem em testes de resistência contra o estado {@condition frightened}."
+      ]
+    },
+    {
+      "name": "Agilidade Halfling",
+      "type": "entries",
+      "entries": [
+        "Você pode se mover através do espaço de qualquer criatura de tamanho maior que o seu."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Halfling. O idioma halfling não é secreto, mas os halflings relutam em compartilhá-lo. Eles escrevem muito pouco, então não possuem uma literatura extensa. No entanto, sua tradição oral é muito forte. Quase todos os halflings falam Comum para se comunicar com os povos nas terras em que vivem ou através das quais viajam."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Pequenos, ágeis e afortunados, os halflings são conhecidos por sua natureza otimista, espírito livre e habilidade natural de evitar perigos, vivendo vidas simples marcadas por conforto, comunidade e curiosidade."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os halflings são humanoides de estatura reduzida, com corpos proporcionais, feições amigáveis e traços que transmitem leveza e simpatia. Seus pés são geralmente grandes e resistentes, muitas vezes descalços, o que reflete sua conexão com ambientes naturais e sua mobilidade silenciosa. Sua aparência é marcada por simplicidade e expressividade.\n\nCulturalmente, os halflings valorizam o lar, a família e a tranquilidade. Suas comunidades costumam ser pacíficas, organizadas em vilas acolhedoras onde a convivência harmoniosa é priorizada. Gostam de prazeres simples, como boa comida, boa companhia e histórias compartilhadas, evitando conflitos sempre que possível.\n\nApesar de sua preferência por uma vida tranquila, os halflings possuem uma notável coragem e uma sorte peculiar que frequentemente os ajuda a escapar de situações perigosas. Essa combinação de ousadia e sorte os torna surpreendentemente eficazes quando precisam enfrentar desafios inesperados.\n\nEm termos de personalidade, halflings tendem a ser otimistas, curiosos e sociáveis. São conhecidos por sua capacidade de manter o bom humor mesmo diante de dificuldades, além de demonstrarem grande lealdade a amigos e aliados. Sua adaptabilidade e resiliência emocional são características marcantes.\n\nSão frequentemente encontrados em papéis como viajantes, mensageiros, ladrões habilidosos, cozinheiros, comerciantes ou aventureiros que valorizam liberdade e experiências. Sua discrição natural e agilidade também os tornam excelentes em tarefas que exigem furtividade e precisão.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Destreza, +1 Carisma, Sorte halfling, Bravura contra medo, Furtividade natural, Mobilidade ágil"
+  ]
+}
+  ],
+  "subraces": [
+    {
+      "name": "Pés Leves",
+      "ability": {
+        "cha": 1
+      },
+      "entries": [
+        {
+          "name": "Furtivo Naturalmente",
+          "type": "entries",
+          "entries": [
+            "Você pode tentar se esconder mesmo quando está encoberto apenas por uma criatura de tamanho pelo menos uma categoria maior que o seu."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Robusto",
+      "ability": {
+        "con": 1
+      },
+      "entries": [
+        {
+          "name": "Resiliência Robusta",
+          "type": "entries",
+          "entries": [
+            "Você tem vantagem em testes de resistência contra veneno e resistência a dano de veneno."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ghostwise",
+      "source": "SCAG",
+      "page": 110,
+      "ability": {
+        "wis": 1
+      },
+      "entries": [
+        {
+          "name": "Fala Silenciosa",
+          "type": "entries",
+          "entries": [
+            "Você pode falar telepaticamente com qualquer criatura a até 9 metros de você. A criatura entende você apenas se ambos compartilharem um idioma. Você pode falar telepaticamente dessa forma com uma criatura por vez."
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+  "name": "Hobgoblin",
+  "source": "Volo's Guide to Monsters",
+  "page": 119,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "con": 2,
+    "int": 1
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Hobgoblins amadurecem na mesma velocidade que os humanos e têm expectativa de vida semelhante à deles."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "A sociedade hobgoblin é baseada na fidelidade a um rígido e implacável código de conduta. Por isso, tendem a ser malignos legais."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Você consegue enxergar na penumbra a até 60 pés como se fosse luz plena, e no escuro como se fosse penumbra. Você não consegue distinguir cores no escuro, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Treinamento Marcial",
+      "type": "entries",
+      "entries": [
+        "Você é proficiente com duas armas marciais de sua escolha e com armaduras leves."
+      ]
+    },
+    {
+      "name": "Salvar a Aparência",
+      "type": "entries",
+      "entries": [
+        "Hobgoblins são cuidadosos para não mostrar fraqueza diante de seus aliados, com medo de perder status. Se você errar um ataque, falhar em uma teste de habilidade ou em uma salvaguarda, você pode ganhar um bônus na rolagem igual ao número de aliados que consegue ver a até 30 pés de você (bônus máximo de +5). Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso curto ou longo."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Goblin."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Goblinoides disciplinados e estratégicos, os hobgoblins são conhecidos por sua organização militar, senso de ordem e eficiência tática, atuando frequentemente como soldados, comandantes e especialistas em guerra."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os hobgoblins são humanoides de porte médio a alto, com constituição robusta, traços angulares e aparência marcante que transmite autoridade e disciplina. Sua pele costuma variar em tons terrosos ou avermelhados, e seus olhos demonstram foco e atenção constantes. Sua postura e linguagem corporal refletem autocontrole e preparo.\n\nDiferente de outros goblinoides mais caóticos, os hobgoblins valorizam fortemente a ordem, a hierarquia e a estratégia. Sua cultura é profundamente militarizada, com sociedades organizadas em estruturas rígidas onde cada indivíduo possui um papel definido. O sucesso coletivo é priorizado acima de interesses individuais, e a disciplina é vista como virtude essencial.\n\nOs hobgoblins são treinados desde cedo em táticas de combate, coordenação em grupo e cumprimento de funções específicas dentro de uma unidade. Essa abordagem os torna extremamente eficazes em batalhas organizadas, onde cooperação e planejamento são fundamentais.\n\nEm termos de personalidade, hobgoblins tendem a ser pragmáticos, determinados e focados em objetivos claros. Demonstram pouco apreço por improvisação desnecessária, preferindo métodos comprovados e estratégias bem estruturadas. Apesar disso, podem demonstrar lealdade intensa a seus superiores e companheiros, especialmente dentro de uma cadeia de comando respeitada.\n\nSão frequentemente encontrados em papéis como soldados, estrategistas, guardas, mercenários disciplinados e líderes militares. Sua capacidade de trabalhar em equipe e seguir planos complexos os torna valiosos em contextos que exigem coordenação e eficiência.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Constituição, +1 Inteligência, Visão no escuro, Disciplina marcial, Treinamento tático, Resistência mental"
+  ]
+}
+  ]
+},
+{
+  "name": "Humano",
+  "english_name": "Human",
+  "source": "Player's Handbook",
+  "page": 29,
+  "size": "M",
+  "speed": 30,
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Humanos atingem a idade adulta no final da adolescência e vivem menos de um século."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "Humanos não tendem a uma tendência específica. Entre eles encontram-se tanto os melhores quanto os piores indivíduos."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e mais um idioma à sua escolha. Humanos normalmente aprendem as línguas de outros povos com os quais convivem, incluindo dialetos obscuros. Gostam de temperar sua fala com palavras emprestadas de outras línguas: maldições orcs, expressões musicais élficas, frases militares anãs, e assim por diante."
+      ]
+    },
+    {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Versáteis e adaptáveis, os humanos são uma das raças mais diversas, conhecidos por sua ambição, criatividade e capacidade de se destacar em praticamente qualquer área, moldando culturas, impérios e histórias ao longo do mundo."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os humanos apresentam grande diversidade em aparência, cultura e capacidades, variando amplamente em estatura, tonalidade de pele, traços faciais e estilos de vida conforme sua origem geográfica e cultural. Essa variedade reflete sua principal característica: a adaptabilidade.\n\nDiferente de muitas outras raças, os humanos não possuem uma identidade cultural única e unificada. Em vez disso, formam inúmeras sociedades, reinos e civilizações, cada uma com suas próprias tradições, valores e estruturas sociais. Essa pluralidade os torna altamente flexíveis e capazes de se integrar a diferentes ambientes e contextos.\n\nEm termos de personalidade, humanos são frequentemente descritos como ambiciosos, inovadores e determinados. Sua capacidade de aprender rapidamente, combinar ideias e se reinventar ao longo da vida contribui para seu protagonismo em diversas áreas, como política, guerra, comércio, arte e magia.\n\nOs humanos também são conhecidos por sua resiliência e espírito de iniciativa. Tendem a se adaptar rapidamente a mudanças, superando desafios com criatividade e esforço. Essa característica os torna particularmente aptos a se tornarem aventureiros, exploradores e líderes em situações imprevisíveis.\n\nSocialmente, humanos são altamente influenciados por suas experiências individuais, o que resulta em uma ampla gama de comportamentos e alinhamentos morais. Essa flexibilidade permite que indivíduos humanos se destaquem tanto em papéis cooperativos quanto em iniciativas independentes.\n\nDe forma geral, os humanos são uma raça definida menos por características físicas específicas e mais por sua capacidade de se moldar ao mundo ao seu redor, deixando sua marca por meio de conquistas, cultura e legado.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+1 em todos os atributos, Versatilidade, Adaptabilidade, Talento extra, Aprendizado rápido"
+  ]
+}
+  ],
+  "subraces": [
+    {
+      "name": "Humano Padrão",
+      "ability": {
+        "str": 1,
+        "dex": 1,
+        "con": 1,
+        "int": 1,
+        "wis": 1,
+        "cha": 1
+      }
+    },
+    {
+      "name": "Variante",
+      "ability": {
+        "choose": [
+          {
+            "from": [
+              "str",
+              "dex",
+              "con",
+              "int",
+              "wis",
+              "cha"
+            ],
+            "count": 2
+          }
+        ]
+      },
+      "entries": [
+        {
+          "name": "Perícias",
+          "type": "entries",
+          "entries": [
+            "Você ganha proficiência em uma perícia de sua escolha."
+          ]
+        },
+        {
+          "name": "Dado de Talento",
+          "type": "entries",
+          "entries": [
+            "Você ganha um talento (feat) de sua escolha."
+          ]
+        }
+      ]
+    }
+  ]
+},
+[
+  {
+    "name": "Kenku",
+    "source": "VGM",
+    "page": 109,
+    "size": "M",
+    "speed": 30,
+    "ability": {
+      "dex": 2,
+      "wis": 1
+    },
+    "entries": [
+      {
+        "name": "Idade",
+        "type": "entries",
+        "entries": [
+          "Kenku têm expectativa de vida menor que a dos humanos. Eles atingem a maturidade aos 12 anos e podem viver até 60 anos."
+        ]
+      },
+      {
+        "name": "Alinhamento",
+        "type": "entries",
+        "entries": [
+          "Kenku são criaturas caóticas, raramente fazendo compromissos duradouros, e se preocupam principalmente em preservar a própria pele. Geralmente têm alinhamento caótico neutro."
+        ]
+      },
+      {
+        "name": "Falsificação Especializada",
+        "type": "entries",
+        "entries": [
+          "Você consegue duplicar a caligrafia e trabalhos manuais de outras criaturas. Você tem vantagem em todas as checagens feitas para produzir falsificações ou duplicatas de objetos existentes."
+        ]
+      },
+      {
+        "name": "Treinamento Kenku",
+        "type": "entries",
+        "entries": [
+          "Você é proficiente em duas das seguintes perícias à sua escolha: Acrobacia, Enganação, Furtividade e Prestidigitação."
+        ]
+      },
+      {
+        "name": "Mímica",
+        "type": "entries",
+        "entries": [
+          "Você pode imitar sons que ouviu, incluindo vozes. Uma criatura que ouça os sons pode perceber que são imitações com uma checagem bem-sucedida de Sabedoria (Intuição) oposta à sua rolagem de Carisma (Enganação)."
+        ]
+      },
+      {
+        "name": "Idiomas",
+        "type": "entries",
+        "entries": [
+          "Você pode ler e escrever Comum e Auran, mas só pode falar usando o traço de Mímica."
+        ]
+      },
+      {
+  "name": "Descrição",
+  "type": "entries",
+  "entries": [
+    "Seres ágeis e observadores, os kenku são humanoides com traços aviários, conhecidos por sua habilidade de imitar sons e sua natureza silenciosa, vivendo como mestres da observação e da adaptação."
+  ]
+},
+{
+  "name": "Descrição Detalhada",
+  "type": "entries",
+  "entries": [
+    "Os kenku possuem aparência semelhante à de aves humanoides, com corpos cobertos por penas, bicos no lugar de narizes e bocas, e membros adaptados tanto para locomoção quanto para manipulação de objetos. Seus olhos são atentos e expressivos, refletindo sua constante vigilância ao ambiente ao seu redor.\n\nUma de suas características mais marcantes é a incapacidade de produzir fala própria original, o que os leva a depender da imitação de sons, vozes e ruídos que já tenham ouvido anteriormente. Essa limitação molda profundamente sua forma de comunicação, tornando-os excelentes imitadores e observadores de comportamento.\n\nA cultura dos kenku é frequentemente influenciada por sua condição, incentivando a escuta atenta, a memória auditiva e a interpretação cuidadosa do mundo. Muitos aprendem a se comunicar combinando frases, trechos e sons que reproduzem com precisão, criando formas únicas de expressão.\n\nOs kenku tendem a viver em grupos ou comunidades organizadas, muitas vezes em ambientes urbanos ou regiões onde possam observar e absorver informações com facilidade. Sua sociedade valoriza a experiência acumulada e a habilidade de aprender por meio da observação direta.\n\nEm termos de personalidade, kenku são geralmente cautelosos, analíticos e altamente perceptivos. Sua necessidade de imitar em vez de criar espontaneamente pode levá-los a desenvolver identidades construídas a partir de referências externas, mas isso também os torna excelentes em infiltração, espionagem e interpretação social.\n\nSão frequentemente encontrados em papéis como espiões, batedores, mensageiros, ladrões, intérpretes ou estudiosos de comportamento. Sua habilidade de replicar sons e vozes os torna particularmente úteis em situações que exigem discrição e precisão.\n\nSe quiser, posso organizar essa descrição em formato de bestiário detalhado com seções como “Aparência”, “Sociedade”, “Habilidades” e “Personalidade”, no estilo de um livro oficial de RPG."
+  ]
+},
+{
+  "name": "Traços Raciais",
+  "type": "entries",
+  "entries": [
+    "+2 Destreza, +1 Sabedoria, Imitação perfeita, Proficiência em Percepção, Furtividade aprimorada, Comunicação por imitação"
+  ]
+}
+    ]
+  },
+  {
+    "name": "Kobold",
+    "source": "VGM",
+    "page": 119,
+    "size": "S",
+    "speed": 30,
+    "darkvision": 60,
+    "ability": {
+      "dex": 2,
+      "str": -2
+    },
+    "entries": [
+      {
+        "name": "Idade",
+        "type": "entries",
+        "entries": [
+          "Kobolds atingem a idade adulta aos 6 anos e podem viver até 120 anos, mas raramente chegam a tanto."
+        ]
+      },
+      {
+        "name": "Alinhamento",
+        "type": "entries",
+        "entries": [
+          "Kobolds são fundamentalmente egoístas, o que os torna malignos, mas sua dependência da força do grupo faz com que tendam à lei."
+        ]
+      },
+      {
+        "name": "Visão no Escuro",
+        "type": "entries",
+        "entries": [
+          "Você consegue enxergar na penumbra a até 60 pés como se fosse luz plena, e no escuro como se fosse penumbra. Você não consegue distinguir cores no escuro, apenas tons de cinza."
+        ]
+      },
+      {
+        "name": "Rastejar, Temer e Suplicar",
+        "type": "entries",
+        "entries": [
+          "Como ação em seu turno, você pode se encolher pateticamente para distrair inimigos próximos. Até o final do seu próximo turno, seus aliados ganham vantagem em ataques contra inimigos a até 10 pés que você consiga ver. Depois de usar este traço, você não pode usá-lo novamente até terminar um descanso curto ou longo."
+        ]
+      },
+      {
+        "name": "Tática de Matilha",
+        "type": "entries",
+        "entries": [
+          "Você tem vantagem em uma rolagem de ataque contra uma criatura se pelo menos um de seus aliados estiver a até 5 pés da criatura e o aliado não estiver {@condition incapacitated}."
+        ]
+      },
+      {
+        "name": "Sensibilidade à Luz Solar",
+        "type": "entries",
+        "entries": [
+          "Você tem desvantagem em ataques e em checagens de Sabedoria (Percepção) que dependam da visão quando você, o alvo do seu ataque ou o que você estiver tentando perceber estiver sob luz solar direta."
+        ]
+      },
+      {
+        "name": "Idiomas",
+        "type": "entries",
+        "entries": [
+          "Você pode falar, ler e escrever Comum e Dracônico."
+        ]
+      }
+    ]
+  }
+],
+{
+      "name": "Kor",
+      "english_name": "Kor",
+      "source": "PSZ",
+      "page": 10,
+      "size": "M",
+      "speed": {
+        "walk": 30,
+        "climb": 30
+      },
+      "ability": {
+        "dex": 2,
+        "wis": 1
+      },
+      "entries": [
+        {
+          "name": "Idade",
+          "type": "entries",
+          "entries": [
+            "Kor amadurecem na mesma taxa que humanos e vivem aproximadamente o mesmo tempo."
+          ]
+        },
+        {
+          "name": "Tendência",
+          "type": "entries",
+          "entries": [
+            "A maioria dos kor é ordeira e boa, com uma forte dedicação à comunidade e às tradições de seus ancestrais."
+          ]
+        },
+        {
+          "name": "Corajoso",
+          "type": "entries",
+          "entries": [
+            "Você tem vantagem em testes de resistência contra a condição amedrontado."
+          ]
+        },
+        {
+          "name": "Escalada",
+          "type": "entries",
+          "entries": [
+            "Você também possui deslocamento de escalada de 9 metros (30 pés), desde que não esteja sobrecarregado ou vestindo armadura pesada."
+          ]
+        },
+        {
+          "name": "Escalada Kor",
+          "type": "entries",
+          "entries": [
+            "Você tem proficiência nas perícias Atletismo e Acrobacia."
+          ]
+        },
+        {
+          "name": "Idiomas",
+          "type": "entries",
+          "entries": [
+            "Você pode falar, ler e escrever Comum, e se comunicar por meio da fala silenciosa dos kor."
+          ]
+        },
+        {
+          "name": "Sortudo",
+          "type": "entries",
+          "entries": [
+            "Quando você rolar um 1 em um d20 para uma jogada de ataque, teste de habilidade ou teste de resistência, você pode rerrolar o dado, devendo usar o novo resultado."
+          ]
+        }
+      ]
+},
+{
+  "name": "Lizardfolk",
+  "source": "VGM",
+  "page": 111,
+  "size": "M",
+  "speed": {
+    "walk": 30,
+    "swim": 30
+  },
+  "ability": {
+    "con": 2,
+    "wis": 1
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Lizardfolk atingem a maturidade por volta dos 14 anos e raramente vivem mais de 60 anos."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "A maioria dos lizardfolk é neutra. Eles veem o mundo como um lugar de predadores e presas, onde vida e morte são processos naturais. Seu objetivo principal é sobreviver, preferindo deixar outras criaturas à própria sorte."
+      ]
+    },
+    {
+      "name": "Velocidade de Nado",
+      "type": "entries",
+      "entries": [
+        "Você possui velocidade de natação de 30 pés."
+      ]
+    },
+    {
+      "name": "Mordida",
+      "type": "entries",
+      "entries": [
+        "Sua mandíbula com presas é uma arma natural que você pode usar para desferir ataques desarmados. Se acertar com ela, você causa dano perfurante igual a 1d6 + seu modificador de Força, em vez do dano contuso normal de um ataque desarmado."
+      ]
+    },
+    {
+      "name": "Artesão Astuto",
+      "type": "entries",
+      "entries": [
+        "Como parte de um descanso curto, você pode coletar ossos e couro de uma criatura abatida (besta, construto, dragão, monstruosidade ou planta de tamanho pequeno ou maior) para criar um dos seguintes itens: um escudo, um clava, uma lança ou 1d4 dardos ou agulhas de zarabatana. Para usar este traço, você precisa de uma lâmina, como adaga, ou ferramentas apropriadas de artesão, como ferramentas de couro."
+      ]
+    },
+    {
+      "name": "Segurar a Respiração",
+      "type": "entries",
+      "entries": [
+        "Você pode prender a respiração por até 15 minutos de cada vez."
+      ]
+    },
+    {
+      "name": "Conhecimento do Caçador",
+      "type": "entries",
+      "entries": [
+        "Você ganha proficiência em duas das seguintes perícias à sua escolha: Adestramento, Natureza, Percepção, Furtividade e Sobrevivência."
+      ]
+    },
+    {
+      "name": "Armadura Natural",
+      "type": "entries",
+      "entries": [
+        "Você possui pele escamosa e resistente. Quando não estiver usando armadura, sua CA é 13 + seu modificador de Destreza. Você pode usar sua armadura natural para determinar sua CA se a armadura que estiver vestindo lhe proporcionaria uma CA menor. Os benefícios de um escudo se aplicam normalmente enquanto você usa a armadura natural."
+      ]
+    },
+    {
+      "name": "Mandíbulas Famintas",
+      "type": "entries",
+      "entries": [
+        "Em combate, você pode entrar em uma frenesi de alimentação feroz. Como ação bônus, você pode fazer um ataque especial com sua mordida. Se o ataque acertar, ele causa seu dano normal, você ganha pontos de vida temporários iguais ao seu modificador de Constituição (mínimo de 1) e não pode usar este traço novamente até terminar um descanso curto ou longo."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Dracônico."
+      ]
+    }
+  ]
+},
+{
+  "name": "Meio-Elfo",
+  "english_name": "Half-Elf",
+  "source": "Player's Handbook",
+  "page": 38,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "cha": 2,
+    "choose": [
+      {
+        "from": ["str", "dex", "con", "int", "wis"],
+        "count": 2
+      }
+    ]
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Meio-elfos amadurecem na mesma velocidade que humanos e alcançam a idade adulta por volta dos 20 anos. Porém, vivem muito mais que humanos, frequentemente ultrapassando 180 anos."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "Meio-elfos compartilham a inclinação caótica de sua herança élfica. Valorizam tanto a liberdade pessoal quanto a expressão criativa, não demonstrando amor por líderes nem desejo de seguidores. Rejeitam regras, ressentem demandas alheias e às vezes se mostram pouco confiáveis ou imprevisíveis."
+      ]
+    },
+    {
+      "name": "Aumento de Atributo",
+      "type": "entries",
+      "entries": [
+        "Dois atributos diferentes de sua escolha aumentam em 1."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Graças ao seu sangue élfico, você tem visão superior em condições de pouca luz e escuridão. Você pode enxergar em luz fraca num raio de 18 metros como se fosse luz plena, e na escuridão como se fosse luz fraca. Não é possível discernir cores na escuridão, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Ascendência Feérica",
+      "type": "entries",
+      "entries": [
+        "Você tem vantagem em testes de resistência contra estar {@condition charmed} e magia não pode fazê-lo dormir."
+      ]
+    },
+    {
+      "name": "Versatilidade de Perícias",
+      "type": "entries",
+      "entries": [
+        "Você adquire proficiência em duas perícias de sua escolha."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum, Élfico e mais um idioma de sua escolha."
+      ]
+    }
+  ],
+  "subraces": [
+    {},
+    {
+      "name": "Descendência Élfica da Floresta",
+      "source": "Sword Coast Adventurer's Guide",
+      "page": 116,
+      "entries": [
+        {
+          "type": "inset",
+          "name": "Característica Variante (Escolha 1)",
+          "entries": [
+            {
+              "name": "Versatilidade de Perícias",
+              "entries": ["Você adquire proficiência em duas perícias de sua escolha."]
+            },
+            {
+              "name": "Sentidos Aguçados",
+              "entries": ["Você tem proficiência na perícia Percepção."]
+            },
+            {
+              "name": "Treinamento em Armas Élficas",
+              "entries": ["Você tem proficiência com espada longa, espada curta, arco curto e arco longo."]
+            },
+            {
+              "name": "Pé Rápido",
+              "entries": ["Sua velocidade base de caminhada aumenta para 10,5 m (35 pés)."]
+            },
+            {
+              "name": "Máscara da Natureza",
+              "entries": [
+                "Você pode tentar se esconder mesmo quando está apenas levemente oculto por folhagem, chuva forte, neve, névoa ou outros fenômenos naturais."
+              ]
+            }
+          ],
+          "data": {"overwrite": "Skill Versatility"}
+        }
+      ]
+    },
+    {
+      "name": "Descendência Élfica Lunar ou Solar",
+      "source": "Sword Coast Adventurer's Guide",
+      "page": 116,
+      "entries": [
+        {
+          "type": "inset",
+          "name": "Característica Variante (Escolha 1)",
+          "entries": [
+            {
+              "name": "Versatilidade de Perícias",
+              "entries": ["Você adquire proficiência em duas perícias de sua escolha."]
+            },
+            {
+              "name": "Sentidos Aguçados",
+              "entries": ["Você tem proficiência na perícia Percepção."]
+            },
+            {
+              "name": "Treinamento em Armas Élficas",
+              "entries": ["Você tem proficiência com espada longa, espada curta, arco curto e arco longo."]
+            },
+            {
+              "name": "Truque",
+              "entries": [
+                "Você conhece um truque à sua escolha da lista de magias de mago. Inteligência é seu atributo para conjuração dessa magia."
+              ]
+            }
+          ],
+          "data": {"overwrite": "Skill Versatility"}
+        }
+      ]
+    },
+    {
+      "name": "Descendência Drow",
+      "source": "Sword Coast Adventurer's Guide",
+      "page": 116,
+      "entries": [
+        {
+          "type": "inset",
+          "name": "Característica Variante (Escolha 1)",
+          "entries": [
+            {
+              "name": "Versatilidade de Perícias",
+              "entries": ["Você adquire proficiência em duas perícias de sua escolha."]
+            },
+            {
+              "name": "Sentidos Aguçados",
+              "entries": ["Você tem proficiência na perícia Percepção."]
+            },
+            {
+              "name": "Magia Drow",
+              "entries": [
+                "Você conhece o truque {@spell dancing lights}. Ao atingir o 3º nível, pode conjurar {@spell faerie fire} uma vez por dia; é necessário terminar um descanso longo para usar novamente. Ao atingir o 5º nível, também pode conjurar {@spell darkness} uma vez por dia; novamente, é necessário um descanso longo. Carisma é seu atributo para essas magias."
+              ]
+            }
+          ],
+          "data": {"overwrite": "Skill Versatility"}
+        }
+      ]
+    },
+    {
+      "name": "Descendência Élfica Aquática",
+      "speed": {"walk": 30, "swim": 30},
+      "source": "Sword Coast Adventurer's Guide",
+      "page": 116,
+      "entries": [
+        {
+          "type": "inset",
+          "name": "Característica Variante (Escolha 1)",
+          "entries": [
+            {
+              "name": "Versatilidade de Perícias",
+              "entries": ["Você adquire proficiência em duas perícias de sua escolha."]
+            },
+            {
+              "name": "Sentidos Aguçados",
+              "entries": ["Você tem proficiência na perícia Percepção."]
+            },
+            {
+              "name": "Natação",
+              "entries": ["Você adquire velocidade de natação de 9 metros (30 pés)."]
+            }
+          ],
+          "data": {"overwrite": "Skill Versatility"}
+        }
+      ]
+    }
+  ]
+},
+{
+  "name": "Meio-Orc",
+  "english_name": "Half-Orc",
+  "source": "Player's Handbook",
+  "page": 40,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "str": 2,
+    "con": 1
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Meio-orcs amadurecem um pouco mais rápido que humanos, atingindo a idade adulta por volta dos 14 anos. Envelhecem mais rapidamente e raramente vivem além de 75 anos."
+      ]
+    },
+    {
+      "name": "Tendência",
+      "type": "entries",
+      "entries": [
+        "Meio-orcs herdam a inclinação para o caos de seus pais orcs e não são fortemente inclinados ao bem. Meio-orcs criados entre orcs e dispostos a viver entre eles geralmente tendem ao mal."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Graças ao seu sangue orc, você tem visão superior em condições de pouca luz e escuridão. Você pode enxergar em luz fraca num raio de 18 metros (60 pés) como se fosse luz plena, e na escuridão como se fosse luz fraca. Não é possível discernir cores na escuridão, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Ameaçador",
+      "type": "entries",
+      "entries": [
+        "Você adquire proficiência na perícia Intimidação."
+      ]
+    },
+    {
+      "name": "Resistência Implacável",
+      "type": "entries",
+      "entries": [
+        "Quando você é reduzido a 0 pontos de vida, mas não é morto imediatamente, pode cair com 1 ponto de vida em vez disso. Você não pode usar este recurso novamente até terminar um descanso longo."
+      ]
+    },
+    {
+      "name": "Ataques Selvagens",
+      "type": "entries",
+      "entries": [
+        "Quando você acerta um golpe crítico com um ataque corpo a corpo, pode rolar um dos dados de dano da arma uma vez adicional e adicionar ao dano extra do golpe crítico."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Orc. Orc é um idioma áspero, estridente, com consoantes duras. Não possui escrita própria, sendo geralmente registrado na escrita anã."
+      ]
+    }
+  ]
+},
+{
+  "name": "Minotauro (Krynn)",
+  "source": "UAWaterborneAdventures",
+  "page": 1,
+  "size": "M",
+  "speed": 30,
+  "ability": {
+    "str": 1,
+    "choose": [
+      {
+        "from": ["str", "int", "wis"],
+        "count": 1,
+        "amount": 1
+      }
+    ]
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Minotauros atingem a idade adulta por volta dos 17 anos e podem viver até 150 anos."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "Minotauros acreditam em um código de honra rígido e, portanto, tendem à lei. Eles são leais até a morte e fazem inimigos implacáveis, embora sua cultura brutal e desprezo pela fraqueza os incline para o mal."
+      ]
+    },
+    {
+      "name": "Virtude do Conquistador",
+      "type": "entries",
+      "entries": [
+        "Desde jovens, vocês se concentraram em uma das três virtudes: força, astúcia ou intelecto. Sua escolha entre Força, Inteligência ou Sabedoria aumenta em 1."
+      ]
+    },
+    {
+      "name": "Chifres",
+      "type": "entries",
+      "entries": [
+        "Você nunca está desarmado. Você é proficiente com seus chifres, que são uma arma corpo a corpo causando 1d10 de dano perfurante. Seus chifres concedem vantagem em todas as tentativas de empurrar uma criatura, mas não para evitar ser empurrado."
+      ]
+    },
+    {
+      "name": "Investida Perfurante",
+      "type": "entries",
+      "entries": [
+        "Quando você usa a ação Correr durante seu turno, pode fazer um ataque corpo a corpo com seus chifres como ação bônus."
+      ]
+    },
+    {
+      "name": "Chifres Martelantes",
+      "type": "entries",
+      "entries": [
+        "Quando você usa a ação Atacar durante seu turno para fazer um ataque corpo a corpo, pode tentar empurrar uma criatura com seus chifres como ação bônus. Não é possível usar essa tentativa para derrubar uma criatura {@condition prone}."
+      ]
+    },
+    {
+      "name": "Memória Labiríntica",
+      "type": "entries",
+      "entries": [
+        "Você consegue se lembrar perfeitamente de qualquer caminho que tenha percorrido."
+      ]
+    },
+    {
+      "name": "Assaltante do Mar",
+      "type": "entries",
+      "entries": [
+        "Você ganha proficiência com ferramentas de navegador e veículos aquáticos."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum."
+      ]
+    }
+  ]
+},
+{
+  "name": "Orc",
+  "source": "VGM",
+  "page": 120,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "str": 2,
+    "con": 1,
+    "int": -2
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Orcs atingem a idade adulta aos 12 anos e vivem até cerca de 50 anos."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "Orcs são saqueadores cruéis que acreditam que o mundo deveria ser deles. Eles respeitam a força acima de tudo e acreditam que os fortes devem intimidar os fracos para garantir que a fraqueza não se espalhe como uma doença. Geralmente são caóticos e malignos."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Você consegue enxergar na penumbra a até 60 pés como se fosse luz plena, e na escuridão como se fosse penumbra. Você não consegue distinguir cores na escuridão, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Agressivo",
+      "type": "entries",
+      "entries": [
+        "Como ação bônus, você pode se mover até a sua velocidade em direção a uma criatura hostil que possa ver ou ouvir. Você deve terminar esse movimento mais próximo do inimigo do que estava no início."
+      ]
+    },
+    {
+      "name": "Ameaçador",
+      "type": "entries",
+      "entries": [
+        "Você é proficiente na perícia Intimidação."
+      ]
+    },
+    {
+      "name": "Constituição Robusta",
+      "type": "entries",
+      "entries": [
+        "Você conta como um tamanho maior ao determinar sua capacidade de carga e o peso que pode empurrar, arrastar ou levantar."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Orc."
+      ]
+    }
+  ]
+},
+{
+  "name": "Revenant",
+  "source": "UAGothicHeroes",
+  "page": 1,
+  "size": "V",
+  "speed": "Varia",
+  "ability": {
+    "con": 1
+  },
+  "entries": [
+    {
+      "name": "Subraça Revenant",
+      "type": "entries",
+      "entries": [
+        "Tendo encontrado um fim cruel e injusto, você retornou ao reino dos vivos. Como um revenant, você busca vingança contra aqueles que o prejudicaram em vida ou deseja completar uma última tarefa crítica que deixou inacabada.",
+        "A subraça revenant pode ser aplicada a qualquer raça que tenha subraças, substituindo as opções de subraça existentes dessa raça. Alternativamente, você pode aplicar essa nova subraça a uma raça sem opções de subraça, usando as modificações fornecidas abaixo.",
+        "Seu DM também pode permitir que você escolha essa subraça para um personagem já morto. Nesse caso, seu personagem se levanta dos mortos com sua subraça original substituída (ou com as modificações necessárias feitas em suas características base), movido por uma determinação de buscar vingança ou completar sua missão."
+      ]
+    },
+    {
+      "name": "Ajustes Raciais",
+      "type": "entries",
+      "entries": [
+        "Para raças que não possuem opções de subraça, assumir a subraça revenant significa alterar as características base do seu personagem, da seguinte forma. (Este artigo de playtest fornece opções apenas para humanos e dragonborn. Outras raças sem subraças não devem usar estas regras de revenant.)",
+        {
+          "name": "Humano Revenant",
+          "type": "entries",
+          "entries": [
+            "Se quiser jogar como humano revenant, modifique o aumento de Pontos de Habilidade do humano para o seguinte: dois diferentes Pontos de Habilidade à sua escolha aumentam em 1. Se você usar as características de humano variante, remova a habilidade de Perícias e a vantagem de Talento."
+          ]
+        },
+        {
+          "name": "Dragonborn Revenant",
+          "type": "entries",
+          "entries": [
+            "Se quiser jogar como dragonborn revenant, modifique o aumento de Pontos de Habilidade do dragonborn da seguinte forma: sua pontuação de Força aumenta em 1 e sua pontuação de Carisma aumenta em 1. Além disso, sua ancestralidade dracônica passa a causar dano necrótico em vez do tipo de dano original do sopro e da resistência a dano."
+          ]
+        },
+        {
+          "name": "Tiefling Revenant",
+          "type": "entries",
+          "entries": [
+            "Uma versão anterior do Unearthed Arcana (That Old Black Magic) descreveu duas variantes de tiefling que usam subraças. Use esse artigo para criar um tiefling revenant, substituindo as opções de subraça pelas opções de subraça revenant. As características base do tiefling do artigo são as seguintes:",
+            {
+              "name": "Aumento de Pontos de Habilidade",
+              "type": "entries",
+              "entries": [
+                "Seu valor de Carisma aumenta em 2."
+              ]
+            },
+            {
+              "name": "Idiomas",
+              "type": "entries",
+              "entries": [
+                "Você pode falar, ler e escrever Comum."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Natureza Implacável",
+      "type": "entries",
+      "entries": [
+        "Seu DM atribui a você um objetivo—normalmente relacionado à morte do seu personagem. O objetivo deve ser uma tarefa específica que você possa completar, como matar um inimigo ou libertar uma área e seu povo. Até cumprir esse objetivo, você recebe os seguintes benefícios:",
+        {
+          "type": "list",
+          "items": [
+            "Se você estiver com menos da metade de seus pontos de vida no início do seu turno, você recupera 1 ponto de vida.",
+            "Se você morrer, retorna à vida 24 horas após a morte. Se seu corpo for destruído, você se reformará a até 1 milha do local de sua morte em um ponto determinado pelo DM. Se seu equipamento também tiver sido destruído, você não o recupera.",
+            "Você sabe a distância e a direção entre você e qualquer criatura envolvida em seu objetivo, como alguém contra quem busca vingança ou alguém que prometeu proteger. Essa consciência falha se a criatura estiver em outro plano de existência."
+          ]
+        },
+        "Quando seu objetivo for concluído, você finalmente descansa. Você morre e não pode mais ser ressuscitado."
+      ]
+    }
+  ]
+},
+{
+  "name": "Shifter",
+  "english_name": "Shifter",
+  "source": "Unearthed Arcana: Eberron",
+  "page": 2,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "dex": 1
+  },
+  "entries": [
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Sua herança licantrópica concede a habilidade de enxergar em condições de pouca luz. Você enxerga na penumbra a até 18 metros como se fosse luz plena e no escuro como se fosse penumbra. Você não consegue discernir cores no escuro, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Transformação",
+      "type": "entries",
+      "entries": [
+        "No seu turno, você pode se transformar como uma ação bônus. A transformação dura 1 minuto ou até que você a encerre em seu turno como uma ação bônus.",
+        "Enquanto estiver transformado, você ganha pontos de vida temporários iguais ao seu nível + seu modificador de Constituição (mínimo 1). Você também ganha uma característica dependendo da sua sub-raça de shifter, descrita abaixo.",
+        "Você deve completar um descanso curto ou longo antes de poder se transformar novamente."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Silvano."
+      ]
+    }
+  ],
+  "subraces": [
+    {
+      "name": "Razorclaw",
+      "ability": {
+        "dex": 2
+      },
+      "entries": [
+        {
+          "name": "Habilidade da Transformação",
+          "type": "entries",
+          "entries": [
+            "Enquanto estiver transformado, você pode realizar um ataque desarmado como ação bônus. Você pode usar sua Destreza para a rolagem de ataque e bônus de dano, e este ataque causa dano cortante."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Wildhunt",
+      "ability": {
+        "wis": 1
+      },
+      "entries": [
+        {
+          "name": "Habilidade da Transformação",
+          "type": "entries",
+          "entries": [
+            "Enquanto estiver transformado, você tem vantagem em todos os testes e salvamentos baseados em Sabedoria."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Beasthide",
+      "ability": {
+        "con": 1
+      },
+      "entries": [
+        {
+          "name": "Habilidade da Transformação",
+          "type": "entries",
+          "entries": [
+            "Enquanto estiver transformado, você ganha +1 de bônus na CA."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Cliffwalk",
+      "ability": {
+        "dex": 2
+      },
+      "entries": [
+        {
+          "name": "Habilidade da Transformação",
+          "type": "entries",
+          "entries": [
+            "Enquanto estiver transformado, você ganha velocidade de escalada de 9 metros."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Longstride",
+      "ability": {
+        "dex": 2
+      },
+      "entries": [
+        {
+          "name": "Habilidade da Transformação",
+          "type": "entries",
+          "entries": [
+            "Enquanto estiver transformado, você pode usar a ação Correr como uma ação bônus."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Longtooth",
+      "ability": {
+        "str": 1
+      },
+      "entries": [
+        {
+          "name": "Habilidade da Transformação",
+          "type": "entries",
+          "entries": [
+            "Enquanto estiver transformado, você pode realizar um ataque de mordida como ação. Este é um ataque corpo a corpo que usa Força para a rolagem de ataque e bônus de dano, causando 1d6 de dano perfurante. Se este ataque atingir uma criatura do seu tamanho ou menor, o alvo também fica {@condition grappled}."
+          ]
+        }
+      ]
+    }
+  ]
+},
+[
+  {
+    "name": "Tabaxi",
+    "source": "VGM",
+    "page": 113,
+    "size": "M",
+    "speed": {
+      "walk": 30,
+      "climb": 20
+    },
+    "darkvision": 60,
+    "ability": {
+      "dex": 2,
+      "cha": 1
+    },
+    "entries": [
+      {
+        "name": "Idade",
+        "type": "entries",
+        "entries": [
+          "Tabaxi têm expectativa de vida equivalente à dos humanos."
+        ]
+      },
+      {
+        "name": "Alinhamento",
+        "type": "entries",
+        "entries": [
+          "Tabaxi tendem a alinhamentos caóticos, pois deixam que o impulso e a fantasia guiem suas decisões. Raramente são malignos, sendo a maioria movida pela curiosidade em vez da ganância ou outros impulsos sombrios."
+        ]
+      },
+      {
+        "name": "Visão no Escuro",
+        "type": "entries",
+        "entries": [
+          "Você possui os sentidos aguçados de um felino, especialmente no escuro. Você consegue enxergar na penumbra a até 60 pés como se fosse luz plena, e na escuridão como se fosse penumbra. Você não consegue distinguir cores na escuridão, apenas tons de cinza."
+        ]
+      },
+      {
+        "name": "Agilidade Felina",
+        "type": "entries",
+        "entries": [
+          "Seus reflexos e agilidade permitem que você se mova com um surto de velocidade. Quando você se move em seu turno de combate, pode dobrar sua velocidade até o final do turno. Só é possível usar essa habilidade novamente após não se mover em um dos seus turnos."
+        ]
+      },
+      {
+        "name": "Garras de Gato",
+        "type": "entries",
+        "entries": [
+          "Por causa de suas garras, você tem uma velocidade de escalada de 20 pés. Além disso, suas garras são armas naturais, que você pode usar para realizar ataques desarmados. Se atingir com elas, você causa dano cortante igual a 1d4 + seu modificador de Força, em vez do dano de contusão normal de um ataque desarmado."
+        ]
+      },
+      {
+        "name": "Talentos Felinos",
+        "type": "entries",
+        "entries": [
+          "Você é proficiente nas perícias Percepção e Furtividade."
+        ]
+      },
+      {
+        "name": "Idiomas",
+        "type": "entries",
+        "entries": [
+          "Você pode falar, ler e escrever Comum e mais um idioma à sua escolha."
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Tritão",
+    "source": "VGM",
+    "page": 115,
+    "size": "M",
+    "speed": {
+      "walk": 30,
+      "swim": 30
+    },
+    "ability": {
+      "str": 1,
+      "cha": 1,
+      "con": 1
+    },
+    "entries": [
+      {
+        "name": "Idade",
+        "type": "entries",
+        "entries": [
+          "Tritons atingem a maturidade por volta dos 15 anos e podem viver até 200 anos."
+        ]
+      },
+      {
+        "name": "Alinhamento",
+        "type": "entries",
+        "entries": [
+          "Tritons tendem ao bem e à lei. Como guardiões das regiões mais profundas do mar, sua cultura os incentiva à ordem e à benevolência."
+        ]
+      },
+      {
+        "name": "Velocidade de Natação",
+        "type": "entries",
+        "entries": [
+          "Você possui uma velocidade de natação de 30 pés."
+        ]
+      },
+      {
+        "name": "Anfíbio",
+        "type": "entries",
+        "entries": [
+          "Você pode respirar ar e água."
+        ]
+      },
+      {
+        "name": "Controle de Ar e Água",
+        "type": "entries",
+        "entries": [
+          "Como filho do mar, você pode invocar a magia elemental do ar e da água. Você pode lançar {@spell neblina} usando essa habilidade. A partir do 3º nível, você pode lançar {@spell rajada de vento} com ela, e a partir do 5º nível, também pode lançar {@spell muro de água|xge}. Depois de lançar um feitiço com essa habilidade, não pode lançá-lo novamente até terminar um descanso longo. Carisma é sua habilidade para conjuração desses feitiços."
+        ]
+      },
+      {
+        "name": "Emissário do Mar",
+        "type": "entries",
+        "entries": [
+          "Bichos aquáticos têm uma afinidade extraordinária com seu povo. Você pode comunicar ideias simples a criaturas que respiram água. Elas compreendem o significado das suas palavras, embora você não tenha habilidade especial de entendê-las em retorno."
+        ]
+      },
+      {
+        "name": "Guardião das Profundezas",
+        "type": "entries",
+        "entries": [
+          "Adaptado até mesmo às profundidades oceânicas mais extremas, você possui resistência a dano por frio e ignora quaisquer desvantagens causadas por ambientes submarinos profundos."
+        ]
+      },
+      {
+        "name": "Idiomas",
+        "type": "entries",
+        "entries": [
+          "Você pode falar, ler e escrever Comum e Primordial."
+        ]
+      }
+    ]
+  }
+],
+    {
+      "name": "Tritão (Zendikar)",
+      "english_name": "Merfolk (Zendikar)",
+      "source": "PSZ",
+      "page": 13,
+      "size": "M",
+      "speed": {
+        "walk": 30,
+        "swim": 30
+      },
+      "ability": {
+        "cha": 1
+      },
+      "entries": [
+        {
+          "name": "Anfíbio",
+          "type": "entries",
+          "entries": [
+            "Você pode respirar ar e água."
+          ]
+        },
+        {
+          "name": "Natação",
+          "type": "entries",
+          "entries": [
+            "Você possui deslocamento de natação de 9 metros (30 pés)."
+          ]
+        },
+        {
+          "name": "Idiomas",
+          "type": "entries",
+          "entries": [
+            "Você pode falar, ler e escrever Comum, Tritão e um idioma adicional de sua escolha."
+          ]
+        }
+      ],
+      "subraces": [
+        {
+          "name": "Credo de Cosi",
+          "ability": {
+            "int": 1,
+            "cha": 2
+          },
+          "entries": [
+            {
+              "name": "Truque",
+              "type": "entries",
+              "entries": [
+                "Você conhece um truque de sua escolha da lista de magias de bardo. Carisma é sua habilidade de conjuração para ele."
+              ]
+            },
+            {
+              "name": "Credo do Trapaceiro",
+              "type": "entries",
+              "entries": [
+                "Você tem proficiência nas perícias Prestidigitação e Furtividade."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Credo de Emeria",
+          "ability": {
+            "wis": 2
+          },
+          "entries": [
+            {
+              "name": "Truque",
+              "type": "entries",
+              "entries": [
+                "Você conhece um truque de sua escolha da lista de magias de druida. Sabedoria é sua habilidade de conjuração para ele."
+              ]
+            },
+            {
+              "name": "Manipulação do Credo dos Ventos",
+              "type": "entries",
+              "entries": [
+                "Você tem proficiência nas perícias Enganação e Persuasão."
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Credo de Ula",
+          "ability": {
+            "int": 2
+          },
+          "entries": [
+            {
+              "name": "Truque",
+              "type": "entries",
+              "entries": [
+                "Você conhece um truque de sua escolha da lista de magias de mago. Inteligência é sua habilidade de conjuração para ele."
+              ]
+            },
+            {
+              "name": "Navegação do Credo das Águas",
+              "type": "entries",
+              "entries": [
+                "Você tem proficiência com ferramentas de navegador e na perícia Sobrevivência."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+{
+  "name": "Tiefling",
+  "english_name": "Tiefling",
+  "source": "PHB",
+  "page": 42,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Os tieflings amadurecem na mesma taxa que os humanos, mas vivem alguns anos a mais."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "Os tieflings podem não ter uma inclinação inata para o mal, mas muitos acabam por isso. Maus ou não, a natureza independente inclina muitos tieflings para um alinhamento caótico."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Graças à sua herança infernal, você tem visão superior em condições de pouca luz e escuridão. Você enxerga na penumbra a até 18 metros como se fosse luz plena e no escuro como se fosse penumbra. Você não consegue discernir cores no escuro, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Resistência Infernal",
+      "type": "entries",
+      "entries": [
+        "Você tem resistência a dano de fogo."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e Infernal."
+      ]
+    }
+  ],
+  "subraces": [
+    {
+      "ability": {
+        "cha": 2,
+        "int": 1
+      },
+      "entries": [
+        {
+          "name": "Legado Infernal",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell thaumaturgy}. Quando atingir o 3º nível, você pode lançar a magia {@spell hellish rebuke} como uma magia de 2º nível; você deve terminar um descanso longo antes de poder lançar novamente usando esse traço. Ao alcançar o 5º nível, você também pode lançar a magia {@spell darkness}; você deve terminar um descanso longo antes de poder lançar novamente usando esse traço. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Variante",
+      "source": "SCAG",
+      "page": 118,
+      "ability": {
+        "int": 1,
+        "choose": [
+          {
+            "from": [
+              "dex",
+              "cha"
+            ],
+            "count": 1,
+            "amount": 2
+          }
+        ]
+      },
+      "entries": [
+        {
+          "name": "Aparência",
+          "type": "entries",
+          "entries": [
+            "Seu tiefling pode não se parecer com outros tieflings. Em vez de ter as características físicas descritas no Livro do Jogador, escolha 1d4+1 das seguintes características: chifres pequenos; presas ou dentes afiados; língua bifurcada; olhos felinos; seis dedos em cada mão; pernas de cabra; cascos fendidos; cauda bifurcada; pele coriácea ou escamosa; pele vermelha ou azul escura; não projetar sombra ou reflexo; exalar cheiro de enxofre."
+          ]
+        },
+        {
+          "type": "inset",
+          "name": "Traço Variante (Escolha 1)",
+          "entries": [
+            {
+              "name": "Legado Infernal (PHB)",
+              "type": "entries",
+              "entries": [
+                "Você conhece o truque {@spell thaumaturgy}. Quando atingir o 3º nível, você pode lançar a magia {@spell hellish rebuke} como uma magia de 2º nível; você deve terminar um descanso longo antes de poder lançar novamente usando esse traço. Ao alcançar o 5º nível, você também pode lançar a magia {@spell darkness}; você deve terminar um descanso longo antes de poder lançar novamente usando esse traço. Carisma é a habilidade de conjuração dessas magias."
+              ]
+            },
+            {
+              "name": "Língua do Diabo",
+              "type": "entries",
+              "entries": [
+                "Você conhece o truque {@spell vicious mockery}. Quando atingir o 3º nível, você pode lançar a magia {@spell charm person} como magia de 2º nível uma vez com este traço. Ao atingir o 5º nível, você pode lançar a magia {@spell enthrall} uma vez com este traço. Você deve completar um descanso longo para lançar novamente essas magias com este traço. Carisma é a habilidade de conjuração delas. Este traço substitui o Legado Infernal."
+              ]
+            },
+            {
+              "name": "Chama Infernal",
+              "type": "entries",
+              "entries": [
+                "Você conhece o truque {@spell thaumaturgy}. Ao atingir o 3º nível, você pode lançar a magia {@spell burning hands} uma vez por dia como magia de 2º nível; você deve terminar um descanso longo antes de poder lançar novamente usando esse traço. Ao atingir o 5º nível, você também pode lançar a magia {@spell darkness}; você deve terminar um descanso longo antes de poder lançar novamente usando esse traço. Carisma é a habilidade de conjuração dessas magias."
+              ]
+            },
+            {
+              "name": "Alado",
+              "type": "entries",
+              "entries": [
+                "Você possui asas semelhantes às de morcego surgindo de suas escápulas. Você tem velocidade de voo de 9 metros enquanto não estiver usando armadura pesada."
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Abissal",
+      "source": "UAThatOldBlackMagic",
+      "page": 1,
+      "ability": {
+        "cha": 2,
+        "con": 1
+      },
+      "entries": [
+        {
+          "name": "Arcanos Abissais",
+          "type": "entries",
+          "entries": [
+            "Cada vez que você termina um descanso longo, ganha a capacidade de conjurar truques e magias determinados aleatoriamente a partir de uma lista curta. No 1º nível, você pode conjurar um truque. Ao atingir o 3º nível, você também pode conjurar uma magia de 1º nível. No 5º nível, você pode conjurar uma magia de 2º nível.",
+            "Você só pode conjurar uma magia obtida por este traço uma vez até completar seu próximo descanso longo. Truques adquiridos por este traço podem ser lançados normalmente à vontade. Para magias de 1º nível cujo efeito muda se forem conjuradas usando um espaço de magia de 2º nível ou superior, você as conjura como se estivesse usando um espaço de 2º nível. Magias de 2º nível são conjuradas como se estivesse usando um espaço de 2º nível.",
+            "Ao final de cada descanso longo, você perde os truques e magias concedidos por este traço, mesmo que não os tenha conjurado. Você substitui esses truques e magias rolando novos resultados na Tabela de Magias Arcanas Abissais. Role separadamente para cada truque e magia. Se rolar a mesma magia ou truque que obteve ao final do descanso longo anterior, role novamente até obter um resultado diferente."
+          ]
+        },
+        {
+          "name": "Resistência Abissal",
+          "type": "entries",
+          "entries": [
+            "Seu máximo de pontos de vida aumenta em metade do seu nível (mínimo 1)."
+          ]
+        },
+        {
+          "name": "Idiomas",
+          "type": "entries",
+          "entries": [
+            "Você pode falar, ler e escrever Comum e Abissal."
+          ],
+          "data": {
+            "overwrite": "Languages"
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "subraces": [
+    {
+      "name": "Asmodeus; UA",
+      "source": "UAFiendishOptions",
+      "ability": {
+        "cha": 2,
+        "int": 1
+      },
+      "entries": [
+        {
+          "name": "Legado Infernal",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell thaumaturgy}. Quando atingir o 3º nível, você pode lançar a magia {@spell hellish rebuke} como magia de 2º nível; você deve completar um descanso longo antes de lançar novamente usando este traço. Ao atingir o 5º nível, você também pode lançar a magia {@spell darkness}; você deve completar um descanso longo antes de lançar novamente usando este traço. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ],
+      "page": 1
+    },
+    {
+      "name": "Baalzebul; UA",
+      "source": "UAFiendishOptions",
+      "ability": {
+        "cha": 2,
+        "int": 1
+      },
+      "page": 1,
+      "entries": [
+        {
+          "name": "Legado de Maladomini",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell thaumaturgy}. Ao atingir o 3º nível, você pode lançar a magia {@spell ray of sickness} como magia de 2º nível uma vez com este traço, recuperando a habilidade após um descanso longo. Ao atingir o 5º nível, você pode lançar a magia {@spell crown of madness} uma vez com este traço, recuperando a habilidade após um descanso longo. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dispater; UA",
+      "source": "UAFiendishOptions",
+      "ability": {
+        "cha": 2,
+        "dex": 1
+      },
+      "page": 1,
+      "entries": [
+        {
+          "name": "Legado de Dis",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell thaumaturgy}. Ao atingir o 3º nível, você pode lançar a magia {@spell disguise self} uma vez com este traço, recuperando a habilidade após um descanso longo. Ao atingir o 5º nível, você pode lançar a magia {@spell invisibility} uma vez com este traço, recuperando a habilidade após um descanso longo. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fierna; UA",
+      "source": "UAFiendishOptions",
+      "ability": {
+        "cha": 2,
+        "wis": 1
+      },
+      "page": 1,
+      "entries": [
+        {
+          "name": "Legado de Phlegethos",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell friends}. Ao atingir o 3º nível, você pode lançar a magia {@spell charm person} como magia de 2º nível uma vez com este traço, recuperando a habilidade após um descanso longo. Ao atingir o 5º nível, você pode lançar a magia {@spell suggestion} uma vez com este traço, recuperando a habilidade após um descanso longo. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Glasya; UA",
+      "source": "UAFiendishOptions",
+      "ability": {
+        "cha": 2,
+        "dex": 1
+      },
+      "page": 2,
+      "entries": [
+        {
+          "name": "Legado de Malbolge",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell minor illusion}. Ao atingir o 3º nível, você pode lançar a magia {@spell disguise self} uma vez com este traço, recuperando a habilidade após um descanso longo. Ao atingir o 5º nível, você pode lançar a magia {@spell invisibility} uma vez com este traço, recuperando a habilidade após um descanso longo. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Levistus; UA",
+      "source": "UAFiendishOptions",
+      "ability": {
+        "cha": 2,
+        "con": 1
+      },
+      "page": 2,
+      "entries": [
+        {
+          "name": "Legado de Stygia",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell ray of frost}. Ao atingir o 3º nível, você pode lançar a magia {@spell armor of Agathys} como magia de 2º nível uma vez com este traço, recuperando a habilidade após um descanso longo. Ao atingir o 5º nível, você pode lançar a magia {@spell darkness} uma vez com este traço, recuperando a habilidade após um descanso longo. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mammon; UA",
+      "source": "UAFiendishOptions",
+      "ability": {
+        "cha": 2,
+        "int": 1
+      },
+      "page": 2,
+      "entries": [
+        {
+          "name": "Legado de Minauros",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell mage hand}. Ao atingir o 3º nível, você pode lançar a magia {@spell Tenser's floating disk} uma vez com este traço, recuperando a habilidade após um descanso curto ou longo. Ao atingir o 5º nível, você pode lançar a magia {@spell arcane lock} uma vez com este traço, sem necessidade de componentes materiais, recuperando a habilidade após um descanso longo. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mephistopheles; UA",
+      "source": "UAFiendishOptions",
+      "ability": {
+        "cha": 2,
+        "int": 1
+      },
+      "entries": [
+        {
+          "name": "Legado de Cania",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell mage hand}. Ao atingir o 3º nível, você pode lançar a magia {@spell burning hands} como magia de 2º nível uma vez com este traço, recuperando a habilidade após um descanso longo. Ao atingir o 5º nível, você pode lançar a magia {@spell flame blade} uma vez com este traço, recuperando a habilidade após um descanso longo. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zariel; UA",
+      "source": "UAFiendishOptions",
+      "ability": {
+        "cha": 2,
+        "str": 1
+      },
+      "entries": [
+        {
+          "name": "Legado de Avernus",
+          "type": "entries",
+          "entries": [
+            "Você conhece o truque {@spell thaumaturgy}. Ao atingir o 3º nível, você pode lançar a magia {@spell searing smite} como magia de 2º nível uma vez com este traço, recuperando a habilidade após um descanso longo. Ao atingir o 5º nível, você pode lançar a magia {@spell branding smite} uma vez com este traço, recuperando a habilidade após um descanso longo. Carisma é a habilidade de conjuração dessas magias."
+          ]
+        }
+      ]
+    }
+  ]
+},
+{
+      "name": "Vampiro (Zendikar)",
+      "english_name": "Vampire (Zendikar)",
+      "source": "PSZ",
+      "page": 14,
+      "size": "M",
+      "speed": 30,
+      "darkvision": 60,
+      "ability": {
+        "int": 1,
+        "cha": 2
+      },
+      "entries": [
+        {
+          "name": "Idade",
+          "type": "entries",
+          "entries": [
+            "Vampiros não amadurecem e envelhecem da mesma forma que outras raças. Todo vampiro vivo é ou um chefe de sangue, infectado pela influência de Ulamog nos confins distantes da história, ou foi criado por um chefe de sangue a partir de um humano vivo. Assim, a maioria dos vampiros é muito antiga, mas poucos têm qualquer memória de seus primeiros anos."
+          ]
+        },
+        {
+          "name": "Tendência",
+          "type": "entries",
+          "entries": [
+            "Vampiros não possuem uma tendência inata para o mal, mas consumir a energia vital de outras criaturas frequentemente os conduz a esse caminho. Independentemente de sua moralidade, as hierarquias rígidas de seus chefes de sangue os inclinam para tendências ordeiras."
+          ]
+        },
+        {
+          "name": "Sede de Sangue",
+          "type": "entries",
+          "entries": [
+            "Você pode drenar sangue e energia vital de uma criatura voluntária, ou de uma que esteja agarrada por você, incapacitada ou impedida. Faça um ataque corpo a corpo contra o alvo. Se acertar, você causa 1 ponto de dano perfurante e 1d6 de dano necrótico. O máximo de pontos de vida do alvo é reduzido em uma quantidade igual ao dano necrótico sofrido, e você recupera pontos de vida iguais a essa quantidade. A redução dura até o alvo completar um descanso longo. O alvo morre se esse efeito reduzir seu máximo de pontos de vida a 0. Um humanoide morto dessa forma se torna um nulo (veja \"Bestiário de Zendikar\")."
+          ]
+        },
+        {
+          "name": "Visão no Escuro",
+          "type": "entries",
+          "entries": [
+            "Graças à sua herança, você possui visão superior em condições de pouca luz e escuridão. Você enxerga na penumbra a até 18 metros (60 pés) como se fosse luz plena, e na escuridão como se fosse penumbra. Você não consegue distinguir cores na escuridão, apenas tons de cinza."
+          ]
+        },
+        {
+          "name": "Idiomas",
+          "type": "entries",
+          "entries": [
+            "Você pode falar, ler e escrever Comum e Vampírico."
+          ]
+        },
+        {
+          "name": "Resistência Vampírica",
+          "type": "entries",
+          "entries": [
+            "Você possui resistência a dano necrótico."
+          ]
+        }
+      ]
+},
+{
+  "name": "Warforged",
+  "source": "UAEberron",
+  "page": 3,
+  "size": "M",
+  "speed": 30,
+  "ability": {
+    "str": 1,
+    "con": 1
+  },
+  "entries": [
+    {
+      "name": "Placa Composta",
+      "type": "entries",
+      "entries": [
+        "Sua construção incorpora madeira e metal, concedendo a você um bônus de +1 na Classe de Armadura."
+      ]
+    },
+    {
+      "name": "Construto Vivo",
+      "type": "entries",
+      "entries": [
+        "Apesar de ter sido construído, você é uma criatura viva. Você é imune a doenças. Não precisa comer ou respirar, mas pode ingerir comida e bebida se desejar.",
+        "Em vez de dormir, você entra em um estado inativo por 4 horas a cada dia. Você não sonha nesse estado; está plenamente consciente do ambiente e percebe inimigos e outros eventos normalmente."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum e mais um idioma à sua escolha."
+      ]
+    }
+  ]
+},
+{
+  "name": "Yuan-ti Sangue Puro",
+  "source": "VGM",
+  "page": 120,
+  "size": "M",
+  "speed": 30,
+  "darkvision": 60,
+  "ability": {
+    "cha": 2,
+    "int": 1
+  },
+  "entries": [
+    {
+      "name": "Idade",
+      "type": "entries",
+      "entries": [
+        "Os Sangue Puro amadurecem na mesma taxa que os humanos e possuem expectativa de vida semelhante à deles."
+      ]
+    },
+    {
+      "name": "Alinhamento",
+      "type": "entries",
+      "entries": [
+        "Sangue Puro são desprovidos de emoção e veem os outros como ferramentas a serem manipuladas. Pouco se importam com lei ou caos e geralmente são malignos neutros."
+      ]
+    },
+    {
+      "name": "Visão no Escuro",
+      "type": "entries",
+      "entries": [
+        "Você consegue enxergar na penumbra a até 60 pés como se fosse luz plena, e na escuridão como se fosse penumbra. Você não consegue distinguir cores na escuridão, apenas tons de cinza."
+      ]
+    },
+    {
+      "name": "Conjuração Inata",
+      "type": "entries",
+      "entries": [
+        "Você conhece o truque {@spell spray de veneno}. Pode lançar {@spell amizade animal} um número ilimitado de vezes com esta habilidade, mas só pode escolher serpentes como alvo. A partir do 3º nível, você também pode lançar {@spell sugestão} usando esta habilidade. Depois de usar um desses feitiços, não pode lançá-lo novamente até terminar um descanso longo. Carisma é sua habilidade de conjuração para estes feitiços."
+      ]
+    },
+    {
+      "name": "Resistência Mágica",
+      "type": "entries",
+      "entries": [
+        "Você possui vantagem em testes de resistência contra feitiços e outros efeitos mágicos."
+      ]
+    },
+    {
+      "name": "Imunidade a Veneno",
+      "type": "entries",
+      "entries": [
+        "Você é imune a dano por veneno e à condição {@condition envenenado}."
+      ]
+    },
+    {
+      "name": "Idiomas",
+      "type": "entries",
+      "entries": [
+        "Você pode falar, ler e escrever Comum, Abissal e Dracônico."
+      ]
+    }
+  ]
+}
+    ]
+}

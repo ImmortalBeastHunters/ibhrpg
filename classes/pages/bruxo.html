@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bruxo • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://www.belloflostsouls.net/wp-content/uploads/2024/04/Vecna-Eve-of-Ruin-key-art-header.jpeg" alt="Bruxo">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const bruxo5e = `
+<h1>Bruxo</h1>
+<div class="subtitle">Classe Conjuradora • D&D</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Bruxos são indivíduos que obtêm poder através de um <strong>pacto
+    com entidades extraplanares</strong>, como arcanjos caídos, fadas
+    antigas ou demônios primordiais. Ao contrário de magos, que estudam
+    e dominam magia por meio de aprendizado, bruxos recebem sua magia
+    como um dom concedido — e muitas vezes condicionado — por forças
+    que transcendem o mundo mortal.
+  </p>
+
+  <p>
+    Essa conexão concede aos bruxos <strong>magias poderosas e invocações
+    únicas</strong>, permitindo manipular energia arcana de maneiras que
+    desafiam a compreensão comum. Embora possam canalizar magia de forma
+    impressionante, seu poder é limitado pelo vínculo com seu patrono e
+    pelo número restrito de magias que podem preparar.
+  </p>
+
+  <p>
+    <strong>Especialistas em pactos e mistérios sombrios</strong>, os
+    bruxos caminham em uma linha tênue entre o mundano e o sobrenatural.
+    Seus conhecimentos arcanos, combinados com astúcia e estudo de
+    segredos antigos, fazem deles aliados valiosos e oponentes formidáveis
+    em qualquer conflito.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Tabela de Progressão</h2>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Nível</th>
+          <th>Bônus de Proficiência</th>
+          <th>Características</th>
+          <th>Truques Conhecidos</th>
+          <th>Magias Conhecidas</th>
+          <th>Espaços de Magia</th>
+          <th>Nível de Magia</th>
+          <th>Invocações Conhecidas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1°</td><td>+2</td><td>Patrono Transcendental, Magia de Pacto</td><td>2</td><td>2</td><td>1</td><td>1°</td><td>–</td></tr>
+        <tr><td>2°</td><td>+2</td><td>Invocações Místicas</td><td>2</td><td>3</td><td>2</td><td>1°</td><td>2</td></tr>
+        <tr><td>3°</td><td>+2</td><td>Dádiva do Pacto</td><td>2</td><td>4</td><td>2</td><td>2°</td><td>2</td></tr>
+        <tr><td>4°</td><td>+2</td><td>Incremento no Valor de Habilidade</td><td>3</td><td>5</td><td>2</td><td>2°</td><td>2</td></tr>
+        <tr><td>5°</td><td>+3</td><td>–</td><td>3</td><td>6</td><td>2</td><td>3°</td><td>3</td></tr>
+        <tr><td>6°</td><td>+3</td><td>Característica de Patrono Transcendental</td><td>3</td><td>7</td><td>2</td><td>3°</td><td>3</td></tr>
+        <tr><td>7°</td><td>+3</td><td>–</td><td>3</td><td>8</td><td>2</td><td>4°</td><td>4</td></tr>
+        <tr><td>8°</td><td>+3</td><td>Incremento no Valor de Habilidade</td><td>3</td><td>9</td><td>2</td><td>4°</td><td>4</td></tr>
+        <tr><td>9°</td><td>+4</td><td>–</td><td>3</td><td>10</td><td>2</td><td>5°</td><td>5</td></tr>
+        <tr><td>10°</td><td>+4</td><td>Característica de Patrono Transcendental</td><td>4</td><td>10</td><td>2</td><td>5°</td><td>5</td></tr>
+        <tr><td>11°</td><td>+4</td><td>Arcana Mística (6° nível)</td><td>4</td><td>11</td><td>3</td><td>5°</td><td>5</td></tr>
+        <tr><td>12°</td><td>+4</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>11</td><td>3</td><td>5°</td><td>6</td></tr>
+        <tr><td>13°</td><td>+5</td><td>Arcana Mística (7° nível)</td><td>4</td><td>12</td><td>3</td><td>5°</td><td>6</td></tr>
+        <tr><td>14°</td><td>+5</td><td>Característica de Patrono Transcendental</td><td>4</td><td>12</td><td>3</td><td>5°</td><td>6</td></tr>
+        <tr><td>15°</td><td>+5</td><td>Arcana Mística (8° nível)</td><td>4</td><td>13</td><td>3</td><td>5°</td><td>7</td></tr>
+        <tr><td>16°</td><td>+5</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>13</td><td>3</td><td>5°</td><td>7</td></tr>
+        <tr><td>17°</td><td>+6</td><td>Arcana Mística (9° nível)</td><td>4</td><td>14</td><td>4</td><td>5°</td><td>7</td></tr>
+        <tr><td>18°</td><td>+6</td><td>–</td><td>4</td><td>14</td><td>4</td><td>5°</td><td>8</td></tr>
+        <tr><td>19°</td><td>+6</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>15</td><td>4</td><td>5°</td><td>8</td></tr>
+        <tr><td>20°</td><td>+6</td><td>Mestre Místico</td><td>4</td><td>15</td><td>4</td><td>5°</td><td>8</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d8 por nível de Bruxo</p>
+  <p><strong>Pontos de Vida no 1º Nível:</strong> 8 + seu modificador de Constituição</p>
+  <p>
+    <strong>Pontos de Vida nos níveis seguintes:</strong>
+    1d8 (ou 5) + seu modificador de Constituição por nível de Bruxo após o 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Armaduras leves</p>
+  <p><strong>Armas:</strong> Armas simples</p>
+  <p><strong>Ferramentas:</strong> Nenhuma</p>
+  <p><strong>Testes de Resistência:</strong> Sabedoria, Carisma</p>
+  <p>
+    <strong>Perícias:</strong> Escolha duas entre
+    Arcanismo, Enganação, História, Intimidação, Investigação, Natureza e Religião
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>Você começa com o seguinte equipamento, além do equipamento concedido pelo seu antecedente:</p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) uma besta leve e 20 virotes
+      <strong>ou</strong>
+      (b) qualquer arma simples
+    </li>
+    <li>
+      (a) uma bolsa de componentes
+      <strong>ou</strong>
+      (b) um foco arcano
+    </li>
+    <li>
+      (a) um pacote de estudioso
+      <strong>ou</strong>
+      (b) um pacote de explorador
+    </li>
+    <li>
+      Armadura de couro, qualquer arma simples e duas adagas
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Patrono Transcendental</h2>
+
+  <p>
+    No 1º nível, você fez um pacto com um ser transcendental à sua escolha.
+    Sua escolha concede características no 1º nível e novamente nos níveis
+    6º, 10º e 14º.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Patronos</h2>
+
+  <div class="subclasse-container">
+
+    <button class="subclasse-card">
+      <img src="https://www.wargamer.com/wp-content/sites/wargamer/2023/03/warlock-patrons-archfey-warlock-550x309.jpg" alt="Arquifada">
+      <h3>Arquifada</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2021/11/Celestial-cover.jpg" alt="Celestial">
+      <h3>Celestial</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.runicdice.com/cdn/shop/articles/Fathomless_Warlock_Guide_for_Beginners_Mastering_the_Abyssal_Depths_in_D_D_5e.png?v=1757085868&width=1600" alt="Insondável">
+      <h3>Insondável</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i.redd.it/7f7c76uhcxo71.png" alt="Corruptor">
+      <h3>Corruptor</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2022/06/Djinni-Windseer-by-Livia-Prima-Cropped.jpg?q=50&fit=crop&w=825&dpr=1.5" alt="Gênio">
+      <h3>Gênio</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2021/10/herald-of-hadar-mtg.jpg" alt="O Grande Antigo">
+      <h3>O Grande Antigo</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://dungeonsanddragonsfan.com/wp-content/uploads/2025/05/new-hexblade-warlock-dnd-2024-2.png" alt="Hexblade">
+      <h3>Hexblade</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://happygamer.com/wp-content/uploads/2020/08/01ae439753d0418589fcd4f79a143518-1536x864.webp" alt="Morto-vivo">
+      <h3>Morto-vivo</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2020/11/Dnd-5e-Lich-Acererak.jpg" alt="Imortal">
+      <h3>Imortal</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://mtgazone.com/wp-content/uploads/2023/09/Gumdrop-Poisoner-Art-by-Brian-Valeza.jpg" alt="Mago de Lorehold">
+      <h3>Mago de Lorehold</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://m.media-amazon.com/images/S/aplus-media/vc/98896ca4-d145-4b1d-9a87-8681e92ba37f.__CR0,0,970,600_PT0_SX970_V1___.jpg" alt="Mago de Silverquill">
+      <h3>Mago de Silverquill</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.dndbeyond.com/attachments/10/45/witherbloom-apprentice.jpg" alt="Mago de Silverquill">
+      <h3>Mago de Witherbloom</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado Arquivado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://tse4.mm.bing.net/th/id/OIP.Veg1-7nFmSFldvyyp0RAHwAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Celestial">
+      <h3>Celestial</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2023/11/dnd-warlock-patrons-genie-warlock.jpg" alt="Gênio">
+      <h3>Gênio</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.worldanvil.com/uploads/images/40403b33baf9de194072a19afa712b01.jpeg" alt="Fantasma na Máquina">
+      <h3>Fantasma na Máquina</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/dungeonsanddragonsfan.com/wp-content/uploads/2025/05/new-hexblade-warlock-dnd-2024-1.png?resize=800%2C450&ssl=1" alt="Hexblade">
+      <h3>Hexblade</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://blackcitadelrpg.com/wp-content/uploads/2022/08/Liliana-the-Last-Hope.jpg" alt="Espreitador nas Profundezas">
+      <h3>Espreitador nas Profundezas</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.5z88ByhKD3oPMmH7Coj9XgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Nobre Gênio">
+      <h3>Nobre Gênio</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2021/09/DD-Warlock.jpg?q=49&fit=crop&w=825&dpr=2" alt="Rainha dos Corvos">
+      <h3>Rainha dos Corvos</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.gmbinder.com/images/FVF1g3Q.jpg" alt="Buscador">
+      <h3>Buscador</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static1.cbrimages.com/wordpress/wp-content/uploads/2024/03/vecna.jpg" alt="Morto-vivo">
+      <h3>Morto-vivo</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://arcaneeye.com/wp-content/uploads/2022/03/Undead-Warlock-e1714663331807.jpg" alt="Luz Imortal">
+      <h3>Luz Imortal</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Ajustes Mágicos</h2>
+
+  <p>
+    No <strong>1º Nível</strong>, você aprende como aplicar uma fagulha de magia
+    em objetos que, de outra forma, seriam mundanos. Para usar essa habilidade,
+    você deve possuir ferramentas de ladrão, ferramentas de funileiro ou outra
+    ferramenta de artesão em mãos. Você então toca um objeto miúdo não-mágico
+    com uma ação e concede-lhe uma das seguintes propriedades mágicas a sua escolha:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      O objeto emite luz plena em um raio de 1,5 m e penumbra por 1,5 m adicionais.
+    </li>
+    <li>
+      Sempre que for tocado por uma criatura, o objeto emite uma mensagem gravada
+      que pode ser ouvida a até 3 m de distância. Você profere a mensagem quando
+      concede essa propriedade ao objeto e a gravação não pode ter duração maior que 6 segundos.
+    </li>
+    <li>
+      O objeto continuamente emite um odor ou som não-verbal (ventos, ondas, cheiros ou semelhantes)
+      de sua escolha. O fenômeno escolhido é perceptível a até 3 m de distância.
+    </li>
+    <li>
+      Um efeito estático visual aparece em uma das superfícies do objeto. Esse efeito
+      pode ser uma figura, texto de até 25 palavras, linhas e formas ou uma mistura destes elementos,
+      como você quiser.
+    </li>
+  </ul>
+
+  <p>
+    A propriedade escolhida dura infinitamente. Como uma ação, você pode tocar
+    o objeto e encerrar a propriedade prematuramente.
+  </p>
+
+  <p>
+    Você pode conceder a magia dessa habilidade para múltiplos objetos, tocando
+    um objeto cada vez que você utiliza essa habilidade e um único objeto pode
+    carregar apenas uma única propriedade de uma vez. O número máximo de objetos
+    que você pode afetar com essa habilidade em uma única vez é igual ao seu
+    modificador de Inteligência (mínimo de 1 objeto). Se você tentar exceder este máximo,
+    a propriedade mais antiga se encerra imediatamente e a nova propriedade se aplica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Magia de Pacto</h2>
+
+  <p>
+    Sua pesquisa arcana e a magia concedida pelo seu patrono deram a você
+    facilidade com magias.
+  </p>
+
+  <h3>Truques</h3>
+  <p>
+    No <strong>1º nível</strong>, você conhece dois truques de sua escolha
+    da <a href="../magias.html">Lista de Magias de Bruxo</a>. Em níveis
+    superiores, você aprende truques adicionais da lista de bruxo, como
+    mostrado na coluna <a href="../magias.html">Truques Conhecidos</a> na tabela
+    do Bruxo.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, pode substituir um de seus
+    truques de bruxo conhecidos por outro truque da <a href="../magias.html">Lista de Magias de Bruxo</a>.
+  </p>
+
+  <h3>Espaços de Magia</h3>
+  <p>
+    A tabela do Bruxo mostra quantos espaços de magia você possui para
+    conjurar suas magias de 1º ao 5º nível. Todos os seus espaços de magia
+    são do mesmo nível. Para conjurar uma de suas magias de bruxo de 1º nível
+    ou superior, você deve gastar um espaço de magia. Você recupera todos os
+    espaços de magia gastos quando finaliza um descanso curto ou longo.
+  </p>
+  <p>
+    Por exemplo, ao atingir o <strong>5º nível</strong>, você possui dois
+    espaços de magia de 3º nível. Para conjurar a magia de 1º nível
+    <em>raio do bruxo</em>, você gasta um desses espaços e a conjura
+    como se fosse de 3º nível.
+  </p>
+
+  <h3>Magias Conhecidas de 1º Nível ou Superior</h3>
+  <p>
+    No <strong>1º nível</strong>, você conhece duas magias de 1º nível de sua
+    escolha da <a href="../magias.html">Lista de Magias de Bruxo</a>.
+  </p>
+  <p>
+    A coluna <a href="../magias.html">Magias Conhecidas</a> na tabela do Bruxo
+    indica quando você aprende novas magias de bruxo de 1º nível ou superior.
+    Uma magia escolhida deve ter nível igual ou inferior ao nível do espaço de
+    magia mostrado na tabela para o seu nível. Ao atingir o 6º nível, por exemplo,
+    você aprende uma nova magia de bruxo, que pode ser de 1º, 2º ou 3º nível.
+  </p>
+  <p>
+    Além disso, sempre que você ganha um nível nesta classe, pode substituir
+    uma magia de bruxo que conhece por outra magia da <a href="../magias.html">Lista de Magias de Bruxo</a>,
+    que também deve ser de um nível para o qual você possua espaços de magia.
+  </p>
+
+  <h3>Habilidade de Conjuração</h3>
+  <p>
+    Carisma é a sua habilidade de conjuração para suas magias de bruxo.
+    Você usa seu modificador de Carisma sempre que uma magia de bruxo referir-se
+    à sua habilidade de conjuração. Além disso, aplica-se seu modificador de
+    Carisma ao determinar a CD dos testes de resistência para suas magias
+    e ao fazer jogadas de ataque com magias.
+  </p>
+  <p>
+    <strong>CD de teste de resistência</strong> = 8 + seu bônus de proficiência + seu modificador de Carisma
+  </p>
+  <p>
+    <strong>Modificador de ataque de magia</strong> = seu bônus de proficiência + seu modificador de Carisma
+  </p>
+
+  <h3>Foco de Conjuração</h3>
+  <p>
+    Você pode usar um foco arcano fornecido pelo seu patrono como componente
+    para conjurar suas magias de bruxo.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Invocações Místicas</h2>
+
+  <p>
+    Durante seus estudos sobre conhecimento oculto, você descobriu as
+    <strong>invocações místicas</strong>, fragmentos de conhecimento proibido
+    que infundiram você com habilidade mágica permanente.
+  </p>
+
+  <p>
+    No <strong>2º nível</strong>, você ganha duas invocações místicas à sua
+    escolha. Suas opções de invocação estão detalhadas no final da descrição
+    desta classe. Quando você atinge certos níveis de bruxo, adquire novas
+    invocações à sua escolha, como mostrado na coluna
+    <a href="#invocacoes">Invocações Conhecidas</a> na tabela do Bruxo.
+  </p>
+
+  <p>
+    Além disso, sempre que você ganha um nível nesta classe, pode escolher
+    uma invocação que já conhece e substituí-la por outra invocação que
+    você possa aprender naquele nível.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Dádiva do Pacto</h2>
+
+  <p>
+    No <strong>3º nível</strong>, seu patrono transcendental lhe confere um dom
+    por seus leais serviços. Você adquire uma das características a seguir,
+    à sua escolha.
+  </p>
+
+  <h3>Pacto da Corrente</h3>
+  <p>
+    Você aprende a magia <strong>Convocar Familiar</strong> e pode conjurá-la
+    como um ritual. Essa magia não conta no número de magias que você conhece.
+  </p>
+  <p>
+    Quando você conjura essa magia, pode escolher uma das formas convencionais
+    para o seu familiar ou uma das seguintes formas especiais: diabrete,
+    pseudodragão, quasit ou sprite.
+  </p>
+  <p>
+    Além disso, quando você realiza a ação de <strong>Ataque</strong>, pode
+    renunciar a um de seus ataques para permitir que seu familiar realize
+    um ataque usando a reação dele.
+  </p>
+
+  <h3>Pacto da Lâmina</h3>
+  <p>
+    Você pode usar sua ação para criar uma <strong>arma de pacto</strong>
+    em sua mão vazia. Você escolhe a forma da arma corpo-a-corpo cada vez que
+    a cria (veja as opções de arma no Capítulo 5). Você é proficiente com ela
+    enquanto a empunhar. A arma conta como mágica para ultrapassar resistência
+    e imunidade a ataques e danos não-mágicos.
+  </p>
+  <p>
+    Sua arma de pacto desaparece se estiver a mais de 1,5 metro de você por
+    1 minuto ou mais. Ela também desaparece se você usar esta característica
+    novamente, dissipar a arma (não requer ação) ou se você morrer.
+  </p>
+  <p>
+    Você pode transformar uma arma mágica em sua arma de pacto ao realizar
+    um ritual especial de 1 hora enquanto a empunha. O ritual pode ser
+    realizado durante um descanso curto. Você pode dissipar a arma,
+    guardando-a em um espaço extradimensional, e ela reaparece toda vez
+    que você criar sua arma de pacto.
+  </p>
+  <p>
+    A arma deixa de ser sua arma de pacto se você morrer, realizar um ritual
+    de 1 hora com outra arma diferente ou realizar um ritual de 1 hora para
+    romper seu elo com ela. A arma aparece aos seus pés se estiver no espaço
+    extradimensional quando o elo for quebrado.
+  </p>
+
+  <h3>Pacto do Tomo</h3>
+  <p>
+    Seu patrono lhe deu um grimório chamado <strong>Livro das Sombras</strong>.
+    Quando você adquire esta característica, escolha três truques da lista
+    de magias de qualquer classe. Enquanto o livro estiver com você, poderá
+    conjurar esses truques à vontade. Eles não contam no número de truques
+    que você conhece e são considerados magias de bruxo para você.
+  </p>
+  <p>
+    Se você perder seu Livro das Sombras, pode realizar uma cerimônia de 1 hora
+    para receber um substituto do seu patrono. A cerimônia pode ser realizada
+    durante um descanso curto ou longo e destrói o livro anterior. O livro se
+    torna cinzas quando você morre.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Arcana Mística</h2>
+
+  <p>
+    No <strong>11º nível</strong>, seu patrono confere a você um segredo mágico
+    conhecido como <strong>arcana</strong>. Escolha uma magia de <strong>6º nível</strong>
+    da <a href="../magias.html">Lista de Magias de Bruxo</a> como sua arcana.
+  </p>
+  <p>
+    Você pode conjurar essa magia arcana uma vez sem gastar um espaço de magia.
+    Você deve terminar um descanso longo antes de poder fazer isso novamente.
+  </p>
+  <p>
+    Em níveis mais altos, você adquire mais magias de bruxo de sua escolha que
+    podem ser conjuradas dessa forma: uma magia de <strong>7º nível</strong> no
+    13º nível, uma magia de <strong>8º nível</strong> no 15º nível e uma magia
+    de <strong>9º nível</strong> no 17º nível.
+  </p>
+  <p>
+    Você recupera todos os usos de sua <strong>Arcana Mística</strong> quando
+    termina um descanso longo.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Mestre Místico</h2>
+
+  <p>
+    No <strong>20º nível</strong>, você pode recarregar sua reserva interior de
+    poder místico suplicando ao seu patrono para recuperar espaços de magia gastos.
+  </p>
+  <p>
+    Você pode gastar <strong>1 minuto</strong> suplicando pela ajuda do seu patrono
+    para recuperar todos os espaços de magia gastos da sua característica
+    <strong>Magia de Pacto</strong>. Uma vez que você recuperou espaços de magia
+    com essa característica, você deve terminar um descanso longo antes de poder
+    fazê-lo novamente.
+  </p>
+</div>
+
+<div class="section">
+  <h2 id="invocacoes">Invocações Místicas</h2>
+
+  <p>
+    Se uma invocação mística tiver pré-requisitos, você deve possuí-los para que
+    possa aprendê-la. Você pode aprender a invocação ao mesmo tempo que adquire
+    os pré-requisitos dela. O pré-requisito de nível nas invocações se refere ao
+    nível de bruxo, não ao nível de personagem.
+  </p>
+
+  <h3>Armadura de Sombras</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 15º nível, característica Corrente de Cárceri</p>
+  <p>Você pode conjurar <strong>armadura arcana</strong> em si mesmo, à vontade,
+    sem precisar gastar um espaço de magia ou componentes materiais.</p>
+  <p>Você também pode conjurar <strong>imobilizar monstro</strong> à vontade – tendo
+    como alvo um celestial, corruptor ou elemental – sem gastar espaço de magia ou
+    componentes materiais. Deve terminar um descanso longo antes de usar essa
+    invocação na mesma criatura novamente.</p>
+
+  <h3>Encharcar a Mente</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 5º nível</p>
+  <p>Você pode conjurar <strong>lentidão</strong> uma vez, usando um espaço de magia
+    de bruxo. Você não pode fazer isso novamente até terminar um descanso longo.</p>
+
+  <h3>Escultor de Carne</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 7º nível</p>
+  <p>Você pode conjurar <strong>metamorfose</strong> uma vez, usando um espaço de
+    magia de bruxo. Você não pode fazer isso novamente até terminar um descanso longo.</p>
+
+  <h3>Explosão Agonizante</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> truque <strong>rajada mística</strong></p>
+  <p>Quando você conjura <strong>rajada mística</strong>, adicione seu modificador
+    de Carisma ao dano causado.</p>
+
+  <h3>Explosão Repulsiva</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> truque <strong>rajada mística</strong></p>
+  <p>Quando você atingir uma criatura com <strong>rajada mística</strong>, você pode
+    empurrar a criatura até 3 metros para longe de você em linha reta.</p>
+
+  <h3>Idioma Bestial</h3>
+  <p>Você pode conjurar <strong>falar com animais</strong> à vontade, sem precisar
+    gastar um espaço de magia.</p>
+
+  <h3>Influência Enganadora</h3>
+  <p>Você ganha proficiência nas perícias <strong>Enganação</strong> e
+    <strong>Persuasão</strong>.</p>
+
+  <h3>Lacaios do Caos</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 9º nível</p>
+  <p>Você pode lançar <strong>conjurar elemental</strong> uma vez, usando um espaço
+    de magia de bruxo. Você não pode fazer isso novamente até terminar um descanso longo.</p>
+
+  <h3>Lâmina Sedenta</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 5º nível, característica <strong>Pacto da Lâmina</strong></p>
+  <p>Quando você usa a ação de Ataque no seu turno, você pode atacar com sua arma
+    do pacto duas vezes, ao invés de apenas uma.</p>
+
+  <h3>Lança Mística</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> truque <strong>rajada mística</strong></p>
+  <p>Quando você conjura <strong>rajada mística</strong>, seu alcance será de 90 metros.</p>
+
+  <h3>Larápio dos Cinco Destinos</h3>
+  <p>Você pode conjurar <strong>perdição</strong> uma vez, usando um espaço de magia
+    de bruxo. Você não pode fazer isso novamente até terminar um descanso longo.</p>
+
+  <h3>Livro de Segredos Antigos</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> característica <strong>Pacto do Tomo</strong></p>
+  <p>Você agora pode registrar rituais mágicos no seu <strong>Livro das Sombras</strong>.
+    Escolha duas magias de 1º nível que possuam o descritor <strong>ritual</strong> da
+    lista de magias de qualquer classe. Elas aparecem no livro e não contam no número
+    de magias que você conhece. Com o livro em mãos, você pode conjurar essas magias
+    como rituais. Também pode conjurar uma magia de bruxo que você conheça como
+    ritual se ela possuir o descritor <strong>ritual</strong>. Os rituais não precisam
+    ser da mesma lista de magias.</p>
+  <p>Durante suas aventuras, você pode adicionar outras magias de ritual ao seu livro.
+    Para isso, o nível da magia deve ser igual ou inferior à metade do seu nível de
+    bruxo (arredondado para baixo) e você deve gastar tempo transcrevendo a magia:
+    <strong>2 horas por nível da magia</strong> e <strong>50 po</strong> em tintas raras
+    necessárias para a inscrição.</p>
+
+  <h3>Máscara das Muitas Faces</h3>
+  <p>Você pode conjurar <strong>disfarçar-se</strong> à vontade, sem precisar gastar um espaço de magia.</p>
+
+  <h3>Mestre das Infindáveis Formas</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 15º nível</p>
+  <p>Você pode conjurar <strong>alterar-se</strong> à vontade, sem precisar gastar um espaço de magia.</p>
+
+  <h3>Olhar de Duas Mentes</h3>
+  <p>Você pode usar sua ação para tocar um humanoide voluntário e perceber através dos seus sentidos até o final do seu próximo turno. Enquanto a criatura estiver no mesmo plano de existência que você, você pode usar sua ação nas rodadas subsequentes para manter a conexão, estendendo a duração até o início do seu próximo turno.</p>
+  <p>Enquanto estiver percebendo pelos sentidos de outra criatura, você aproveita todos os benefícios dos sentidos especiais da criatura, mas fica cego e surdo ao que está à sua volta.</p>
+
+  <h3>Olhos do Guardião das Runas</h3>
+  <p>Você pode <strong>ler todas as escritas</strong>.</p>
+
+  <h3>Palavra Terrível</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 7º nível</p>
+  <p>Você pode conjurar <strong>confusão</strong> uma vez, usando um espaço de magia de bruxo. Não pode fazê-lo novamente até terminar um descanso longo.</p>
+
+  <h3>Passo Ascendente</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 9º nível</p>
+  <p>Você pode conjurar <strong>levitação</strong> em si mesmo, à vontade, sem gastar espaço de magia ou componentes materiais.</p>
+
+  <h3>Salto Transcendental</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 9º nível</p>
+  <p>Você pode conjurar <strong>salto</strong> em si mesmo, à vontade, sem gastar espaço de magia ou componentes materiais.</p>
+
+  <h3>Sinal de Mau Agouro</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 5º nível</p>
+  <p>Você pode conjurar <strong>rogar maldição</strong> uma vez, usando um espaço de magia de bruxo. Não pode fazê-lo novamente até terminar um descanso longo.</p>
+
+  <h3>Sorvedor de Vida</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 12º nível, característica <strong>Pacto da Lâmina</strong></p>
+  <p>Quando você atingir uma criatura com sua arma do pacto, ela sofre dano necrótico adicional igual ao seu modificador de Carisma (mínimo 1).</p>
+
+  <h3>Sussurros da Sepultura</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 9º nível</p>
+  <p>Você pode conjurar <strong>falar com os mortos</strong> à vontade, sem gastar espaço de magia.</p>
+
+  <h3>Sussurros Sedutores</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 7º nível</p>
+  <p>Você pode conjurar <strong>compulsão</strong> uma vez, usando um espaço de magia de bruxo. Não pode fazê-lo novamente até terminar um descanso longo.</p>
+
+  <h3>Uno com as Sombras</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 5º nível</p>
+  <p>Quando você estiver em uma área de penumbra ou escuridão, pode usar sua ação para ficar invisível até se mover ou realizar uma ação ou reação.</p>
+
+  <h3>Vigor Abissal</h3>
+  <p>Você pode conjurar <strong>vitalidade falsa</strong> em si mesmo, à vontade, como magia de 1º nível, sem gastar espaço de magia ou componentes materiais.</p>
+
+  <h3>Visão da Bruxa</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 15º nível</p>
+  <p>Você pode ver a verdadeira forma de qualquer metamorfo ou criatura oculta por magias de ilusão ou transmutação, contanto que a criatura esteja a até 9 metros e você tenha linha de visão.</p>
+
+  <h3>Visão Diabólica</h3>
+  <p>Você pode ver normalmente na escuridão, tanto mágica quanto normal, com alcance de 36 metros.</p>
+
+  <h3>Visão Mística</h3>
+  <p>Você pode conjurar <strong>detectar magia</strong> à vontade, sem gastar espaço de magia.</p>
+
+  <h3>Visões de Reinos Distantes</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> 15º nível</p>
+  <p>Você pode conjurar <strong>olho arcano</strong> à vontade, sem gastar espaço de magia.</p>
+
+  <h3>Visões nas Brumas</h3>
+  <p>Você pode conjurar <strong>imagem silenciosa</strong> à vontade, sem gastar espaço de magia ou componentes materiais.</p>
+
+  <h3>Voz do Mestre das Correntes</h3>
+  <p class="invocation-info"><em>Pré-requisito:</em> característica <strong>Pacto da Corrente</strong></p>
+  <p>Você pode se comunicar telepaticamente com seu familiar e perceber através dos sentidos dele enquanto ambos estiverem no mesmo plano de existência. Além disso, você pode falar através do familiar usando sua própria voz, mesmo que ele normalmente não consiga falar.</p>
+
+</div>
+
+
+`;
+
+const bruxoOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(bruxo5e, true));
+btnOne.addEventListener("click", () => swapContent(bruxoOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = bruxo5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

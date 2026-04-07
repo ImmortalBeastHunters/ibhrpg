@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feiticeiro • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://legiaorpg.com.br/wp-content/uploads/2024/09/DD-Os-12-Melhores-Feats-para-o-Sorcerer-Players-Handbook-2024-1.jpg" alt="Druida">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const feiticeiro5e = `
+<h1>Feiticeiro</h1>
+<div class="subtitle">Classe Conjuradora • D&D 5e</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Feiticeiros são aqueles cujo poder mágico nasce de forma
+    <strong>inata e indomável</strong>. Diferente de magos, que dominam a magia
+    por meio de estudo rigoroso, ou clérigos, que a recebem de entidades
+    divinas, o feiticeiro carrega a magia em seu próprio sangue.
+  </p>
+
+  <p>
+    Essa origem pode estar ligada a linhagens dracônicas, influências
+    feéricas, caos arcano, sombras extraplanares ou eventos sobrenaturais
+    que marcaram seu nascimento. Para um feiticeiro, a magia não é uma
+    ferramenta externa, mas uma extensão de sua essência — reagindo às
+    suas emoções, vontades e instintos.
+  </p>
+
+  <p>
+    Impulsivos ou disciplinados, temidos ou reverenciados, feiticeiros
+    moldam a magia por pura força de vontade, distorcendo feitiços,
+    ampliando efeitos e liberando energia arcana bruta de formas que
+    outros conjuradores só conseguem imitar. Onde a magia flui livre e
+    perigosa, um feiticeiro se destaca — transformando
+    <strong>linhagem em poder</strong> e emoção em destruição ou maravilha.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Feiticeiro</h2>
+
+<div class="table-wrapper">
+<table>
+  <tr>
+    <th>Nível</th>
+    <th>Bônus de Prof.</th>
+    <th>Pontos de Feitiçaria</th>
+    <th>Características</th>
+    <th>Truques Conhecidos</th>
+    <th>Magias Conhecidas</th>
+    <th>1º</th>
+    <th>2º</th>
+    <th>3º</th>
+    <th>4º</th>
+    <th>5º</th>
+    <th>6º</th>
+    <th>7º</th>
+    <th>8º</th>
+    <th>9º</th>
+  </tr>
+
+  <tr><td>1°</td><td>+2</td><td>–</td><td>Conjuração, Origem de Feitiçaria</td><td>4</td><td>2</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>2°</td><td>+2</td><td>2</td><td>Fonte de Magia</td><td>4</td><td>3</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>3°</td><td>+2</td><td>3</td><td>Metamagia</td><td>4</td><td>4</td><td>4</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>4°</td><td>+2</td><td>4</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>5</td><td>4</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>5°</td><td>+3</td><td>5</td><td>–</td><td>5</td><td>6</td><td>4</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>6°</td><td>+3</td><td>6</td><td>Característica da Origem de Feitiçaria</td><td>5</td><td>7</td><td>4</td><td>3</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>7°</td><td>+3</td><td>7</td><td>–</td><td>5</td><td>8</td><td>4</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>8°</td><td>+3</td><td>8</td><td>Incremento no Valor de Habilidade</td><td>5</td><td>9</td><td>4</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>9°</td><td>+4</td><td>9</td><td>–</td><td>5</td><td>10</td><td>4</td><td>3</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>10°</td><td>+4</td><td>10</td><td>Metamagia</td><td>6</td><td>11</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>11°</td><td>+4</td><td>11</td><td>–</td><td>6</td><td>12</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>12°</td><td>+4</td><td>12</td><td>Incremento no Valor de Habilidade</td><td>6</td><td>12</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+  <tr><td>13°</td><td>+5</td><td>13</td><td>–</td><td>6</td><td>13</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+  <tr><td>14°</td><td>+5</td><td>14</td><td>Característica da Origem de Feitiçaria</td><td>6</td><td>13</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+  <tr><td>15°</td><td>+5</td><td>15</td><td>–</td><td>6</td><td>14</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+  <tr><td>16°</td><td>+5</td><td>16</td><td>Incremento no Valor de Habilidade</td><td>6</td><td>14</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+  <tr><td>17°</td><td>+6</td><td>17</td><td>Metamagia</td><td>6</td><td>15</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  <tr><td>18°</td><td>+6</td><td>18</td><td>Característica da Origem de Feitiçaria</td><td>6</td><td>15</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  <tr><td>19°</td><td>+6</td><td>19</td><td>Incremento no Valor de Habilidade</td><td>6</td><td>15</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+  <tr><td>20°</td><td>+6</td><td>20</td><td>Restauração Mística</td><td>6</td><td>15</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+</table>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d6 por nível de Feiticeiro</p>
+  <p>
+    <strong>Pontos de Vida no 1º Nível:</strong>
+    6 + seu modificador de Constituição
+  </p>
+  <p>
+    <strong>Pontos de Vida nos Níveis Seguintes:</strong>
+    1d6 (ou 4) + seu modificador de Constituição por nível de Feiticeiro após o 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p><strong>Armaduras:</strong> Nenhuma</p>
+  <p>
+    <strong>Armas:</strong> Adagas, dardos, fundas, bordões e bestas leves
+  </p>
+  <p><strong>Ferramentas:</strong> Nenhuma</p>
+  <p>
+    <strong>Testes de Resistência:</strong>
+    Constituição, Carisma
+  </p>
+  <p>
+    <strong>Perícias:</strong>
+    Escolha duas dentre Arcanismo, Enganação, Intuição,
+    Intimidação, Persuasão e Religião
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>
+    Você começa com o seguinte equipamento, além do equipamento concedido pelo
+    seu antecedente:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) uma besta leve e 20 virotes
+      <strong>ou</strong>
+      (b) qualquer arma simples
+    </li>
+    <li>
+      (a) uma bolsa de componentes
+      <strong>ou</strong>
+      (b) um foco arcano
+    </li>
+    <li>
+      (a) um pacote de explorador
+      <strong>ou</strong>
+      (b) um pacote de aventureiro
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Conjuração</h2>
+
+  <p>
+    Como feiticeiro, você canaliza a <strong>magia inata que corre em seu sangue</strong>,
+    uma força arcana bruta que emana de sua linhagem, alma ou de um evento sobrenatural
+    que marcou sua existência. Suas magias não são aprendidas por estudo ou oração,
+    mas manifestadas por instinto, emoção e força de vontade.
+  </p>
+
+  <h3>Truques</h3>
+  <p>
+    No <strong>1º nível</strong>, você conhece quatro truques de sua escolha presentes na
+    <a href="../magias.html">Lista de Magias de Feiticeiro</a>. Em níveis superiores,
+    você aprende truques adicionais da lista de feiticeiro, como mostrado na coluna
+    <a href="../magias.html">Truques Conhecidos</a> na tabela do Feiticeiro.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, pode substituir um dos truques de Feiticeiro
+    que conhece por outro truque da
+    <a href="../magias.html">Lista de Magias de Feiticeiro</a>.
+  </p>
+
+  <h3>Magias Conhecidas e Conjuração</h3>
+  <p>
+    A tabela do Feiticeiro mostra quantos espaços de magia você possui para conjurar suas
+    magias de feiticeiro de 1º nível ou superior. Para conjurar uma dessas magias,
+    você deve consumir um espaço de magia do nível da magia ou superior.
+    Você recupera todos os espaços de magia gastos quando finaliza um descanso longo.
+  </p>
+  <p>
+    Diferente de outras classes conjuradoras, você não prepara magias.
+    Em vez disso, você conhece um número limitado de magias de feiticeiro,
+    conforme indicado na coluna
+    <a href="../magias.html">Magias Conhecidas</a> da tabela do Feiticeiro.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, pode substituir uma das magias de feiticeiro
+    que conhece por outra magia da
+    <a href="../magias.html">Lista de Magias de Feiticeiro</a>,
+    desde que seja de um nível para o qual você possua espaços de magia.
+  </p>
+
+  <h3>Habilidade de Conjuração</h3>
+  <p>
+    Carisma é sua habilidade de conjuração para as magias de Feiticeiro:
+    sua presença, força de personalidade e poder interior moldam a magia
+    que você libera no mundo.
+    Você usa seu modificador de Carisma sempre que uma magia de Feiticeiro
+    se referir à sua habilidade de conjuração.
+    Além disso, você usa seu modificador de Carisma ao definir a CD dos testes
+    de resistência para suas magias de Feiticeiro e ao realizar jogadas de ataque
+    com magia.
+  </p>
+  <p>
+    <strong>CD de teste de resistência</strong> = 8 + seu bônus de proficiência + seu modificador de Carisma
+  </p>
+  <p>
+    <strong>Modificador de ataque de magia</strong> = seu bônus de proficiência + seu modificador de Carisma
+  </p>
+
+  <h3>Foco de Conjuração</h3>
+  <p>
+    Você pode usar um <strong>foco arcano</strong> (encontrado no capítulo 5)
+    como foco de conjuração para suas magias de Feiticeiro.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Origem de Feitiçaria</h2>
+
+  <p>
+    A partir do <strong>1º nível</strong>, você escolhe uma origem de feitiçaria
+    que representa a fonte do poder mágico que flui em seu sangue.
+    Essa escolha concede a você características específicas no
+    <strong>1º nível</strong> e novamente nos
+    <strong>6º, 14º</strong> e <strong>18º níveis</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Origens</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/04/5e-mind-sliver-aberrant-mind.jpg" alt="Mente Aberrante">
+      <h3>Mente Aberrante</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://cdnb.artstation.com/p/assets/images/images/070/438/533/large/lalita-wipulanusat-magic-practice-scholar-1.jpg?1702527601" alt="Alma Mecânica">
+      <h3>Alma Mecânica</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/08/collage-maker-12-aug-2023-11-40-am-393.jpg?w=1600&h=1200&fit=crop" alt="Linhagem Dracônica">
+      <h3>Linhagem Dracônica</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/03/art-mtg-clever-lumimancer.jpg" alt="Alma Divina">
+      <h3>Alma Divina</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/dungeonsanddragonsfan.com/wp-content/uploads/2024/06/sorcerer-dnd-5e-class-guide-16.png?resize=800%2C450&ssl=1" alt="Feitiçaria Lunar">
+      <h3>Feitiçaria Lunar</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/04/mtg-silverquill-art.jpg" alt="Magia das Sombras">
+      <h3>Magia das Sombras</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://velantis.wordpress.com/wp-content/uploads/2020/01/storm-sorcery.jpg" alt="Feitiçaria da Tempestade">
+      <h3>Feitiçaria da Tempestade</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2025/02/farebfa0bgr80abgwbarawq.jpg" alt="Magia Selvagem">
+      <h3>Magia Selvagem</h3>
+    </button>
+  </div>
+
+  <h2>Amonkhet</h2>
+  <em>Os domínios a seguir foram projetados para os artigos do Amonkhet Planeshift e não fazem parte de nenhum lançamento oficial.</em>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://img.freepik.com/premium-photo/firewielding-pyromancer-girl-with-flames-dancing-ai-generated_731790-12078.jpg" alt="Piromancia">
+      <h3>Piromancia</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2023/05/lunar-mystic-mtg-1024x749.jpg" alt="Magia Lunar">
+      <h3>Magia Lunar</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado Arquivado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://www.dndbeyond.com/attachments/10/127/ray-of-enfeeblement-adventures-in-the-forgotten.jpg" alt="Mente Aberrante">
+      <h3>Mente Aberrante</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.cbrimages.com/wordpress/wp-content/uploads/2023/11/dnd-clockwork-soul-sorcerer.jpg?w=1200&h=628&fit=crop" alt="Alma Mecânica">
+      <h3>Alma Mecânica</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.flutesloot.com/wp-content/uploads/2021/11/sorcerer-multiclass-dnd-5e-featured-image-template.jpg" alt="Alma Favorecida (2015)">
+      <h3>Alma Favorecida (2015)</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.gmbinder.com/images/UPEcXrj.jpg" alt="Alma Favorecida (2017)">
+      <h3>Alma Favorecida (2017)</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/590e0ada-7e62-4633-8e21-acc2669122ab/dcd4gv7-6613e96c-1fd9-4585-b61a-a492b69cf18b.jpg/v1/fill/w_1024,h_624,q_75,strp/sorcerer_by_kilartdev_dcd4gv7-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjI0IiwicGF0aCI6IlwvZlwvNTkwZTBhZGEtN2U2Mi00NjMzLThlMjEtYWNjMjY2OTEyMmFiXC9kY2Q0Z3Y3LTY2MTNlOTZjLTFmZDktNDU4NS1iNjFhLWE0OTJiNjljZjE4Yi5qcGciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.FnHagQHI51au9Q3hfvzzvpZtJki-NAigrM1084kq4Aw" alt="Alma Gigante">
+      <h3>Alma Gigante</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJbIFxPxrSAVOBTi7tjWu-ZWFT8sx-CFVo8A&s" alt="Mago de Prismari">
+      <h3>Mago de Prismari</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.gamerantimages.com/wordpress/wp-content/uploads/2021/12/Strixhaven-A-Curriculum-of-Chaos-Quandrix-Professors-using-fractal-spells.jpg" alt="Mago de Quandrix">
+      <h3>Mago de Quandrix</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://cdna.artstation.com/p/assets/images/images/025/710/264/large/lie-setiawan-413131.jpg?1586698144" alt="Feitiçaria da Fênix">
+      <h3>Feitiçaria da Fênix</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://mythcreants.com/wp-content/uploads/2021/10/Abberant-Mind-655x476.png" alt="Alma Psíquica">
+      <h3>Alma Psíquica</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAAX2HvkG-JEgXB5VdxHFACBExtfavt0ygTXQtYHpBZArwqnu547EDq-Be8cDXu2ptUaC2GJD0A9PsuCAFW4zyBs89iAvq2Rh22fpovB_Fab1kWk0JEYXIevQEsOlrmfVo2MTfpz41Ey4/s1600/water_mage.jpg" alt="Feitiçaria do Mar">
+      <h3>Feitiçaria do Mar</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.nerdsandscoundrels.com/wp-content/uploads/2023/08/shadow-sorcerer-5e.jpg" alt="Sombra">
+      <h3>Sombra</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://wiki.guildwars2.com/images/6/6b/Earth_elemental_01_concept_art.jpg" alt="Feitiçaria de Pedra">
+      <h3>Feitiçaria de Pedra</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Fonte de Magia</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, você alcança uma profunda fonte de magia
+    dentro de si. Essa fonte é representada pelos <strong>pontos de feitiçaria</strong>,
+    que permitem criar uma variedade de efeitos mágicos.
+  </p>
+
+  <h3>Pontos de Feitiçaria</h3>
+  <p>
+    Você possui <strong>2 pontos de feitiçaria</strong> e ganha mais à medida que
+    alcança níveis elevados, conforme mostrado na coluna
+    <strong>Pontos de Feitiçaria</strong> da tabela do Feiticeiro.
+    Você nunca pode ter mais pontos de feitiçaria do que o valor indicado
+    para o seu nível.
+  </p>
+  <p>
+    Você recupera todos os pontos de feitiçaria gastos ao finalizar
+    um <strong>descanso longo</strong>.
+  </p>
+
+  <h3>Conjuração Flexível</h3>
+  <p>
+    Você pode usar seus pontos de feitiçaria para ganhar novos espaços de magia
+    ou sacrificar espaços de magia para obter pontos de feitiçaria adicionais.
+    Você aprende novas formas de usar seus pontos de feitiçaria à medida que
+    alcança níveis mais elevados.
+  </p>
+  <p>
+    Os espaços de magia criados por essa característica desaparecem ao final
+    de um <strong>descanso longo</strong>.
+  </p>
+
+  <h3>Criando Espaços de Magia</h3>
+  <p>
+    Como uma <strong>ação bônus</strong> em seu turno, você pode transformar
+    pontos de feitiçaria disponíveis em um espaço de magia.
+    A tabela abaixo mostra o custo para criar um espaço de magia de cada nível.
+    Você não pode criar espaços de magia acima do <strong>5º nível</strong>.
+  </p>
+
+  <table class="class-table">
+    <thead>
+      <tr>
+        <th>Nível do Espaço de Magia</th>
+        <th>Custo em Pontos de Feitiçaria</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1º</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>2º</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>3º</td>
+        <td>5</td>
+      </tr>
+      <tr>
+        <td>4º</td>
+        <td>6</td>
+      </tr>
+      <tr>
+        <td>5º</td>
+        <td>7</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Convertendo um Espaço de Magia em Pontos de Feitiçaria</h3>
+  <p>
+    Como uma <strong>ação bônus</strong> em seu turno, você pode gastar um
+    espaço de magia disponível e ganhar uma quantidade de pontos de feitiçaria
+    igual ao nível do espaço de magia gasto.
+  </p>
+</div>
+
+<div class="section">
+  <h2 id="metamagia">Metamagia</h2>
+
+  <p>
+    A partir do <strong>3º nível</strong>, você adquire a habilidade de distorcer
+    suas magias para que se adequem às suas necessidades. Você ganha duas opções
+    de <strong>metamagia</strong>, à sua escolha. Você adquire outra opção no
+    <strong>10º nível</strong> e no <strong>17º nível</strong>.
+  </p>
+  <p>
+    Você pode usar apenas uma opção de <strong>metamagia</strong> em uma magia
+    quando a conjura, a menos que a descrição da opção indique o contrário.
+  </p>
+
+  <h3>Magia Acelerada</h3>
+  <p>
+    Quando você conjurar uma magia que tenha um tempo de conjuração de
+    <strong>1 ação</strong>, você pode gastar <strong>2 pontos de feitiçaria</strong>
+    para mudar o tempo de conjuração dessa magia para
+    <strong>1 ação bônus</strong>.
+  </p>
+
+  <h3>Magia Aumentada</h3>
+  <p>
+    Quando você conjurar uma magia que force uma criatura a realizar um teste
+    de resistência contra seus efeitos, você pode gastar
+    <strong>3 pontos de feitiçaria</strong> para impor
+    <strong>desvantagem</strong> ao primeiro teste de resistência feito por um
+    dos alvos da magia.
+  </p>
+
+  <h3>Magia Cuidadosa</h3>
+  <p>
+    Quando você conjurar uma magia que force outras criaturas a realizarem um
+    teste de resistência, você pode proteger algumas delas da força total da
+    magia. Para isso, você gasta <strong>1 ponto de feitiçaria</strong> e escolhe
+    um número de criaturas até o seu modificador de <strong>Carisma</strong>
+    (mínimo de uma criatura).
+  </p>
+  <p>
+    Uma criatura escolhida passa automaticamente no teste de resistência contra
+    a magia.
+  </p>
+
+  <h3>Magia Distante</h3>
+  <p>
+    Quando você conjurar uma magia que tenha alcance de <strong>1,5 metro</strong>
+    ou maior, você pode gastar <strong>1 ponto de feitiçaria</strong> para dobrar
+    o alcance da magia.
+  </p>
+  <p>
+    Quando você conjurar uma magia com alcance de <strong>toque</strong>, você pode
+    gastar <strong>1 ponto de feitiçaria</strong> para mudar o alcance da magia
+    para <strong>9 metros</strong>.
+  </p>
+
+  <p>
+    A partir do <strong>3º nível</strong>, você adquire a habilidade de distorcer
+    suas magias para que se adequem às suas necessidades. Você ganha duas opções
+    de <strong>metamagia</strong>, à sua escolha. Você adquire outra opção no
+    <strong>10º nível</strong> e no <strong>17º nível</strong>.
+  </p>
+  <p>
+    Você pode usar apenas uma opção de <strong>metamagia</strong> em uma magia
+    quando a conjura, a menos que a descrição da opção indique o contrário.
+  </p>
+
+  <h3>Magia Acelerada</h3>
+  <p>
+    Quando você conjurar uma magia que tenha um tempo de conjuração de
+    <strong>1 ação</strong>, você pode gastar <strong>2 pontos de feitiçaria</strong>
+    para mudar o tempo de conjuração dessa magia para
+    <strong>1 ação bônus</strong>.
+  </p>
+
+  <h3>Magia Aumentada</h3>
+  <p>
+    Quando você conjurar uma magia que force uma criatura a realizar um teste
+    de resistência contra seus efeitos, você pode gastar
+    <strong>3 pontos de feitiçaria</strong> para impor
+    <strong>desvantagem</strong> ao primeiro teste de resistência feito por um
+    dos alvos da magia.
+  </p>
+
+  <h3>Magia Cuidadosa</h3>
+  <p>
+    Quando você conjurar uma magia que force outras criaturas a realizarem um
+    teste de resistência, você pode proteger algumas delas da força total da
+    magia. Para isso, você gasta <strong>1 ponto de feitiçaria</strong> e escolhe
+    um número de criaturas até o seu modificador de <strong>Carisma</strong>
+    (mínimo de uma criatura).
+  </p>
+  <p>
+    Uma criatura escolhida passa automaticamente no teste de resistência contra
+    a magia.
+  </p>
+
+  <h3>Magia Distante</h3>
+  <p>
+    Quando você conjurar uma magia que tenha alcance de <strong>1,5 metro</strong>
+    ou maior, você pode gastar <strong>1 ponto de feitiçaria</strong> para dobrar
+    o alcance da magia.
+  </p>
+  <p>
+    Quando você conjurar uma magia com alcance de <strong>toque</strong>, você pode
+    gastar <strong>1 ponto de feitiçaria</strong> para mudar o alcance da magia
+    para <strong>9 metros</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Versatilidade Feiticeira <span class="optional">(Opcional)</span></h2>
+
+  <p>
+    A partir do <strong>4º nível</strong>, sempre que você alcançar um nível nesta
+    classe que conceda a característica
+    <strong>Incremento no Valor de Habilidade</strong>, você pode escolher uma das
+    opções abaixo, representando a magia dentro de você fluindo de novas formas:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Substituir uma das opções escolhidas para a característica
+      <strong>Metamagia</strong> por uma opção diferente de Metamagia disponível
+      para você.
+    </li>
+    <li>
+      Substituir um truque aprendido por meio da característica
+      <strong>Conjuração</strong> desta classe por outro truque da
+      <strong>lista de magias de Feiticeiro</strong>.
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Orientação Mágica <span class="optional">(Opcional)</span></h2>
+
+  <p>
+    A partir do <strong>5º nível</strong>, você pode acessar sua fonte interior de
+    magia para tentar transformar o fracasso em sucesso.
+  </p>
+
+  <p>
+    Quando você falhar em um <strong>teste de habilidade</strong>, você pode gastar
+    <strong>1 ponto de feitiçaria</strong> para rolar novamente o <strong>d20</strong>.
+    Você deve usar o novo resultado, que pode transformar o fracasso em sucesso.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Restauração Mística</h2>
+
+  <p>
+    No <strong>20º nível</strong>, sempre que você terminar um
+    <strong>descanso curto</strong>, você recupera
+    <strong>4 pontos de feitiçaria</strong> gastos.
+  </p>
+</div>
+`;
+
+const feitceiroOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(feitceiro5e, true));
+btnOne.addEventListener("click", () => swapContent(feiticeiroOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = feiticeiro5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Druida • D&D</title>
+
+<style>
+:root {
+  --bg: #0f1115;
+  --bg-soft: #181b22;
+  --card: #1f2430;
+  --border: #2c3240;
+  --text: #e6e6eb;
+  --muted: #9aa0b4;
+  --accent: #5da9ff;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, sans-serif;
+}
+
+/* BOTÃO VOLTAR */
+.back-button {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2000;
+}
+
+.hero {
+  position: relative;
+  height: 520px; /* altura visual mínima */
+  width: 100%;
+  overflow: visible;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,17,21,0.15) 40%,
+    var(--bg) 100%
+  );
+}
+
+.hero-content {
+  position: absolute;
+  top: 250px; /* controla a altura visual que você quer */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px; /* card mais largo */
+  padding: 0 16px;
+  z-index: 5;
+}
+
+/* TOGGLE */
+.toggle-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.toggle {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  display: flex;
+  padding: 6px;
+  gap: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.toggle-wrapper.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toggle button {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.toggle button.active {
+  background: white;
+  opacity: 1;
+}
+
+.toggle img {
+  height: 24px;
+}
+
+/* Ícone padrão (inativo) */
+.toggle button img {
+  filter: invert(0%) grayscale(0%);
+  transition: filter 0.2s ease;
+}
+
+/* Ícone quando o botão está ativo (fundo branco) */
+.toggle button.active img {
+  filter: invert(100%) grayscale(100%);
+}
+
+.card {
+  max-width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  transition-delay: 0.08s;
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CONTEÚDO */
+.card h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  margin-bottom: 34px;
+}
+
+/* SEÇÕES */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h2 {
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  line-height: 1.65;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  min-width: 720px;
+}
+
+table tr.active-row{
+  background: rgba(255, 255, 255, 0.08);
+}
+
+table tr{
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+@media (hover: hover) {
+  table tr:hover{
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+th, td {
+  border: 1px solid var(--border);
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  background: var(--bg-soft);
+}
+
+.subclasse-container {
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, 180px);
+  gap: 20px;
+  justify-content: center;
+  margin: 20px auto 0;
+}
+
+.subclasse-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  width: 180px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: center;
+  color: var(--text);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.subclasse-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent);
+}
+
+.subclasse-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+}
+
+.subclasse-card h3 {
+  margin: 12px 0;
+  font-size: 1rem;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 80px 16px;
+  margin-top: 260px; /* espaço para o card crescer */
+}
+
+/* Links sutis destacados */
+.section a{
+  color: #9cd1ff;            /* cor base branca */
+  font-weight: 600;          /* levemente negrito */
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Linha animada por baixo do link */
+.section a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;              /* espaçamento da linha */
+  width: 0%;
+  height: 2px;               /* espessura da linha */
+  background: #5da9ff;       /* cor sutil da paleta (accent) */
+  border-radius: 1px;        /* suaviza a linha */
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima a linha e muda levemente a cor */
+.section a:hover {
+  color: #dce6ff;            /* leve clareamento no hover */
+}
+
+.section a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .subclasse-container {
+    gap: 14px;
+  }
+
+  .subclasse-card {
+    width: calc(50% - 14px);
+    max-width: 180px;
+    border-radius: 12px;
+  }
+
+  .subclasse-card img {
+    height: 110px;
+  }
+
+  .subclasse-card h3 {
+    font-size: 0.9rem;
+    margin: 8px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<button class="back-button" onclick="location.href='../classe.html'">&lt;</button>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2024/09/a-nature-priest-of-primal-power-by-alexander-mokhov.jpg?q=49&fit=crop&w=825&dpr=2" alt="Druida">
+
+  <!-- CONTEÚDO SOBRE A IMAGEM -->
+  <div class="hero-content">
+
+    <div class="toggle-wrapper">
+      <div class="toggle">
+        <button id="btn5e" class="active">
+          <img src="https://i.ibb.co/ZRQ5vtg0/Design-sem-nome-27-removebg-preview.png">
+        </button>
+        <button id="btnOne">
+          <img src="https://i.ibb.co/YFkwMByH/One-Dn-D-1280x700-1-1-e1718997110440-removebg-preview.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="card" id="content"></div>
+  </div>
+</div>
+
+<main></main>
+
+<script>
+const content = document.getElementById("content");
+const btn5e = document.getElementById("btn5e");
+const btnOne = document.getElementById("btnOne");
+
+const druida5e = `
+<h1>Druida</h1>
+<div class="subtitle">Classe Conjuradora • D&D 5e</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+
+  <p>
+    Druidas são os <strong>guardadores do equilíbrio natural</strong>
+    em Iccarion. Diferente de clérigos que servem divindades ou magos que
+    dominam a magia por estudo, druidas canalizam o poder primitivo da
+    natureza — a força viva da terra, das feras e dos ciclos eternos.
+  </p>
+
+  <p>
+    Para um druida, a natureza não é apenas cenário, mas uma entidade viva
+    e sagrada. Florestas, rios, tempestades e criaturas selvagens fazem
+    parte de um mesmo fluxo, e através de rituais antigos e comunhão
+    espiritual, o druida molda essa energia para curar, proteger,
+    transformar e destruir quando o equilíbrio é ameaçado.
+  </p>
+
+  <p>
+    Errantes e protetores, druidas são frequentemente encontrados em
+    regiões intocadas, círculos sagrados ou viajando para impedir a
+    corrupção da natureza. Onde o mundo natural clama por defesa ou
+    harmonia, um druida se ergue — transformando <strong>instinto em magia</strong>
+    e a força da natureza em poder indomável.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Druida</h2>
+
+  <div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus de Prof.</th>
+      <th>Características</th>
+      <th>Truques Conhecidos</th>
+      <th>1º</th>
+      <th>2º</th>
+      <th>3º</th>
+      <th>4º</th>
+      <th>5º</th>
+      <th>6º</th>
+      <th>7º</th>
+      <th>8º</th>
+      <th>9º</th>
+    </tr>
+
+    <tr><td>1°</td><td>+2</td><td>Druídico, Conjuração</td><td>2</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>2°</td><td>+2</td><td>Círculo Druídico, Forma Selvagem</td><td>2</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>3°</td><td>+2</td><td>–</td><td>2</td><td>4</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>4°</td><td>+2</td><td>Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade</td><td>3</td><td>4</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>5°</td><td>+3</td><td>–</td><td>3</td><td>4</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>6°</td><td>+3</td><td>Característica de Círculo Druídico</td><td>3</td><td>4</td><td>3</td><td>3</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>7°</td><td>+3</td><td>–</td><td>3</td><td>4</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>8°</td><td>+3</td><td>Aprimoramento de Forma Selvagem, Incremento no Valor de Habilidade</td><td>3</td><td>4</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>9°</td><td>+4</td><td>–</td><td>3</td><td>4</td><td>3</td><td>3</td><td>3</td><td>1</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>10°</td><td>+4</td><td>Característica de Círculo Druídico</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>–</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>11°</td><td>+4</td><td>–</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>12°</td><td>+4</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>–</td><td>–</td><td>–</td></tr>
+    <tr><td>13°</td><td>+5</td><td>–</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+    <tr><td>14°</td><td>+5</td><td>Característica de Círculo Druídico</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>–</td><td>–</td></tr>
+    <tr><td>15°</td><td>+5</td><td>–</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+    <tr><td>16°</td><td>+5</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>–</td></tr>
+    <tr><td>17°</td><td>+6</td><td>–</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>18°</td><td>+6</td><td>Corpo Atemporal, Magias da Besta</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>19°</td><td>+6</td><td>Incremento no Valor de Habilidade</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>20°</td><td>+6</td><td>Arquidruida</td><td>4</td><td>4</td><td>3</td><td>3</td><td>3</td><td>3</td><td>2</td><td>2</td><td>1</td><td>1</td></tr>
+  </table>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+
+  <h3>Pontos de Vida</h3>
+  <p><strong>Dado de Vida:</strong> 1d8 por nível de Druida</p>
+  <p><strong>Pontos de Vida no 1º Nível:</strong> 8 + seu modificador de Constituição</p>
+  <p>
+    <strong>Pontos de Vida nos Níveis Seguintes:</strong>
+    1d8 (ou 5) + seu modificador de Constituição por nível de Druida após o 1º
+  </p>
+
+  <br>
+
+  <h3>Proficiências</h3>
+  <p>
+    <strong>Armaduras:</strong> Armaduras leves, armaduras médias e escudos
+    (druidas não vestem armaduras nem usam escudos feitos de metal)
+  </p>
+  <p>
+    <strong>Armas:</strong> Clavas, adagas, dardos, azagaias, maças, bordões,
+    cimitarras, foices, fundas e lanças
+  </p>
+  <p><strong>Ferramentas:</strong> Kit de herbalismo</p>
+  <p><strong>Testes de Resistência:</strong> Inteligência, Sabedoria</p>
+  <p>
+    <strong>Perícias:</strong> Escolha duas dentre Arcanismo, Adestrar Animais,
+    Intuição, Medicina, Natureza, Percepção, Religião e Sobrevivência
+  </p>
+
+  <br>
+
+  <h3>Equipamento</h3>
+  <p>
+    Você começa com o seguinte equipamento, além do equipamento concedido pelo
+    seu antecedente:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      (a) um escudo de madeira
+      <strong>ou</strong>
+      (b) qualquer arma simples
+    </li>
+    <li>
+      (a) uma cimitarra
+      <strong>ou</strong>
+      (b) qualquer arma corpo-a-corpo simples
+    </li>
+    <li>
+      (a) um pacote de estudioso
+      <strong>ou</strong>
+      (b) um pacote de explorador
+    </li>
+    <li>
+      Armadura de couro, um foco druídico e um pacote de aventureiro
+    </li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Druídico</h2>
+
+  <p>
+    Você conhece o <strong>Druídico</strong>, o idioma secreto dos druidas.
+    Você pode falar esse idioma e utilizá-lo para deixar mensagens ocultas.
+  </p>
+
+  <p>
+    Você e outras criaturas que conheçam o Druídico
+    <strong>automaticamente percebem</strong> essas mensagens.
+    Outras criaturas notarão a presença de uma mensagem oculta se forem
+    bem-sucedidas em um teste de Sabedoria (Percepção) com CD 15, mas não
+    conseguem decifrá-la sem o uso de magia.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Conjuração</h2>
+
+  <p>
+    Como druida, você canaliza o <strong>poder primordial da natureza</strong> para moldar o mundo ao seu redor.
+    Suas magias refletem os ciclos naturais, os espíritos da terra e a força viva do mundo selvagem,
+    permitindo que você cure, controle, transforme e destrua conforme o equilíbrio exige.
+  </p>
+
+  <h3>Truques</h3>
+  <p>
+    No <strong>1º nível</strong>, você conhece dois truques de sua escolha presentes na
+    <a href="../magias.html">Lista de Magias de Druida</a>. Em níveis superiores, você aprende truques adicionais da lista de druida,
+    como mostrado na coluna <a href="../magias.html">Truques Conhecidos</a> na tabela do Druida.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, pode substituir um dos truques de Druida que conhece por outro truque da
+    <a href="../magias.html">Lista de Magias de Druida</a>.
+  </p>
+
+  <h3>Preparando e Conjurando Magias</h3>
+  <p>
+    A tabela do Druida mostra quantos espaços de magia você possui para conjurar suas magias de druida de 1º nível ou superior.
+    Para conjurar uma dessas magias, você deve consumir um espaço do nível da magia ou superior.
+    Você recupera todos os espaços de magia gastos quando finaliza um descanso longo.
+  </p>
+  <p>
+    Você pode preparar um número de magias de druida a cada dia conforme mostrado na coluna
+    <a href="../magias.html">Magias Preparadas</a> da tabela do Druida. Cada magia deve ser de um nível para o qual você possua espaços de magia.
+  </p>
+  <p>
+    Quando você ganhar um nível nesta classe, pode trocar uma das magias preparadas por outra magia da
+    <a href="../magias.html">Lista de Magias de Druida</a>, também de um nível para o qual você possua espaços de magia.
+  </p>
+
+  <h3>Habilidade de Conjuração</h3>
+  <p>
+    Sabedoria é sua habilidade de conjuração para as magias de Druida: sua sintonia com o mundo natural
+    permite que você canalize magia com eficácia.
+    Você usa seu modificador de Sabedoria sempre que uma magia de Druida se referir à sua habilidade de conjuração.
+    Além disso, você usa seu modificador de Sabedoria ao definir a CD dos testes de resistência para suas magias de Druida
+    e ao realizar jogadas de ataque com magia.
+  </p>
+  <p>
+    <strong>CD de teste de resistência</strong> = 8 + seu bônus de proficiência + seu modificador de Sabedoria
+  </p>
+  <p>
+    <strong>Modificador de ataque de magia</strong> = seu bônus de proficiência + seu modificador de Sabedoria
+  </p>
+
+  <h3>Conjuração de Ritual</h3>
+  <p>
+    Você pode conjurar qualquer magia de Druida que conheça como um ritual, se essa magia possuir a etiqueta <strong>ritual</strong>.
+  </p>
+
+  <h3>Foco de Conjuração</h3>
+  <p>
+    Você pode usar um <strong>foco druídico</strong> (encontrado no capítulo 5) como foco de conjuração para suas magias de Druida.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Forma Selvagem</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, você pode usar sua ação para assumir
+    magicamente a forma de uma besta que você já tenha visto antes.
+    Você pode usar essa característica <strong>duas vezes</strong> e recupera
+    todos os usos quando termina um descanso curto ou longo.
+  </p>
+
+  <p>
+    Seu nível de druida determina as bestas em que você pode se transformar,
+    conforme mostrado na tabela <strong>Formas de Besta</strong>.
+    Por exemplo, no 2º nível, você pode se transformar em qualquer besta
+    com <strong>nível de desafio 1/4 ou inferior</strong> que não possua
+    deslocamento de voo ou natação.
+  </p>
+
+  <table class="class-table">
+    <thead>
+      <tr>
+        <th>Nível de Druida</th>
+        <th>ND Máximo</th>
+        <th>Limitações</th>
+        <th>Exemplo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2º</td>
+        <td>1/4</td>
+        <td>Sem deslocamento de voo ou natação</td>
+        <td>Lobo</td>
+      </tr>
+      <tr>
+        <td>4º</td>
+        <td>1/2</td>
+        <td>Sem deslocamento de voo</td>
+        <td>Crocodilo</td>
+      </tr>
+      <tr>
+        <td>8º</td>
+        <td>—</td>
+        <td>Sem limitações</td>
+        <td>Águia Gigante</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Você pode permanecer na forma de besta por um número de horas igual
+    à <strong>metade do seu nível de druida</strong> (arredondado para baixo).
+    Ao final desse tempo, você retorna à sua forma normal, a menos que
+    gaste outro uso dessa característica.
+  </p>
+
+  <p>
+    Você também pode reverter à sua forma normal prematuramente usando
+    uma <strong>ação bônus</strong> no seu turno.
+    Você reverte automaticamente se cair inconsciente,
+    cair a 0 pontos de vida ou morrer.
+  </p>
+
+  <div class="feature">
+    <h4>Regras da Forma Selvagem</h4>
+
+    <ul class="bullet-list">
+      <li>
+        Suas estatísticas de jogo são substituídas pelas estatísticas da besta,
+        mas você mantém sua tendência, personalidade e valores de
+        Inteligência, Sabedoria e Carisma.
+        Você também mantém suas proficiências em perícias e testes de resistência,
+        além de receber as proficiências da criatura.
+        Se a criatura possuir uma proficiência que você também tenha e o bônus
+        dela for maior que o seu, você usa o bônus da criatura.
+        Ações lendárias ou de covil da criatura não podem ser usadas.
+      </li>
+
+      <li>
+        Quando você se transforma, assume os pontos de vida e Dados de Vida
+        da criatura. Ao reverter à sua forma normal, você retorna ao número
+        de pontos de vida que tinha antes da transformação.
+        Se você reverter por cair a 0 pontos de vida, qualquer dano excedente
+        é transferido para sua forma normal.
+        Caso esse dano não reduza você a 0 pontos de vida, você não cai inconsciente.
+      </li>
+
+      <li>
+        Você não pode conjurar magias enquanto estiver na forma de besta,
+        e sua capacidade de falar ou realizar ações que exijam mãos é limitada
+        pelas capacidades da forma assumida.
+        A transformação não interrompe sua concentração em uma magia já conjurada,
+        nem impede ações que façam parte dela, como manter uma magia ativa.
+      </li>
+
+      <li>
+        Você mantém os benefícios de todas as características de classe,
+        raça ou outras fontes, e pode usá-las se a nova forma for fisicamente
+        capaz de fazê-lo.
+        Contudo, você não pode usar sentidos especiais, como visão no escuro,
+        a menos que a nova forma também possua esse sentido.
+      </li>
+
+      <li>
+        Você escolhe se seu equipamento cai no chão no seu espaço,
+        é assimilado pela nova forma ou é usado por ela.
+        Equipamentos vestidos ou carregados funcionam normalmente,
+        mas o Mestre decide quais itens são viáveis para a nova forma usar,
+        de acordo com seu tamanho e anatomia.
+        Equipamentos assimilados não têm efeito até você deixar a forma.
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Círculo Druídico</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, você escolhe um círculo druídico que representa
+    sua conexão com um aspecto específico da natureza.
+    Essa escolha concede a você características específicas no
+    <strong>2º nível</strong> e novamente nos
+    <strong>6º, 10º</strong> e <strong>14º níveis</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Círculos</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://www.cultture.com/pics/2022/12/13-mejores-cantrips-de-artifice-en-dampd-5e-clasificados-11.webp" alt="Sonhos">
+      <h3>Sonhos</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.dexerto.com/cdn-image/wp-content/uploads/2023/10/02/Druid-MTG-Header-final.jpg?width=1200&quality=60&format=auto" alt="Terra">
+      <h3>Terra</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i.redd.it/hgjjgzmws6891.jpg" alt="Lua">
+      <h3>Lua</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2023/10/jorael-voice-of-zhalfir-by-lorenzo-mastroianni.jpg" alt="Pastor">
+      <h3>Pastor</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static.wixstatic.com/media/65a683_bdcebaa9496347f0b7d7134a7befe7e6~mv2.jpg/v1/fill/w_677,h_497,al_c,lg_1,q_80/65a683_bdcebaa9496347f0b7d7134a7befe7e6~mv2.jpg" alt="Esporos">
+      <h3>Esporos</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tabletopjoab.com/wp-content/uploads/2022/05/mtg-martanael-moon-blessed-1024x731.jpg" alt="Estrelas">
+      <h3>Estrelas</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://static1.thegamerimages.com/wordpress/wp-content/uploads/2023/10/fireball-by-xavier-ribiero.jpg" alt="Fogo Selvagem">
+      <h3>Fogo Selvagem</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://static.wikia.nocookie.net/forgottenrealms/images/6/64/Halsin%2C_Emerald_Archdruid.jpg/revision/latest?cb=20230617130741" alt="Primavero">
+      <h3>Primavero</h3>
+    </button>
+  </div>
+
+  <h2>Arcano Desenterrado Arquivado</h2>
+
+  <div class="subclasse-container">
+    <button class="subclasse-card">
+      <img src="https://static0.srcdn.com/wordpress/wp-content/uploads/2021/12/Dungeons-Dragons-Strixhaven-Cover-Prismari.jpg" alt="Mago de Prismari">
+      <h3>Mago de Prismari</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://pbs.twimg.com/media/Euk7TOOXUAAapy3.jpg" alt="Mago de Witherbloom">
+      <h3>Mago de Witherbloom</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://i0.wp.com/nat1gaming.com/wp-content/uploads/2024/05/Sefris-of-the-Hidden-Ways-Adventures-in-the-Forgotten-Realms-MtG-Art-scaled.jpg?fit=2560%2C1905&ssl=1" alt="Estrelas">
+      <h3>Estrelas</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://tse3.mm.bing.net/th/id/OIP.de8MCBPAQAY5Z64HGZ0msgHaEz?w=1024&h=665&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Crepúsculo">
+      <h3>Crepúsculo</h3>
+    </button>
+
+    <button class="subclasse-card">
+      <img src="https://www.dndbeyond.com/attachments/10/364/building-a-sorcerer.jpg" alt="Fogo Selvagem">
+      <h3>Fogo Selvagem</h3>
+    </button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Companheiro Selvagem (Opcional)</h2>
+
+  <p>
+    A partir do <strong>2º nível</strong>, você adquire a capacidade de invocar
+    um espírito que assume a forma de um animal.
+    Usando uma <strong>ação</strong>, você pode gastar um uso da sua
+    característica <strong>Forma Selvagem</strong> para conjurar a magia
+    <em>encontrar familiar</em>, sem a necessidade de componentes materiais.
+  </p>
+
+  <p>
+    Ao conjurar a magia dessa forma, o familiar é uma
+    <strong>criatura feérica</strong>, em vez de uma besta,
+    e desaparece após um número de horas igual à
+    <strong>metade do seu nível de druida</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Incremento no Valor de Habilidade</h2>
+
+  <p>
+    Quando você atinge o <strong>4º nível</strong>, e novamente no
+    <strong>8º, 12º, 16º e 19º níveis</strong>, você pode aumentar
+    seus valores de habilidade.
+  </p>
+
+  <p>
+    Você pode escolher uma das opções abaixo:
+  </p>
+
+  <ul class="bullet-list">
+    <li>
+      Aumentar <strong>um valor de habilidade</strong>, à sua escolha, em <strong>2</strong>;
+    </li>
+    <li>
+      Aumentar <strong>dois valores de habilidade diferentes</strong>, à sua escolha, em <strong>1</strong> cada.
+    </li>
+  </ul>
+
+  <p>
+    Como padrão, você <strong>não pode elevar um valor de habilidade acima de 20</strong>
+    usando essa característica.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Versatilidade de Truques (Opcional)</h2>
+
+  <p>
+    Sempre que você alcançar um nível nesta classe que conceda a característica
+    <strong>Incremento no Valor de Habilidade</strong>, você pode substituir
+    um truque que aprendeu por meio da característica <strong>Conjuração</strong>
+    desta classe por outro truque da
+    <strong>lista de magias de druida</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Corpo Atemporal</h2>
+
+  <p>
+    A partir do <strong>18º nível</strong>, a magia primordial que você controla
+    faz com que seu corpo envelheça de forma significativamente mais lenta.
+    Para cada <strong>10 anos</strong> que se passarem, seu corpo envelhece
+    apenas <strong>1 ano</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Magias da Besta</h2>
+
+  <p>
+    A partir do <strong>18º nível</strong>, você pode conjurar muitas de suas
+    magias enquanto estiver sob o efeito da <strong>Forma Selvagem</strong>.
+    Você pode realizar os componentes <strong>verbais</strong> e
+    <strong>somáticos</strong> das magias de druida na forma de besta,
+    mas não é capaz de prover os <strong>componentes materiais</strong>.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Arquidruida</h2>
+
+  <p>
+    No <strong>20º nível</strong>, você pode usar sua
+    <strong>Forma Selvagem</strong> um número
+    <strong>ilimitado de vezes</strong>.
+  </p>
+
+  <p>
+    Além disso, você pode ignorar os componentes verbais 
+    e somáticos das suas magias de druida, assim como 
+    qualquer componente material que não tenha custo e não 
+    seja consumido pela magia. Você recebe esse benefício 
+    tanto na sua forma normal, quanto na forma de besta da 
+    sua Forma Selvagem.
+  </p>
+</div>
+`;
+
+const druidaOne = `
+<h1>Bárbaro</h1>
+<div class="subtitle">Classe Marcial • One D&D (2024)</div>
+
+<div class="section">
+  <h2>Descrição</h2>
+  <p>
+    No One D&D, o Bárbaro mantém sua identidade como combatente brutal,
+    mas com melhorias de consistência, novas opções táticas e integração
+    com o sistema de Maestria em Armas.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Características de Classe</h2>
+  <p><strong>Dado de Vida:</strong> d12</p>
+  <p><strong>Armaduras:</strong> Leves, médias e escudos</p>
+  <p><strong>Armas:</strong> Simples e marciais (com Maestria)</p>
+  <p><strong>Testes de Resistência:</strong> Força, Constituição</p>
+</div>
+
+<div class="section">
+  <h2>Fúria</h2>
+  <p>
+    A Fúria foi refinada: agora ela é mais fácil de manter e escala
+    melhor ao longo dos níveis, oferecendo dano adicional e resistência
+    a dano físico.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Maestria em Armas</h2>
+  <p>
+    A partir do 1º nível, você pode aplicar efeitos especiais
+    de Maestria ao usar armas específicas, como Empurrar,
+    Derrubar ou Atingir com Precisão.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Ataque Descuidado</h2>
+  <p>
+    Você pode atacar com vantagem, e o risco associado foi
+    reduzido em níveis mais altos.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Subclasse</h2>
+  <p>
+    No 3º nível, você escolhe uma subclasse, que agora concede
+    habilidades mais impactantes logo no início.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Progressão do Bárbaro</h2>
+  <table>
+    <tr>
+      <th>Nível</th>
+      <th>Bônus</th>
+      <th>Características</th>
+    </tr>
+    <tr><td>1</td><td>+2</td><td>Fúria, Maestria em Armas</td></tr>
+    <tr><td>2</td><td>+2</td><td>Ataque Descuidado, Sentido de Perigo</td></tr>
+    <tr><td>3</td><td>+2</td><td>Subclasse</td></tr>
+    <tr><td>4</td><td>+2</td><td>Talento</td></tr>
+    <tr><td>5</td><td>+3</td><td>Ataque Extra</td></tr>
+    <tr><td>6</td><td>+3</td><td>Característica da Subclasse</td></tr>
+    <tr><td>7</td><td>+3</td><td>Instinto Feral</td></tr>
+    <tr><td>8</td><td>+3</td><td>Talento</td></tr>
+    <tr><td>9</td><td>+4</td><td>Crítico Brutal</td></tr>
+    <tr><td>10</td><td>+4</td><td>Característica da Subclasse</td></tr>
+    <tr><td>11</td><td>+4</td><td>Fúria Implacável</td></tr>
+    <tr><td>12</td><td>+4</td><td>Talento</td></tr>
+    <tr><td>13</td><td>+5</td><td>Crítico Brutal Aprimorado</td></tr>
+    <tr><td>14</td><td>+5</td><td>Característica da Subclasse</td></tr>
+    <tr><td>15</td><td>+5</td><td>Fúria Persistente</td></tr>
+    <tr><td>16</td><td>+5</td><td>Talento</td></tr>
+    <tr><td>17</td><td>+6</td><td>Crítico Brutal Superior</td></tr>
+    <tr><td>18</td><td>+6</td><td>Força Indomável</td></tr>
+    <tr><td>19</td><td>+6</td><td>Talento</td></tr>
+    <tr><td>20</td><td>+6</td><td>Campeão Primal</td></tr>
+  </table>
+</div>
+`;
+
+const toggleWrapper = document.querySelector(".toggle-wrapper");
+
+let isAnimating = false;
+
+/* anima toggle (só uma vez) */
+function animateToggle() {
+  toggleWrapper.classList.remove("animate-in");
+  void toggleWrapper.offsetHeight;
+  toggleWrapper.classList.add("animate-in");
+}
+
+/* anima card */
+function animateCardIn() {
+  content.classList.add("animate-in");
+}
+
+function animateCardOut(callback) {
+  content.classList.remove("animate-in");
+  setTimeout(callback, 100);
+}
+
+/* troca de conteúdo com lock */
+function swapContent(html, is5e) {
+  if (isAnimating) return;
+
+  // evita reanimar se já estiver ativo
+  if (
+    (is5e && btn5e.classList.contains("active")) ||
+    (!is5e && btnOne.classList.contains("active"))
+  ) {
+    return;
+  }
+
+  isAnimating = true;
+
+  btn5e.classList.toggle("active", is5e);
+  btnOne.classList.toggle("active", !is5e);
+
+  animateCardOut(() => {
+    content.innerHTML = html;
+
+    void content.offsetHeight;
+
+    animateCardIn();
+
+    setTimeout(() => {
+      isAnimating = false;
+    }, 550); // duração da animação do card
+  });
+}
+
+/* eventos */
+btn5e.addEventListener("click", () => swapContent(druida5e, true));
+btnOne.addEventListener("click", () => swapContent(druidaOne, false));
+
+/* carga inicial */
+requestAnimationFrame(() => {
+  animateToggle();
+  content.innerHTML = druida5e;
+  animateCardIn();
+  btn5e.classList.add("active");
+});
+</script>
+
+</body>
+</html>
