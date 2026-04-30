@@ -190,9 +190,7 @@ function setImage(name) {
 function findRace(data, name) {
     return data.find(r =>
         normalize(r.name) === name ||
-        normalize(r.english_name) === name ||
-        normalize(r.name).includes(name) ||
-        normalize(r.english_name).includes(name)
+        normalize(r.english_name) === name
     );
 }
 
