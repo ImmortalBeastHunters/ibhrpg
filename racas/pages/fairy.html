@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title id="page-title">Raça</title>
+
+<!-- CSS GLOBAL -->
+<link rel="stylesheet" href="../css/race-page.css">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-left">
+        <div class="logo" onclick="goHome()">
+            <i class="ti ti-dice-5"></i>
+            <span>Grimório de Raças</span>
+        </div>
+
+        <button class="back-button" onclick="goBack()">
+            ← Voltar
+        </button>
+    </div>
+</header>
+
+<!-- CONTAINER -->
+<div class="container">
+
+<div class="race-card">
+
+    <!-- HEADER DO CARD -->
+    <div class="race-header">
+        <div class="race-name" id="race-name">Nome da Raça</div>
+    </div>
+
+    <div class="race-divider"></div>
+
+    <div class="race-main">
+
+        <!-- INFO -->
+        <div class="race-info">
+
+            <div><b>Livro:</b> <span id="race-source"></span></div>
+            <div><b>Tamanho:</b> <span id="race-size"></span></div>
+            <div><b>Deslocamento:</b> <span id="race-speed"></span></div>
+            <div><b>Atributos:</b> <span id="race-ability"></span></div>
+
+            <!-- ENTRIES DINÂMICOS -->
+            <div id="race-entries"></div>
+
+        </div>
+
+        <!-- IMAGEM -->
+        <div class="race-image">
+            <img id="race-image" src="" alt="">
+        </div>
+
+    </div>
+
+    <!-- SUBRAÇAS -->
+    <div class="subraces" id="subraces-container">
+        <!-- JS injeta aqui -->
+    </div>
+
+</div>
+
+</div>
+
+<!-- JS GLOBAL -->
+<script src="../js/race.js"></script>
+
+<script>
+function goBack(){
+    window.location.href = "../index.html";
+}
+
+function goHome(){
+    window.location.href = "../index.html";
+}
+</script>
+
+</body>
+</html>
